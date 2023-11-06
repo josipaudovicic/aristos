@@ -16,61 +16,104 @@
 			
 			
 			\begin{packed_enum}
-				\item  \underbar{Neregistrirani/neprijavljeni korisnik  (inicijator) može:}
+				\item  \underbar{Neregistrirani korisnik  (inicijator) može:}
 				
 				\begin{packed_enum}
-					\item vidjeti kartu i pozicije životinja
-					\item vidjeti neke informacije o životinjama(povijesni podaci gdje se nalazila, naziv vrste, slika i opis)
 					\item se registrirati u sustav
-					\item \begin{packed_enum}
+					 \begin{packed_enum}
 						\item  dati svoje podatke: korisničko ime, fotografija, lozinka, ime, prezime i email adresa
 						\item  odabrati svoju ulogu(tragač, istraživač ili voditelj postaje)
 						\item potvrditi registraciju na svojoj email adresi 
 					\end{packed_enum}
-					\item se prijaviti u sustav
 				\end{packed_enum}
 			
+				\item  \underbar{Korisnik (inicijator) može:}
+				
+				\begin{packed_enum}
+					\item se prijaviti u sustav
+					\item upravljati svojim podatcima
+					 \begin{packed_enum}
+						\item  pregled osobnih podataka
+						\item promjena osobnih podataka
+						\item brisanje korisničkog računa
+					\end{packed_enum}
+				\end{packed_enum}
+
 				\item  \underbar{Tragač na terenu (inicijator) može:}
 				
 				\begin{packed_enum}
 					
-					\item vidjeti kartu i pozicije životinja
-					\item vidjeti na karti gdje se nalaze ostali tragači aktivni na istoj akciji
-					\item vidjeti neke informacije o životinjama(povijesni podaci gdje se nalazila, naziv vrste, slika i opis)
-					\item ostavljati komentare o praćenim životinjama
-					\item ostavljati komentare drugim tragačima i istraživačima koji su na istoj akciji
-					\item obavljati zadane zadatke
-					\item \begin{packed_enum}
-						\item može ići određenim prijevozom (pješke, dronom, automobilom, cross motorom, brodom ili helikopterom)
-						\item može se maknuti s akcije završetkom svih potrebnih zadataka
+					\item vidjeti zadatke tijekom akcije
+					 \begin{packed_enum}
+						\item označiti da je zadatak riješen
 					\end{packed_enum}
+					\item završiti akciju
+					\item vidjeti gdje se nalaze ostali tragači na akciji 
+					\item vidjeti koje su dostupne akcije 
+					 \begin{packed_enum}
+						\item prihvatiti akciju
+						\item odbiti akciju
+					\end{packed_enum} 
+					\item vidjeti pozicije praćenih životinja
+					\item odabrati vozilo kojim će ići u istraživanje
+					\item vidjeti informacije o životinjama
+					 \begin{packed_enum}
+						\item dodati komentar
+						\item izbrisati komentar
+					\end{packed_enum}
+
 					
 				\end{packed_enum}
 
 				\item  \underbar{Istraživač (inicijator) može:}
 				
 				\begin{packed_enum}
-					\item vidjeti, u obliku toplinske karte, staze kojima su se tragači kretali i načinima kojima su se kretali
-					\item stvoriti novu akciju pretraživanja i praćenja
-					\item poslati zahtjev voditelju postaje za tragačima za svoju akciju
-					\item preko karte zadati zadatke tragačima
-					\item ostavljati dodatne komentare
-					\item preko interaktivne karte pratiti informacije o životinjama, tragačima i postajama
-					\item izabrati koje će se informacije koristiti pri izradi karte
+
+					\item vidjeti informacije o životinjama
+					 \begin{packed_enum}
+						\item dodati komentar
+						\item izbrisati komentar
+					\end{packed_enum}
+					\item vidjeti kartu 
+					 \begin{packed_enum}
+						\item izraditi kartu: na temelju životinja ili tragača
+					\end{packed_enum}
+					\item stvoriti novu akciju
+					 \begin{packed_enum}
+						\item dodati nove zadatke
+					\end{packed_enum}
+					\item poslati voditelju postaje zahtjev za tragačima
+					 \begin{packed_enum}
+						\item dodati opis o željenim tragačima
+					\end{packed_enum}
+					\item zadati zadatke tragačima
+					 \begin{packed_enum}
+						\item upravljati zadacima
+						 \begin{packed_enum}
+							\item dodavati zadatke
+							\item uređivati zadatke
+							\item brisati zadatke
+						\end{packed_enum}
+						\item dodati komentare na zadatke
+					\end{packed_enum}
+					\item pregledati informacije
+
+
 				\end{packed_enum}
 
 				\item  \underbar{Voditelj postaje (inicijator) može:}
 				
 				\begin{packed_enum}
-					\item birati tragače za svoju postaju
-					\item definira na koji način će se izvoditi pretraživanje
-					\item birati tragače koje će dodjeliti istraživaču
+					\item pregledati sve tragače
+					\item dodati tragača na akciju
+					\item dodijeliti postaju tragaču
 				\end{packed_enum}
 
 				\item  \underbar{Administrator (inicijator) može:}
 				
 				\begin{packed_enum}
 					\item vidjeti popis svih registriranih korisnika i njihovih osobnih podataka
+					\item obrisati korisnika
 					\item mijenjati dodijeljena prava i osobne podatke registriranim korisnicima
 					\item potvrditi istraživača i voditelja postaje
 				\end{packed_enum}
