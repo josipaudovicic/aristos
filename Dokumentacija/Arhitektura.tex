@@ -1,19 +1,66 @@
 \chapter{Arhitektura i dizajn sustava}
-		
-		\textbf{\textit{dio 1. revizije}}\\
 
-		\textit{ Potrebno je opisati stil arhitekture te identificirati: podsustave, preslikavanje na radnu platformu, spremišta podataka, mrežne protokole, globalni upravljački tok i sklopovsko-programske zahtjeve. Po točkama razraditi i popratiti odgovarajućim skicama:}
-	\begin{itemize}
-		\item 	\textit{izbor arhitekture temeljem principa oblikovanja pokazanih na predavanjima (objasniti zašto ste baš odabrali takvu arhitekturu)}
-		\item 	\textit{organizaciju sustava s najviše razine apstrakcije (npr. klijent-poslužitelj, baza podataka, datotečni sustav, grafičko sučelje)}
-		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
-	\end{itemize}
+Arhitektura sustava može se podijeliti na tri ključna podsustava:
 
+\begin{packed_enum}
+	\item Web poslužitelj:
+	\begin{packed_enum}
+		\item Srce web aplikacije.
+		\item Odgovoran za interakciju između klijenta i aplikacije.
+		\item Koristi HTTP/HTTPS protokol za prijenos informacija na webu.
+		\item Inicira pokretanje web aplikacije i proslijeđuje zahtjeve.
+	\end{packed_enum}
+	\item Web aplikacija:
+	\begin{packed_enum}
+		\item Procesira korisničke zahtjeve i obrađuje ih.
+		\item Pristupa bazi podataka prema potrebi.
+		\item Generira odgovore u obliku HTML dokumenata za prikaz u web pregledniku.
+	\end{packed_enum}			
+	\item Baza podataka:	
+	\begin{packed_enum}
+		\item Sprema podatke koji se koriste ili modificiraju unutar web aplikacije.
+	\end{packed_enum}
+\end{packed_enum}
+
+Korisnik, putem web preglednika, šalje zahtjeve web poslužitelju. 
+Web poslužitelj zatim inicira rad web aplikacije, koja procesira zahtjeve, pristupa bazi podataka po potrebi i vraća odgovore u obliku HTML dokumenata. 
+Ova interakcija omogućuje korisnicima pregled i manipulaciju sadržajem putem web sučelja.
+
+\begin{figure}[H]
+	\includegraphics[scale=0.5]{slike/arhitektura.png}
+	\centering
+	\caption{Arhitektura sustava}
+	\label{fig:arhitektura}
+\end{figure}
+
+React je biblioteka koju smo odabrali za izradu naše web aplikacije, zajedno sa Spring Boot radnim okvirom te programskim jezikom JavaScript. 
+Odabrano razvojno okruženje je Visual Studio Code. Arhitektura sustava temeljiti će se na MVC(Model-View-Controller) konceptu.
+\newline React je biblioteka otvorenog koda koja se koristi za izgradnju korisničkih sučelja.
+\begin{packed_item}
+	\item Jezik: Povezan je s JavaScriptom
+	\item Slučajevi upotrebe: Često se koristi za izradu jednostranih aplikacija, gdje je potrebna brza i prilagodljiva interakcija
+	\item Platforma: Nema specifičnu platformu; može se koristiti u web aplikacijama na različitim platformama
+\end{packed_item}
+Spring Boot je radno okruženje koje se koristi za izgradnju aplikacija.
+\begin{packed_item}
+	\item Jezik: prvenstveno povezan s Javom
+	\item Radno okruženje: Spring Boot dio je Spring Frameworka za Java razvoj
+	\item Slučajevi upotrebe: naširoko se koristi za izradu web aplikacija temeljenih na Javi
+	\item Ekosustav: Java ekosustav, s jakom integracijom s tehnologijama kao što su Spring MVC, Spring Data itd.
+	\item Platforma: Java Virtual Machine (JVM)
+\end{packed_item}
+Spring Boot podržava koncept MVC (Model-View-Controller) arhitekture, a to se postiže kroz Spring Web MVC modul. Spring Boot podržava MVC koncept:
+\begin{packed_item}
+	\item Model: Spring Boot omogućava korištenje Java objekata kao modela. Ovi objekti predstavljaju podatke koji se koriste u aplikaciji.
+	Spring Data može se integrirati za jednostavno upravljanje podacima i komunikaciju s bazom podataka.
+	\item View: Spring Boot pruža fleksibilnost u odabiru tehnologije za prikazivanje korisničkog sučelja. Prikazi se često implementiraju kroz HTML datoteke, a moguće je koristiti različite template engines (Thymeleaf, FreeMarker, JSP).
+	Pomoću konfiguracija view resolvera jednostavno se integriraju odabrane tehnologije za prikazivanje podataka korisnicima.
+	\item Controller: Anotacije poput @Controller i @RestController omogućuju jednostavno označavanje klasa koje djeluju kao kontroleri.
+	@RequestMapping i slične anotacije omogućuju mapiranje HTTP zahtjeva na određene metode kontrolera.
+	Spring Boot automatski prepoznaje i konfigurira komponente kontrolera.		
+\end{packed_item}
+Primjena MVC koncepta u Spring Boot-u olakšava održavanje i proširivost aplikacija.
 	
-		
-
-		
-
 				
 		\section{Baza podataka}
 			
