@@ -807,202 +807,338 @@
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          27         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-					\noindent \underbar{\textbf{UC27 - Pregled dostupnih akcija}}
+					\noindent \underbar{\textbf{UC27 - Pregled pozicija praćenih životinja}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: } Tragač
-						\item  \textbf{Cilj:} Pregled dostupnih akcija
+						\item  \textbf{Cilj:} Pregled pozicija praćene životinje
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} : Postoje dostupne akcije
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Tragač odabire opciju pregled dostupnih akcija
-							\item Pojavljuje se lista dostupnih akcija
+							\item Tragač izabire opciju pregleda pozicija praćenih životinja
+							\item Na karti se pojavljuju pozicije praćenih životinja
+							
 							
 						\end{packed_enum}
 					\end{packed_item}
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          28         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-					\noindent \underbar{\textbf{???UC28 - Prihvaćanje akcije}}
+					\noindent \underbar{\textbf{UC28 - Odabir načina kretanja}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: } Tragač
-						\item  \textbf{Cilj:} Prihvaćanje akcije
+						\item  \textbf{Cilj:} Odabrati način kretanja za akciju
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:}
+						\item  \textbf{Preduvjet:} Tragač je u aktivnoj akciji
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item 
-							\item 
+							\item 	Tragač odabire opciju za odabir vozila
+							\item Pojavljuju se opcije prijevoza za koje je osposobljen
+							\item	Tragač bira način prijevoza
+							\item Ažurira se baza
+							
 						
 						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-	
-							\item[2.a]
-							\item[] \begin{packed_enum}
-								
-								\item 
-								
-							\end{packed_enum}
-
-						\end{packed_item}
 					\end{packed_item}
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          29         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-					\noindent \underbar{\textbf{UC29 - Odbijanje akcije}}
+					\noindent \underbar{\textbf{UC29 - Pregled zadataka}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }
-						\item  \textbf{Cilj:} 
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Pregled zadataka na karti
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:}
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item 
-							\item 
-						
+							\item	Istraživač izabire opciju pregled zadataka
+							\item	Pojavljuje se lista  zadataka
+							
 						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-	
-							\item[2.a]
-							\item[] \begin{packed_enum}
-								
-								\item 
-								
-							\end{packed_enum}
-
-						\end{packed_item}
 					\end{packed_item}
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          30         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-					\noindent \underbar{\textbf{UC}}
+					\noindent \underbar{\textbf{UC30 – slanje zahtjeva voditelju stanice za tragačima}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }
-						\item  \textbf{Cilj:} 
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Slanje zahtjeva za tragačima
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:}
+						\item  \textbf{Preduvjet:} Postoji akcija u tijeku
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item 
-							\item 
+							\item  Istraživač izabire opciju slanja zahtjeva za tragačem
+							\item  Istraživač piše zahtjev
+							\item  Istraživač šalje zahtjev voditelju postaje
+							\item  Ažurira se baza podataka
 						
 						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-	
-							\item[2.a]
-							\item[] \begin{packed_enum}
-								
-								\item 
-								
-							\end{packed_enum}
-
-						\end{packed_item}
 					\end{packed_item}
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          31         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-					\noindent \underbar{\textbf{UC}}
+					\noindent \underbar{\textbf{UC31 – Dodavanje opisa o tragačima}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }
-						\item  \textbf{Cilj:} 
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Dodavanje opisa za tražene tragače
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:}
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item 
-							\item 
-						
+							\item 	Istraživač odabire sredstvo prijevoza za koje tragač mora biti osposobljen
+							\item 	Istraživač dodaje dodatan opis
+							\item 	Istraživač potvrđuje opis tragača
+							\item 	Ažurira se baza podataka
+							
 						\end{packed_enum}
-						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-	
-							\item[2.a]
-							\item[] \begin{packed_enum}
-								
-								\item 
-								
-							\end{packed_enum}
-
-						\end{packed_item}
 					\end{packed_item}
-					
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          template         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          32         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-					\noindent \underbar{\textbf{UC$<$broj obrasca$>$ -$<$ime obrasca$>$}}
+					\noindent \underbar{\textbf{UC32 – Dodjeljivanje zadataka tragačima}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }$<$sudionik$>$
-						\item  \textbf{Cilj:} $<$cilj$>$
-						\item  \textbf{Sudionici:} $<$sudionici$>$
-						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Dodjeljivanje zadataka izabranim tragačima
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:}
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item $<$opis korak jedan$>$
-							\item $<$opis korak dva$>$
-							\item $<$opis korak tri$>$
-							\item $<$opis korak četiri$>$
-							\item $<$opis korak pet$>$
+							\item 	 Istraživač izabire tragača na karti kojem zadaje zadatak
+							\item  Istraživač potvrđuje odabir
+							\item  Ažurira se baza podataka
+							
 						\end{packed_enum}
+					\end{packed_item}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          33         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					\noindent \underbar{\textbf{UC33 – Dodavanje zadataka}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Dodavanje zadatka na već postojeću akciju
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:}
+						\item  \textbf{Opis osnovnog tijeka:}
 						
+						\item[] \begin{packed_enum}
+	
+							\item Istraživač izabire opciju “dodavanje zadataka”
+							\item	Istraživač bira akciju iz liste aktivnih akcija
+							\item	Istraživač piše zadatak I odabire lokaciju zadatka
+							\item	Ažurira se baza podataka
+							
+						\end{packed_enum}
+					\end{packed_item}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          34         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					\noindent \underbar{\textbf{UC34 - Uređivanje zadataka}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Uređivanje zadataka
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:}
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item 	Istraživač izabire zadatak koji želi urediti sa karte
+							\item Istraživač odabire opciju “uređivanje zadatka”
+							\item 	Istraživač mijenja zadatak
+							\item 	Istraživač sprema promjene
+							\item 	Ažurira se baza podataka
+							
+						\end{packed_enum}
+
 						\item  \textbf{Opis mogućih odstupanja:}
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[4.a] 	Istarživač nakon promjene ne odabere opciju „Spremi“
 							\item[] \begin{packed_enum}
 								
-								\item $<$opis rješenja mogućeg scenarija korak 1$>$
-								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								\item Sustav obavještava istraživača da nije spremio promjene prije izlaska iz prozora 
 								
 							\end{packed_enum}
-							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
-							
+
 						\end{packed_item}
+
+					\end{packed_item}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          35         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					\noindent \underbar{\textbf{UC35 – Brisanje zadataka}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Brisanje zadataka
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:}
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item 	Istraživač izabire zadatak koji želi izbrisati sa karte
+							\item 	Istraživač odabire opciju “brisanja zadatka”
+							\item 	Istraživač sprema promjene
+							\item 	Ažurira se baza podataka
+							
+							
+						\end{packed_enum}
+
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[4.a] 9.	Istarživač nakon promjene ne odabere opciju „Spremi“
+							\item[] \begin{packed_enum}
+								
+								\item 10.	Sustav obavještava istraživača da nije spremio promjene prije izlaska iz prozora 
+								
+							\end{packed_enum}
+
+						\end{packed_item}
+					\end{packed_item}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          36         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					\noindent \underbar{\textbf{UC36 – Dodavanje komentara na zadatke}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Dodavanje komentara na zadatke
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:}
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item 	Istraživač izabire zadatak koji želi komentirati na karti
+							\item 	Istraživač odabire opciju “dodaj komentar”
+							\item 	Istraživač piše komentar
+							\item 	Istraživač potvrđuje komentar
+							\item 	Ažurira se baza podataka
+							
+							
+						\end{packed_enum}
+					\end{packed_item}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          37         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					\noindent \underbar{\textbf{UC37 – Stvaranje nove akcije }}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} : Stvaranje nove akcije pretraživanja i praćenja s detaljima o određenim vrstama, jedinkama ili staništima za proučavanje
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:}
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Istraživač odabire opciju „Dodaj novu akciju“
+							\item	Ispunjava sve potrebne detalje o akciji
+							\item	Ažurira se baza podataka
+							
+							
+						\end{packed_enum}
+					\end{packed_item}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          38         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					\noindent \underbar{\textbf{UC38 – Dodavanje novih zadataka}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Dodavanje zadatka na novu akciju
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:}
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item 		Istraživač se nudi opcija “dodavanje zadataka” kao nužna
+							\item 	Istraživač piše zadatak I odabire lokaciju zadatka
+							\item 	Ažurira se baza podataka
+							
+						\end{packed_enum}
+					\end{packed_item}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          39         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					\noindent \underbar{\textbf{UC39 – Pregled karte na temelju tragača}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Izrada karte na temelju tragača
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:}
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item 	Istraživač izabire opciju izrade karte
+							\item Istraživač izabire opciju izrade na temelju tragača
+							\item Istraživač filtrira tragače po akciji, tipu prijevoza ili pojedinačno
+							\item Izrađuje se I pregleda karta
+							
+							
+						\end{packed_enum}
+					\end{packed_item}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          40         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					\noindent \underbar{\textbf{UC40 – 	Pregled karte na temelju životinja}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Izrada karte na temelju životinja
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:}
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item 	Istraživač izabire opciju izrade karte
+							\item  Istraživač izabire opciju izrade na temelju životinja
+							\item  Istraživač filtrira životinje po vrsti ili jedinki
+							\item  Izrađuje se I pregleda karta
+							
+							
+						\end{packed_enum}
 					\end{packed_item}
-				
+					
+					
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
 					
-					\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
+					\textit{}
 				
 					\begin{figure}[H]
-						\includegraphics[scale=1]{slike/Funkcionalnost neregistriranog korisnika, administratora aplikacije i voditelja postaje.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+						\includegraphics[scale=0.9]{slike/dijagram admin.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 						\centering
-						\caption{Funkcionalnost neregistriranog korisnika, administratora aplikacije i voditelja postaje}
+						\caption{Funkcionalnost neregistriranog korisnika, generaliziranog korisnika, administratora aplikacije i voditelja postaje}
 						\label{fig:Funkcionalnost neregistriranog korisnika, administratora aplikacije i voditelja postaje}
 					\end{figure}
-				
+					
+					\begin{figure}[H]
+						\includegraphics[scale=0.9]{slike/dijagram ekipa.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+						\centering
+						\caption{Funkcionalnost tragača i istraživača}
+						\label{fig:Funkcionalnost neregistriranog korisnika, administratora aplikacije i voditelja postaje}
+					\end{figure}
 				
 					\eject		
 				
@@ -1010,7 +1146,8 @@
 				
 				\textbf{\textit{dio 1. revizije}}\\
 				
-				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
+				\textit{dodati opis sek dijagrama i slike}
+
 				\eject
 	
 		\section{Ostali zahtjevi}
