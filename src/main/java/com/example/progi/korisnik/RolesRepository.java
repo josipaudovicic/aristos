@@ -3,7 +3,9 @@ package com.example.progi.korisnik;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface RolesRepository extends JpaRepository<Roles, Long> {
-    Roles findByRolesName(String roleName);
+    Optional<Roles> findByRoleName(String roleName);
 }

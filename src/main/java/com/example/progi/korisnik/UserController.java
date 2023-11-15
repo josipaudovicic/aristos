@@ -6,16 +6,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping
 public class UserController {
 
     private final UserService userService;
+    private final RolesService rolesService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RolesService rolesService) {
         this.userService = userService;
+        this.rolesService = rolesService;
     }
 
     @GetMapping
@@ -24,7 +28,19 @@ public class UserController {
     }
 
     @PostMapping(path = "/register")
-    public void register(@RequestBody Users user) {
+    public void register(@RequestBody Map<String, Object> requestBody)
+    {
+        Users user = new Users();
+        user.setUsername((String) requestBody.get("username"));
+        user.setEmail((String) requestBody.get("email"));
+        user.setPassword((String) requestBody.get("password"));
+        user.setName((String) requestBody.get("name"));
+        user.setSurname((String) requestBody.get("surname"));
+
+        String roleName = (String) requestBody.get("status");
+        Roles role = rolesService.getByName(roleName);
+        user.setRole(role);
+
         userService.addUser(user);
     }
 

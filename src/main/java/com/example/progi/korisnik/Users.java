@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 public class Users {
     @Id
     private String username;
+    @Column(unique = true)
     private String email;
     private String password;
     private String name;
@@ -17,7 +18,7 @@ public class Users {
 
     public Users(){
     }
-    public Users(String username, String email, String password, String name, String surname, String roleName) {
+    public Users(String username, String email, String password, String name, String surname) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -49,9 +50,7 @@ public class Users {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     public void setName(String name) {
         this.name = name;
