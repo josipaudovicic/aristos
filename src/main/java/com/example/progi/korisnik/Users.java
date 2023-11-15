@@ -1,6 +1,9 @@
 package com.example.progi.korisnik;
 
+import com.example.progi.korisnik.token.ConfirmationToken;
 import jakarta.persistence.*;
+
+import java.util.Collection;
 
 @Entity
 @Table
@@ -15,6 +18,8 @@ public class Users {
     @ManyToOne
     @JoinColumn(name="id")
     private Roles role;
+    private Boolean emailCheck;
+    private Boolean adminCheck;
 
     public Users(){
     }
@@ -72,4 +77,30 @@ public class Users {
         this.role = role;
     }
 
+    public boolean isEmailCheck() {
+        return emailCheck;
+    }
+
+    public void setEmailCheck(boolean emailCheck) {
+        this.emailCheck = emailCheck;
+    }
+
+    public boolean isAdminCheck() {
+        return adminCheck;
+    }
+
+    public void setAdminCheck(boolean adminCheck) {
+        this.adminCheck = adminCheck;
+    }
+
+    @OneToMany(mappedBy = "user")
+    private Collection<ConfirmationToken> confirmationToken;
+
+    public Collection<ConfirmationToken> getConfirmationToken() {
+        return confirmationToken;
+    }
+
+    public void setConfirmationToken(Collection<ConfirmationToken> confirmationToken) {
+        this.confirmationToken = confirmationToken;
+    }
 }

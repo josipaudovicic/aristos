@@ -22,13 +22,13 @@ public class UserController {
         this.rolesService = rolesService;
     }
 
-    @GetMapping
-    public List<Users> getUsers () {
-        return userService.getUsers();
+    @GetMapping(path = "/register/confirm")
+    public String confirm (@RequestParam("token") String token) {
+        return userService.confirmToken(token);
     }
 
     @PostMapping(path = "/register")
-    public void register(@RequestBody Map<String, Object> requestBody)
+    public String register(@RequestBody Map<String, Object> requestBody)
     {
         Users user = new Users();
         user.setUsername((String) requestBody.get("username"));
@@ -41,7 +41,10 @@ public class UserController {
         Roles role = rolesService.getByName(roleName);
         user.setRole(role);
 
-        userService.addUser(user);
+        user.setAdminCheck(!(role.getId() != 1 && role.getId() != 4));
+        user.setEmailCheck(false);
+
+        return userService.addUser(user);
     }
 
     @PostMapping(path = "/login")
