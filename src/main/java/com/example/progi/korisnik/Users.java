@@ -18,8 +18,8 @@ public class Users {
     @ManyToOne
     @JoinColumn(name="id")
     private Roles role;
-    private Boolean emailCheck;
-    private Boolean adminCheck;
+    private boolean emailCheck;
+    private boolean adminCheck;
 
     public Users(){
     }
