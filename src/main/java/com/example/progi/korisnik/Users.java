@@ -16,7 +16,7 @@ public class Users {
     private String name;
     private String surname;
     @ManyToOne
-    @JoinColumn(name="id")
+    @JoinColumn(name="role_id")
     private Roles role;
     private Boolean emailCheck;
     private Boolean adminCheck;
