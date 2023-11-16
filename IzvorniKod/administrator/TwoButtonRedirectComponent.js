@@ -26,7 +26,7 @@ function TwoButtonRedirectComponent() {
           padding: '10px 20px',
           margin: '10px',
         }}
-        onClick={() => redirectToPage('users')}
+        onClick={() => redirectToPage('pregled_svih_korisnika')}
       >
         View Users
       </button>
@@ -36,7 +36,7 @@ function TwoButtonRedirectComponent() {
           padding: '10px 20px',
           margin: '10px',
         }}
-        onClick={() => redirectToPage('requests')}
+        onClick={() => redirectToPage('Requests')}
       >
         View Requests
       </button>
