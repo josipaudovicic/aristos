@@ -1,15 +1,15 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function pregled_svih_korisnika({ users }) { //dobivam json sa domagojeve stranice o podatcima svih korisnika
-  const history = useHistory(); //služi za preusmjeravanje na stranicu pojedinačnog korisnika
+function PregledSvihKorisnika({ users }) { //dobivam json sa domagojeve stranice o podatcima svih korisnika
+  const navigate = useNavigate(); //služi za preusmjeravanje na stranicu pojedinačnog korisnika
 
   const handleClick = async (user) => {  //klik na korisnika iz prikazane liste
     try {
       // Fetch detailed user information from the database using the username ----> imam ih već u users argumentu
       
       // Redirect to a new page with detailed user information
-      history.push(`/user/${user.username}`, { user }); //podatke šaljem na stranicu pojedinačnog korisnika
+      navigate(`/user/${user.username}`, { user }); //podatke šaljem na stranicu pojedinačnog korisnika
 
     } catch (error) {
       console.error('Error fetching user details:', error.message);
@@ -30,4 +30,4 @@ function pregled_svih_korisnika({ users }) { //dobivam json sa domagojeve strani
   );
 }
 
-export default pregled_svih_korisnika;
+export default PregledSvihKorisnika;

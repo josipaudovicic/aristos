@@ -3,8 +3,8 @@ import React from "react";
 function Poruka() {
 
     return(
-        <div>
-            Potvrdite registraciju na mailu.
+        <div class='poruka'>
+            Potvrdite registraciju na mail-u.
         </div>
     );
 }
