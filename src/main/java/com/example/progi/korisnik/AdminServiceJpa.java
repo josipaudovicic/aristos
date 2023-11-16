@@ -34,6 +34,17 @@ public class AdminServiceJpa implements AdminService{
     }
 
     @Override
+    public boolean confirm(Users user) {
+        String username = user.getUsername();
+        Users user_confirm = user_repository.getReferenceById(username);
+
+        user_confirm.setAdminCheck(true);
+        user_repository.saveAndFlush(user_confirm);
+
+        return true;
+    }
+
+    @Override
      public boolean delete(Users user) {
         String username = user.getUsername();
 
