@@ -20,6 +20,7 @@ public class Users {
     private Roles role;
     private boolean emailCheck;
     private boolean adminCheck;
+    private String photo;
 
     public Users(){
     }
@@ -102,5 +103,13 @@ public class Users {
 
     public void setConfirmationToken(Collection<ConfirmationToken> confirmationToken) {
         this.confirmationToken = confirmationToken;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

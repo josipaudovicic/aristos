@@ -4,9 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -28,16 +34,21 @@ public class UserController {
     }
 
     @PostMapping(path = "/register")
-    public String register(@RequestBody Map<String, Object> requestBody)
+    public String register(@RequestPart("username") String username, @RequestPart("email") String email,
+                           @RequestPart("password") String password, @RequestPart("status") String roleName,
+                           @RequestPart("name") String name, @RequestPart("surname") String surname,
+                           @RequestPart("file") MultipartFile image)
     {
-        Users user = new Users();
-        user.setUsername((String) requestBody.get("username"));
-        user.setEmail((String) requestBody.get("email"));
-        user.setPassword((String) requestBody.get("password"));
-        user.setName((String) requestBody.get("name"));
-        user.setSurname((String) requestBody.get("surname"));
+        Users user = new Users(username, email, password, name, surname);
 
-        String roleName = (String) requestBody.get("status");
+        try {
+            Path uploadPath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static");
+            Path filePath = uploadPath.resolve(Objects.requireNonNull(image.getOriginalFilename()));
+            Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            String photo = "/images/" + image.getOriginalFilename();
+            user.setPhoto(photo);
+        } catch (Exception e) { throw new IllegalStateException("no photo uploaded!"); }
+
         Roles role = rolesService.getByName(roleName);
         user.setRole(role);
 
