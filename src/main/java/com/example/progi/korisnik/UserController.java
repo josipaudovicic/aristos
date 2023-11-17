@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/register/confirm")
-    public String confirm (@RequestParam("token") String token) {
+    public String emailConfirm (@RequestParam("token") String token) {
         return userService.confirmToken(token);
     }
 
@@ -39,6 +39,7 @@ public class UserController {
                            @RequestPart("name") String name, @RequestPart("surname") String surname,
                            @RequestPart("file") MultipartFile image)
     {
+
         Users user = new Users(username, email, password, name, surname);
 
         try {
