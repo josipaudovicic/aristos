@@ -16,42 +16,47 @@ function Registration() {
   });
 
   const handleInputChange = (e) => {
-    const { name, value, type, files } = e.target;
+    const { name, value, files } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'file' ? files[0] : value,
+      [name]: files ? files[0] : value,
     });
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    var validate = validateForm();
-
-    if(!validate){
-      alert("Nisu popunjena sva polja!\n   Molimo sve ispunite!")
-    } else{
   
-    try {
-      console.log(formData)
-      const response = await fetch('your_server_endpoint_here', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      navigate('/poruka');
-      if (response.ok) {
-        console.log('Registration successful');
-      } else {
-        console.error('Registration failed');
+    var validate = validateForm();
+  
+    if (!validate) {
+      alert("Nisu popunjena sva polja!\n   Molimo sve ispunite!");
+    } else {
+      try {
+        const formDataToSend = new FormData();
+  
+        for (const key in formData) {
+          formDataToSend.append(key, formData[key]);
+        }
+  
+        const response = await fetch('/register', {
+          method: 'POST',
+          body: formDataToSend,
+        });
+  
+        navigate('/poruka');
+        
+        if (response.ok) {
+          console.log('Registration successful');
+        } else {
+          console.error('Registration failed');
+        }
+      } catch (error) {
+        console.error('Error during registration:', error.message);
       }
-    } catch (error) {
-      console.error('Error during registration:', error.message);
     }
-  }
   };
+  
 
   function validateForm(){
     if (formData.email === '' || formData.name === '' || formData.surname === '' || formData.password === '' || formData.username === '' || formData.status === '' || formData.file === null){
