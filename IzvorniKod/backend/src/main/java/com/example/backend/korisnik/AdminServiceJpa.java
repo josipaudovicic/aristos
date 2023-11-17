@@ -59,8 +59,9 @@ public class AdminServiceJpa {
 
     public List<Map<String, String>> getUsersToConfirm() {
         List<Users> allUsers = this.findAll();
-        List<Users> listToConfirm = allUsers.stream().filter(user -> (user.getRole().getRoleName().equals("voditelj postaje")
-                || user.getRole().getRoleName().equals("istrazivac")) && !user.isAdminCheck()).collect(Collectors.toList());
+        List<Users> listToConfirm = allUsers.stream().filter(user -> (user.getRole().getRoleName().equals("Voditelj postaje")
+                || user.getRole().getRoleName().equals("Istraživač")) && !user.isAdminCheck()).collect(Collectors.toList());
+
 
         List<Map<String, String>> kaoUseri = new java.util.ArrayList<>(List.of());
         for (Users user : listToConfirm){

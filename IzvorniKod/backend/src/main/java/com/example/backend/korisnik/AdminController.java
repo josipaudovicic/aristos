@@ -29,7 +29,7 @@ public class AdminController {
         return adminService.userById(id);
     }
 
-    @GetMapping("admin/users/toconfirm")
+    @GetMapping("admin/toConfirm")
     public List<Map<String, String>> usersToConfirm(@RequestParam(name = "confirmed", required = false) boolean confirmed) {
         return adminService.getUsersToConfirm();
     }
@@ -37,6 +37,7 @@ public class AdminController {
     @PutMapping("/admin/users/{userName}")
     public ResponseEntity<String> confirmUser(@PathVariable String userName) {
         Users user = adminService.getUserById(userName);
+        System.out.println(user);
         if (user != null) {
             if (adminService.confirm(user)) {
                 return ResponseEntity.ok("User succesfully confirmed");
@@ -51,9 +52,7 @@ public class AdminController {
 
     @DeleteMapping("/admin/users/{username}")
     public ResponseEntity<String> rejectUser(@PathVariable String username) {
-        //System.out.println(username);
         Users user = adminService.getUserById(username);
-        //System.out.println(user);
         if (user != null) {
             if (adminService.delete(user)) {
                 return ResponseEntity.ok("User succesfully rejected");
