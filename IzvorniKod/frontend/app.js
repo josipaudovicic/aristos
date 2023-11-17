@@ -19,8 +19,6 @@ app.use(
     })
 );
 
-console.log(REACT_APP_API_BASE_URL)
-
 app.use(express.static(path.join(__dirname, 'build')))
 
 app.listen(PORT, HOST, () => {
