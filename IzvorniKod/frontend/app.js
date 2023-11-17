@@ -8,7 +8,7 @@ const app = express();
 // Configuration
 const { PORT } = process.env;
 const { HOST } = process.env;
-const { API_BASE_URL } = process.env;
+const { REACT_APP_API_BASE_URL } = process.env;
 
 // Proxy
 app.use(
