@@ -19,8 +19,8 @@ public class AdminController {
     }
 
     @GetMapping("admin/getAllUsers")
-    public List<Map<String, String>> viewAllUsers() {
-        return adminService.getUsers();
+    public List<Map<String, String>> viewRegisteredUsers() {
+        return adminService.getRegisteredUsers();
     }
 
     @GetMapping("admin/users/{id}")

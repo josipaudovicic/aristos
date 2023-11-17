@@ -19,10 +19,12 @@ public class AdminServiceJpa {
         return userRepository.findAll();
     }
 
-    public List<Map<String, String>> getUsers() {
+    public List<Map<String, String>> getRegisteredUsers() {
         List<Users> Users= userRepository.findAll();
+        List<Users> registered = Users.stream().filter(user -> (user.isEmailCheck() && user.isAdminCheck())).collect(Collectors.toList());
+
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
-        for (Users user : Users){
+        for (Users user : registered){
             Map<String, String> kaoUser = new HashMap<>();
             kaoUser.put("username",user.getUsername());
             kaoUser.put("email",user.getEmail());
