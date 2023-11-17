@@ -13,11 +13,11 @@ Aplikacija je osmišljena u istraživačke svrhe. Ljudi koji dobrovoljno žele p
 # Funkcijski zahtjevi 
 Aplikacija mora omogućiti rad više korisnika u isto vrijeme, prijavu kao tragač, istraživač i voditelja postaje, pregled mjesta gdje se životinje nalaze...
 
-#Arhitektura
+# Arhitektura
 Aplikacija koristi React biblioteku, sa JavaScript datotekama te Spring boot-om. Za bazu podataka se koristi Postgre SQL.
 Za dokumentaciju je korišten latex.
 
-#Članovi tima
+# Članovi tima
 -Franjo Vuković <br>
 -Marko Pongrac <br>
 -Marko Kukolj <br> 
