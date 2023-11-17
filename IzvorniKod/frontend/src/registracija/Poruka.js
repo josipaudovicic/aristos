@@ -13,7 +13,7 @@ function Poruka() {
         
         const fetchData = async () => {
           try {
-            const response = await fetch("process.env.REACT_APP_API_BASE_URL/waitEmail", {
+            const response = await fetch(process.env.REACT_APP_API_BASE_URL + "/waitEmail", {
               method: 'GET', 
               headers: {
                 'Content-Type': 'application/json', 
