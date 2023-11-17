@@ -7,10 +7,11 @@ function Requests() {
     // Fetch users with confirmed attribute set to NULL
     const fetchUsers = async () => {
       try {
-        const response = await fetch('/admin/users/toconfirm');
+        const response = await fetch('/admin/toConfirm');
         if (response.ok) {
           const data = await response.json();
-          setUsers(data.users);
+          console.log(data);
+          setUsers(data);
         } else {
           console.error('Failed to fetch users');
         }
@@ -29,16 +30,11 @@ function Requests() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ confirmed: true }),
       });
 
       if (response.ok) {
         // Update the local state to reflect the change
-        setUsers((prevUsers) =>
-          prevUsers.map((user) =>
-            user.username === userName ? { ...user, confirmed: true } : user
-          )
-        );
+        setUsers((prevUsers) => prevUsers.filter((user) => user.username !== userName));
       } else {
         console.error('Failed to update user confirmation status');
       }

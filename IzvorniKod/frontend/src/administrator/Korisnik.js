@@ -6,24 +6,8 @@ const Korisnik = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state.user);
   const users = location.state.users;
-  const [user, setUser] = useState(location.state.user);
-
-  const renderData = async () => {
-      try {
-        const response = await fetch(`/admin/users/${id}`);
-        const data = await response.json();
-        console.log(data);
-        console.log(location.state.user);
-      } catch (error) {
-        console.error('Error fetching user details:', error);
-      }
-  };
-
-  useEffect(() => {
-    renderData();
-  }, []);
+  const [user] = useState(location.state.user);
 
 
   const handleEdit = async () => {

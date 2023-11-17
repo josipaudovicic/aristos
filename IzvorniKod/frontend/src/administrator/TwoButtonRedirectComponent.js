@@ -7,7 +7,14 @@ function TwoButtonRedirectComponent() {
   const redirectToPage = async (path) => {
       try {
       // Send a GET request to the backend endpoint for users or requests
-      const response = await fetch(`/admin/getAllUsers`);
+      //console.log(path);
+      let response;
+      if (path === "getUsers") {
+        response = await fetch(`/admin/getAllUsers`);
+      } else {
+        response = await fetch(`/admin/toConfirm`);
+      }
+
       const data = await response.json();
       navigate(`/${path}`, {state: {users: data}});
 
