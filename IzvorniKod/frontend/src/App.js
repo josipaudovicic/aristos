@@ -13,14 +13,14 @@ function App() {
   return(
     <BrowserRouter>
         <Routes>
-            <Route path="/" element={<Registration />} />
-            <Route path="/poruka" element={<Poruka />} />
-            <Route path="/welcome" element={<Welcome />} />
-            <Route path="/emailChecked" element={<EmailChecked />} />
-            <Route path="/user/:username" element={<Korisnik />} />
-            <Route path="/getUsers" element={<PregledSvihKorisnika />} />
-            <Route path="/requests" element={<Requests />} />
-            <Route path="/admin" element={<TwoButtonRedirectComponent />} />
+            <Route path="process.env.REACT_APP_API_BASE_URL/" element={<Registration />} />
+            <Route path="process.env.REACT_APP_API_BASE_URL/poruka" element={<Poruka />} />
+            <Route path="process.env.REACT_APP_API_BASE_URL/welcome" element={<Welcome />} />
+            <Route path="process.env.REACT_APP_API_BASE_URL/emailChecked" element={<EmailChecked />} />
+            <Route path="process.env.REACT_APP_API_BASE_URL/user/:username" element={<Korisnik />} />
+            <Route path="process.env.REACT_APP_API_BASE_URL/getUsers" element={<PregledSvihKorisnika />} />
+            <Route path="process.env.REACT_APP_API_BASE_URL/requests" element={<Requests />} />
+            <Route path="process.env.REACT_APP_API_BASE_URL/admin" element={<TwoButtonRedirectComponent />} />
         </Routes>
     </BrowserRouter>
 );
