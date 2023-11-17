@@ -8,13 +8,13 @@ const app = express();
 // Configuration
 const { PORT } = process.env;
 const { HOST } = process.env;
-const { REACT_APP_API_BASE_URL } = process.env;
+const { API_BASE_URL } = process.env;
 
 // Proxy
 app.use(
-    "/api",
+    "/",
     createProxyMiddleware({
-        target: REACT_APP_API_BASE_URL,
+        target: API_BASE_URL,
         changeOrigin: true,
     })
 );
