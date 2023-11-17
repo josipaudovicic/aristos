@@ -3,6 +3,7 @@ Grupa 19 - Aristos <br>
 Asistent: Hrvoje Nuić <br>
 Demos: Dominik Babić <br> 
 Tema: WildTrack <br> 
+Render: https://aristosi.onrender.com
 
 # Opis projektnog zadatka
 Ovaj projekt je rezultat projektnog zadatka kolegija Programsko inženjerstvo na Fakultetu elektrotehnike i računarstva.
