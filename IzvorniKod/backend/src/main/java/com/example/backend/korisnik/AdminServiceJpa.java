@@ -45,7 +45,7 @@ public class AdminServiceJpa implements AdminService{
     }
 
     @Override
-     public boolean delete(Users user) {
+    public boolean delete(Users user) {
         String username = user.getUsername();
 
         if (user_repository.existsById(username)) {

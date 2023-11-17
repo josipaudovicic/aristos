@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/register/confirm")
-    public String emailConfirm (@RequestParam("token") String token) {
+    public String emailConfirm(@RequestParam("token") String token) {
         return userService.confirmToken(token);
     }
 
@@ -35,8 +35,7 @@ public class UserController {
     public String register(@RequestPart("username") String username, @RequestPart("email") String email,
                            @RequestPart("password") String password, @RequestPart("status") String roleName,
                            @RequestPart("name") String name, @RequestPart("surname") String surname,
-                           @RequestPart("file") MultipartFile image)
-    {
+                           @RequestPart("file") MultipartFile image) {
 
         Users user = new Users(username, email, password, name, surname);
 
@@ -46,7 +45,9 @@ public class UserController {
             Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             String photo = "/images/" + image.getOriginalFilename();
             user.setPhoto(photo);
-        } catch (Exception e) { throw new IllegalStateException("no photo uploaded!"); }
+        } catch (Exception e) {
+            throw new IllegalStateException("no photo uploaded!");
+        }
 
         Roles role = rolesService.getByName(roleName);
         user.setRole(role);

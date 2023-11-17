@@ -16,14 +16,15 @@ public class Users {
     private String name;
     private String surname;
     @ManyToOne
-    @JoinColumn(name="role_id")
+    @JoinColumn(name = "role_id")
     private Roles role;
     private boolean emailCheck;
     private boolean adminCheck;
     private String photo;
 
-    public Users(){
+    public Users() {
     }
+
     public Users(String username, String email, String password, String name, String surname) {
         this.username = username;
         this.email = email;
@@ -56,7 +57,9 @@ public class Users {
         this.password = password;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     public void setName(String name) {
         this.name = name;

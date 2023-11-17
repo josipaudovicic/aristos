@@ -1,6 +1,6 @@
 package com.example.backend.korisnik.token;
 
-import com.example.backend.korisnik.*;
+import com.example.backend.korisnik.Users;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -37,7 +37,8 @@ public class ConfirmationToken {
         this.user = user;
     }
 
-    public ConfirmationToken(){}
+    public ConfirmationToken() {
+    }
 
     public Long getId() {
         return id;

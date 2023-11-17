@@ -33,14 +33,14 @@ public class UserService {
         String token = UUID.randomUUID().toString();
 
         ConfirmationToken confirmationToken = new ConfirmationToken(
-            token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user
+                token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user
         );
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
         String link = "http://localhost:8080/register/confirm?token=" + token;
         emailSender.send(user.getEmail(), buildEmail(user.getName(), link));
 
-        return token;
+        return "sent an email";
     }
 
     public String confirmToken(String token) {
@@ -67,7 +67,7 @@ public class UserService {
 
     public String login(Users user) {
         boolean exists = userRepository.existsById(user.getUsername());
-        if (!exists){
+        if (!exists) {
             throw new IllegalStateException("User with username " + user.getUsername() + " does not exist!");
         }
         return "redirect:/user/" + user.getRole().getRoleName();

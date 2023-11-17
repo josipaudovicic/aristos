@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailService implements EmailSender{
+public class EmailService implements EmailSender {
 
     private final JavaMailSender mailSender;
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
@@ -22,7 +22,7 @@ public class EmailService implements EmailSender{
     @Override
     @Async
     public void send(String to, String email) {
-        try{
+        try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(email, true);
@@ -30,7 +30,7 @@ public class EmailService implements EmailSender{
             helper.setSubject("Confirm your email");
             helper.setFrom("aristos@gmail.com");
             mailSender.send(mimeMessage);
-        } catch (MessagingException e){
+        } catch (MessagingException e) {
             LOGGER.error("failed to send email", e);
             throw new IllegalStateException("failed to send email");
         }
