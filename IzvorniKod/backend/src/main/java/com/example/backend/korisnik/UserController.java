@@ -31,6 +31,11 @@ public class UserController {
         return userService.confirmToken(token);
     }
 
+    @GetMapping
+    public String hello() {
+        return "Hello world";
+    }
+
     @PostMapping(path = "/register")
     public String register(@RequestPart("username") String username, @RequestPart("email") String email,
                            @RequestPart("password") String password, @RequestPart("status") String roleName,
