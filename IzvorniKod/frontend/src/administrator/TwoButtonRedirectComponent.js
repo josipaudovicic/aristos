@@ -10,9 +10,9 @@ function TwoButtonRedirectComponent() {
       //console.log(path);
       let response;
       if (path === "getUsers") {
-        response = await fetch(`/admin/getAllUsers`);
+        response = await fetch(`process.env.REACT_APP_API_BASE_URL/admin/getAllUsers`);
       } else {
-        response = await fetch(`/admin/toConfirm`);
+        response = await fetch(`process.env.REACT_APP_API_BASE_URL/admin/toConfirm`);
       }
 
       const data = await response.json();
