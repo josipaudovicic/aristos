@@ -44,18 +44,20 @@ public class UserController {
 
         Users user = new Users(username, email, password, name, surname);
 
-        try {
-            Path uploadPath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static");
-            Path filePath = uploadPath.resolve(Objects.requireNonNull(image.getOriginalFilename()));
-            Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-            String photo = "/images/" + image.getOriginalFilename();
-            user.setPhoto(photo);
-        } catch (Exception e) {
-            throw new IllegalStateException("no photo uploaded!");
-        }
+//        try {
+//            Path uploadPath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static");
+//            Path filePath = uploadPath.resolve(Objects.requireNonNull(image.getOriginalFilename()));
+//            Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+//            String photo = "/images/" + image.getOriginalFilename();
+//            user.setPhoto(photo);
+//        } catch (Exception e) {
+//            throw new IllegalStateException("no photo uploaded!");
+//        }
 
         Roles role = rolesService.getByName(roleName);
         user.setRole(role);
+
+        user.setPhoto("no photo");
 
         user.setAdminCheck(!(role.getId() != 1 && role.getId() != 4));
         user.setEmailCheck(false);
