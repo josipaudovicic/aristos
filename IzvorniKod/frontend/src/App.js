@@ -18,9 +18,9 @@ function App() {
             <Route path=process.env.REACT_APP_API_BASE_URL + "/welcome" element={<Welcome />} />
             <Route path=process.env.REACT_APP_API_BASE_URL + "/emailChecked" element={<EmailChecked />} />
             <Route path=process.env.REACT_APP_API_BASE_URL + "/user/:username" element={<Korisnik />} />
-            <Route path="process.env.REACT_APP_API_BASE_URL/getUsers" element={<PregledSvihKorisnika />} />
-            <Route path="process.env.REACT_APP_API_BASE_URL/requests" element={<Requests />} />
-            <Route path="process.env.REACT_APP_API_BASE_URL/admin" element={<TwoButtonRedirectComponent />} />
+            <Route path=process.env.REACT_APP_API_BASE_URL + "/getUsers" element={<PregledSvihKorisnika />} />
+            <Route path=process.env.REACT_APP_API_BASE_URL + "/requests" element={<Requests />} />
+            <Route path=process.env.REACT_APP_API_BASE_URL + "/admin" element={<TwoButtonRedirectComponent />} />
         </Routes>
     </BrowserRouter>
 );
