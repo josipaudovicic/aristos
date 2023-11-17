@@ -43,26 +43,26 @@ public class UserService {
         return "sent an email";
     }
 
-    public String confirmToken(String token) {
+    public boolean confirmToken(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService
                 .getToken(token)
                 .orElseThrow(() ->
                         new IllegalStateException("token not found"));
 
         if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("email already confirmed");
+            return false;
         }
 
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("token expired");
+            return false;
         }
 
         confirmationTokenService.setConfirmedAt(token);
         userRepository.enableAppUser(
                 confirmationToken.getUser().getEmail());
-        return "confirmed";
+        return true;
     }
 
     public String login(Users user) {

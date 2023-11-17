@@ -27,13 +27,8 @@ public class UserController {
     }
 
     @GetMapping(path = "/register/confirm")
-    public String emailConfirm(@RequestParam("token") String token) {
+    public boolean emailConfirm(@RequestParam("token") String token) {
         return userService.confirmToken(token);
-    }
-
-    @GetMapping
-    public String hello() {
-        return "Hello world";
     }
 
     @PostMapping(path = "/register")
