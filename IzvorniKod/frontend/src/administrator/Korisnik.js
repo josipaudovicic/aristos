@@ -12,7 +12,7 @@ const Korisnik = () => {
 
   const handleEdit = async () => {
     try {
-      const response = await fetch(`process.env.REACT_APP_API_BASE_URL/admin/users/${id}`, {
+      const response = await fetch(process.env.REACT_APP_API_BASE_URL + `/admin/users/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ const Korisnik = () => {
 
   const handleDelete = async () => {
     try {
-      await fetch(`process.env.REACT_APP_API_BASE_URL/admin/users/${user.username}`, {
+      await fetch(process.env.REACT_APP_API_BASE_URL + `/admin/users/${user.username}`, {
         method: 'DELETE',
       });
       navigate('/admin');
