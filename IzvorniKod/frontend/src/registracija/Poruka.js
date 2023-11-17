@@ -13,7 +13,7 @@ function Poruka() {
         
         const fetchData = async () => {
           try {
-            const response = await fetch("/waitEmail", {
+            const response = await fetch("process.env.REACT_APP_API_BASE_URL/waitEmail", {
               method: 'GET', 
               headers: {
                 'Content-Type': 'application/json', 
@@ -25,7 +25,7 @@ function Poruka() {
             console.log(result)
             if (result){
               console.log(result)
-              navigate("/emailChecked", {state: {username: username}});
+              navigate("process.env.REACT_APP_API_BASE_URL/emailChecked", {state: {username: username}});
             }
             setEmailChecked(result.emailChecked);
           } catch (error) {
@@ -38,7 +38,7 @@ function Poruka() {
 
   useEffect(() => {
     if (emailChecked) {
-      navigate("/emailChecked");
+      navigate("process.env.REACT_APP_API_BASE_URL/emailChecked");
     }
   }, [emailChecked, navigate]);
 
