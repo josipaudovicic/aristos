@@ -22,7 +22,7 @@ function EmailChecked() {
 
         const result = await response.json();
         if(result){
-          navigate("process.env.REACT_APP_API_BASE_URL/welcome");
+          navigate("/welcome");
         }
         setAdminChecked(result.adminChecked);
       } catch (error) {
@@ -35,7 +35,7 @@ function EmailChecked() {
 
   useEffect(() => {
     if (adminChecked) {
-      navigate("process.env.REACT_APP_API_BASE_URL/welcome");
+      navigate("/welcome");
     }
   }, [adminChecked, navigate]);
 
