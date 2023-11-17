@@ -6,6 +6,8 @@ import Korisnik from "./administrator/Korisnik";
 import PregledSvihKorisnika from "./administrator/PregledSvihKorisnika";
 import Requests from "./administrator/Requests";
 import TwoButtonRedirectComponent from "./administrator/TwoButtonRedirectComponent";
+import Welcome from "./registracija/Welcome";
+import EmailChecked from "./registracija/EmailChecked";
 
 function App() {
   return(
@@ -13,6 +15,8 @@ function App() {
         <Routes>
             <Route path="/" element={<Registration />} />
             <Route path="/poruka" element={<Poruka />} />
+            <Route path="/welcome" element={<Welcome />} />
+            <Route path="/emailChecked" element={<EmailChecked />} />
             <Route path="/user" element={<Korisnik />} />
             <Route path="/getUsers" element={<PregledSvihKorisnika />} />
             <Route path="/requests" element={<Requests />} />
