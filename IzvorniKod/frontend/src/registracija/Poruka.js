@@ -25,7 +25,7 @@ function Poruka() {
             console.log(result)
             if (result){
               console.log(result)
-              navigate("process.env.REACT_APP_API_BASE_URL/emailChecked", {state: {username: username}});
+              navigate("/emailChecked", {state: {username: username}});
             }
             setEmailChecked(result.emailChecked);
           } catch (error) {
@@ -38,7 +38,7 @@ function Poruka() {
 
   useEffect(() => {
     if (emailChecked) {
-      navigate("process.env.REACT_APP_API_BASE_URL/emailChecked");
+      navigate("/emailChecked");
     }
   }, [emailChecked, navigate]);
 
