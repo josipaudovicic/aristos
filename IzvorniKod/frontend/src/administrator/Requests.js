@@ -7,7 +7,7 @@ function Requests() {
     // Fetch users with confirmed attribute set to NULL
     const fetchUsers = async () => {
       try {
-        const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/admin/toConfirm');
+        const response = await fetch('/admin/toConfirm');
         if (response.ok) {
           const data = await response.json();
           console.log(data);
@@ -25,7 +25,7 @@ function Requests() {
   
   const handleConfirm = async (userName) => {
     try {
-      const response = await fetch(process.env.REACT_APP_API_BASE_URL + `/admin/users/${userName}`, {
+      const response = await fetch(`/admin/users/${userName}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ function Requests() {
 
   const handleDecline = async (userName) => {
     try {
-      const response = await fetch(process.env.REACT_APP_API_BASE_URL +`/admin/users/${userName}`, {
+      const response = await fetch(`/admin/users/${userName}`, {
         method: 'DELETE',
       });
 
