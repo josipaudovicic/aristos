@@ -4,6 +4,7 @@ import '../App.css';
 
 function Registration() {
   const navigate = useNavigate();
+  console.log(process.env.REACT_APP_API_BASE_URL)
 
   const [formData, setFormData] = useState({
     status: '',
