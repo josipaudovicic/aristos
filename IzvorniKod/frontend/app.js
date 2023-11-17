@@ -14,12 +14,12 @@ const { API_BASE_URL } = process.env;
 app.use(
     "/api",
     createProxyMiddleware({
-        target: API_BASE_URL,
+        target: REACT_APP_API_BASE_URL,
         changeOrigin: true,
     })
 );
 
-console.log(API_BASE_URL)
+console.log(REACT_APP_API_BASE_URL)
 
 app.use(express.static(path.join(__dirname, 'build')))
 
