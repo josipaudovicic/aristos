@@ -44,7 +44,7 @@ function Registration() {
           body: formDataToSend,
         });
   
-        navigate('/poruka');
+        navigate('/poruka', {state: {username: formData.username}});
         
         if (response.ok) {
           console.log('Registration successful');

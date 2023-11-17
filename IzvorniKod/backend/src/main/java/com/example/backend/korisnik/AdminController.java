@@ -1,37 +1,44 @@
 package com.example.backend.korisnik;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/backend")
+@RequestMapping()
 public class AdminController {
-
-    private AdminServiceJpa admin_service;
-
-    @RequestMapping("/getAllUsers")
-    public void viewAllUsers() {
-
+    @Autowired
+    private final AdminServiceJpa adminService;
+    @Autowired
+    public AdminController(AdminServiceJpa adminService) {
+        this.adminService = adminService;
     }
 
-    @RequestMapping("/users")
-    public List<Users> usersToConfirm(@RequestParam(name = "confirmed", required = true) boolean confirmed) {
-        List<Users> usersToConfirm = new LinkedList<>();
-        if (confirmed == false) {
-            usersToConfirm = admin_service.getUsersToConfirm();
-        }
-        return usersToConfirm;
+    @GetMapping("admin/getAllUsers")
+    public List<Map<String, String>> viewAllUsers() {
+        return adminService.getUsers();
     }
 
-    @PutMapping("/users/{userName}")
+    @GetMapping("admin/users/{id}")
+    public Map<String, String> viewUser(@PathVariable String id) {
+        System.out.println(adminService.userById(id));
+        return adminService.userById(id);
+    }
+
+    @GetMapping("admin/users/toconfirm")
+    public List<Map<String, String>> usersToConfirm(@RequestParam(name = "confirmed", required = false) boolean confirmed) {
+        return adminService.getUsersToConfirm();
+    }
+
+    @PutMapping("/admin/users/{userName}")
     public ResponseEntity<String> confirmUser(@PathVariable String userName) {
-        Users user = admin_service.getUserById(userName);
+        Users user = adminService.getUserById(userName);
         if (user != null) {
-            if (admin_service.confirm(user)) {
+            if (adminService.confirm(user)) {
                 return ResponseEntity.ok("User succesfully confirmed");
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: User could not be confirmed");
@@ -42,11 +49,13 @@ public class AdminController {
 
     }
 
-    @DeleteMapping("/users/{userName}")
-    public ResponseEntity<String> rejectUser(@PathVariable String userName) {
-        Users user = admin_service.getUserById(userName);
+    @DeleteMapping("/admin/users/{username}")
+    public ResponseEntity<String> rejectUser(@PathVariable String username) {
+        //System.out.println(username);
+        Users user = adminService.getUserById(username);
+        //System.out.println(user);
         if (user != null) {
-            if (admin_service.delete(user)) {
+            if (adminService.delete(user)) {
                 return ResponseEntity.ok("User succesfully rejected");
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: User could not be deleted");

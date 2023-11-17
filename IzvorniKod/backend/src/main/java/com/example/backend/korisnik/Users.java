@@ -1,6 +1,7 @@
 package com.example.backend.korisnik;
 
 import com.example.backend.korisnik.token.ConfirmationToken;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Collection;
@@ -97,7 +98,7 @@ public class Users {
         this.adminCheck = adminCheck;
     }
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Collection<ConfirmationToken> confirmationToken;
 
     public Collection<ConfirmationToken> getConfirmationToken() {

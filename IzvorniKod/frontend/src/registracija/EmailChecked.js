@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function EmailChecked() {
     const [adminChecked, setAdminChecked] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
+    const username = location.state.username
+    console.log(username)
 
   useEffect(() => {
-    const apiUrl = "https://api.example.com/checkAdmin";
     
     const fetchData = async () => {
       try {
-        const response = await fetch(apiUrl, {
+        const response = await fetch("/emailChecked", {
             method: 'GET', 
             headers: {
               'Content-Type': 'application/json', 
+              'username': username
             },
           });
 
         const result = await response.json();
+        if(result){
+          navigate("/welcome");
+        }
         setAdminChecked(result.adminChecked);
       } catch (error) {
         console.error("Error fetching data:", error);

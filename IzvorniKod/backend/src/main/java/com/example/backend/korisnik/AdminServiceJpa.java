@@ -3,53 +3,97 @@ package com.example.backend.korisnik;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class AdminServiceJpa implements AdminService{
-
+public class AdminServiceJpa {
+    private final UserRepository userRepository;
     @Autowired
-    private UserRepository user_repository;
+    public AdminServiceJpa(UserRepository user_repository) {
+        this.userRepository = user_repository;
+    }
 
-    @Override
-    public List<Users> listAll() {
-        return user_repository.findAll();
+    public List<Users> findAll() {
+        System.out.println(userRepository.findAll());
+        return userRepository.findAll();
+    }
+
+    public List<Map<String, String>> getUsers() {
+        List<Users> Users= userRepository.findAll();
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (Users user : Users){
+            Map<String, String> kaoUser = new HashMap<>();
+            kaoUser.put("username",user.getUsername());
+            kaoUser.put("email",user.getEmail());
+            kaoUser.put("name",user.getName());
+            kaoUser.put("surname",user.getSurname());
+            kaoUser.put("password",user.getPassword());
+            kaoUser.put("role",user.getRole().getRoleName());
+            kaoUser.put("file",user.getPhoto());
+            returning.add(kaoUser);
+        }
+        return returning;
+    }
+
+    public Map<String, String> userById(String id) {
+        Users user = userRepository.getReferenceById(id);
+        Map<String, String> kaoUser = new HashMap<>();
+        kaoUser.put("username",user.getUsername());
+        kaoUser.put("email",user.getEmail());
+        kaoUser.put("name",user.getName());
+        kaoUser.put("surname",user.getSurname());
+        kaoUser.put("password",user.getPassword());
+        kaoUser.put("role",user.getRole().getRoleName());
+        kaoUser.put("file",user.getPhoto());
+        return kaoUser;
     }
 
     public Users getUserById(String username) {
-        if (user_repository.existsById(username)) {
-            return user_repository.getReferenceById(username);
+        if (userRepository.existsById(username)) {
+            return userRepository.getReferenceById(username);
         } else {
             return null;
         }
     }
 
-    public List<Users> getUsersToConfirm() {
-        List<Users> allUsers = this.listAll();
-        List<Users> toConfirm = allUsers.stream().filter(user -> (user.getRole().getRoleName().equals("voditelj postaje")
+    public List<Map<String, String>> getUsersToConfirm() {
+        List<Users> allUsers = this.findAll();
+        List<Users> listToConfirm = allUsers.stream().filter(user -> (user.getRole().getRoleName().equals("voditelj postaje")
                 || user.getRole().getRoleName().equals("istrazivac")) && !user.isAdminCheck()).collect(Collectors.toList());
 
-        return toConfirm;
+        List<Map<String, String>> kaoUseri = new java.util.ArrayList<>(List.of());
+        for (Users user : listToConfirm){
+            Map<String, String> kaoUser = new HashMap<>();
+            kaoUser.put("username",user.getUsername());
+            kaoUser.put("email",user.getEmail());
+            kaoUser.put("name",user.getName());
+            kaoUser.put("surname",user.getSurname());
+            kaoUser.put("password",user.getPassword());
+            kaoUser.put("role",user.getRole().getRoleName());
+            kaoUser.put("file",user.getPhoto());
+            kaoUseri.add(kaoUser);
+        }
+        return kaoUseri;
     }
 
-    @Override
+
     public boolean confirm(Users user) {
         String username = user.getUsername();
-        Users user_confirm = user_repository.getReferenceById(username);
+        Users user_confirm = userRepository.getReferenceById(username);
 
         user_confirm.setAdminCheck(true);
-        user_repository.saveAndFlush(user_confirm);
+        userRepository.saveAndFlush(user_confirm);
 
         return true;
     }
 
-    @Override
+
     public boolean delete(Users user) {
         String username = user.getUsername();
 
-        if (user_repository.existsById(username)) {
-            user_repository.deleteById(username);
+        if (userRepository.existsById(username)) {
+            userRepository.deleteById(username);
             return true;
         } else {
             return false;
