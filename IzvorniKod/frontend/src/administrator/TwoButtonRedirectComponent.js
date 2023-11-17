@@ -5,11 +5,11 @@ function TwoButtonRedirectComponent() {
   const navigate = useNavigate();
 
   const redirectToPage = async (path) => {
-    navigate(`/${path}`); 
-    try {
+      try {
       // Send a GET request to the backend endpoint for users or requests
-      const response = await fetch(`/backend/users`);
+      const response = await fetch(`/admin/getAllUsers`);
       const data = await response.json();
+      navigate(`/${path}`, {state: {users: data}});
 
       // Assuming you have a route for both users and requests
       // Pass the fetched data as a state to the new route

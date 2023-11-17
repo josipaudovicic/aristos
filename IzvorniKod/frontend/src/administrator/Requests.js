@@ -7,7 +7,7 @@ function Requests() {
     // Fetch users with confirmed attribute set to NULL
     const fetchUsers = async () => {
       try {
-        const response = await fetch('/backend/users?confirmed=null');
+        const response = await fetch('/admin/users/toconfirm');
         if (response.ok) {
           const data = await response.json();
           setUsers(data.users);
@@ -24,7 +24,7 @@ function Requests() {
   
   const handleConfirm = async (userName) => {
     try {
-      const response = await fetch(`/backend/users/${userName}`, {
+      const response = await fetch(`/admin/users/${userName}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ function Requests() {
 
   const handleDecline = async (userName) => {
     try {
-      const response = await fetch(`/backend/users/${userName}`, {
+      const response = await fetch(`/admin/users/${userName}`, {
         method: 'DELETE',
       });
 

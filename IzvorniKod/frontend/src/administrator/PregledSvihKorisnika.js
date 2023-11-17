@@ -1,15 +1,20 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-function PregledSvihKorisnika({ users }) { //dobivam json sa domagojeve stranice o podatcima svih korisnika
+function PregledSvihKorisnika() { //dobivam json sa domagojeve stranice o podatcima svih korisnika
+  const location = useLocation()
+  const users = location.state.users;
+  console.log(users);
   const navigate = useNavigate(); //služi za preusmjeravanje na stranicu pojedinačnog korisnika
 
   const handleClick = async (user) => {  //klik na korisnika iz prikazane liste
     try {
+      console.log(user);
       // Fetch detailed user information from the database using the username ----> imam ih već u users argumentu
       
       // Redirect to a new page with detailed user information
-      navigate(`/user/${user.username}`, { user }); //podatke šaljem na stranicu pojedinačnog korisnika
+      navigate(`/user/${user.username}`, { state: {user: user, users: users}}); //podatke šaljem na stranicu pojedinačnog korisnika
 
     } catch (error) {
       console.error('Error fetching user details:', error.message);

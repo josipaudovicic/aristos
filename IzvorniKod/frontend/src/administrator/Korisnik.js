@@ -2,36 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation, Navigate } from 'react-router-dom';
 
 const Korisnik = () => {
+  console.log("Renderamo korisnika");
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  console.log(location.state.user);
+  const users = location.state.users;
   const [user, setUser] = useState(location.state.user);
 
-  useEffect(() => {
-    const fetchUserDetails = async () => {
+  const renderData = async () => {
       try {
-        const response = await fetch(`https://api.example.com/users/${id}`);
+        const response = await fetch(`/admin/users/${id}`);
         const data = await response.json();
-        setUser(data); 
+        console.log(data);
+        console.log(location.state.user);
       } catch (error) {
         console.error('Error fetching user details:', error);
       }
-    };
+  };
 
-    fetchUserDetails();
-  }, [id]);
+  useEffect(() => {
+    renderData();
+  }, []);
+
 
   const handleEdit = async () => {
     try {
-      const response = await fetch(`https://api.example.com/users/${id}`, {
+      const response = await fetch(`admin/users/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(user), 
       });
-  
-      navigate(`/user/${id}`);
+      navigate(`/user/${user.username}`, { state: {user: user }});
     } catch (error) {
       console.error('Error updating user details:', error);
     }
@@ -41,11 +45,10 @@ const Korisnik = () => {
 
   const handleDelete = async () => {
     try {
-      await fetch(`https://api.example.com/users/${id}`, {
+      await fetch(`/admin/users/${user.username}`, {
         method: 'DELETE',
       });
-  
-      navigate('/users');
+      navigate('/admin');
     } catch (error) {
       console.error('Error deleting user:', error);
     }
@@ -64,7 +67,7 @@ const Korisnik = () => {
       <p>Fotografija: <img src={user.file} alt="User" /></p>
       <p>Email: {user.email}</p>
       <p>Lozinka: {user.password}</p>
-      <p>Uloga: {user.status}</p>
+      <p>Uloga: {user.role}</p>
 
       <div>
         <button onClick={handleEdit}>Promjeni podatke</button>

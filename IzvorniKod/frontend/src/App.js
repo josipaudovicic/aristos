@@ -17,7 +17,7 @@ function App() {
             <Route path="/poruka" element={<Poruka />} />
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/emailChecked" element={<EmailChecked />} />
-            <Route path="/user" element={<Korisnik />} />
+            <Route path="/user/:username" element={<Korisnik />} />
             <Route path="/getUsers" element={<PregledSvihKorisnika />} />
             <Route path="/requests" element={<Requests />} />
             <Route path="/admin" element={<TwoButtonRedirectComponent />} />
