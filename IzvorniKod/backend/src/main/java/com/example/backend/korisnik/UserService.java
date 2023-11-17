@@ -146,4 +146,13 @@ public class UserService {
                 "</div></div>";
     }
 
+    public boolean checkEmail(String username) {
+        Users user = userRepository.findById(username).orElseThrow(() -> new IllegalStateException("Wrong username"));
+        return user.isEmailCheck();
+    }
+
+    public boolean checkAdmin(String username) {
+        Users user = userRepository.findById(username).orElseThrow(() -> new IllegalStateException("Wrong username"));
+        return user.isAdminCheck();
+    }
 }

@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 function Poruka() {
     const [emailChecked , setEmailChecked ] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
+    const username = location.state.username
+    console.log(username)
 
-    useEffect(() => {
-        const apiUrl = "https://api.example.com/emailChecked"; 
+    useEffect(() => { 
         
         const fetchData = async () => {
           try {
-            const response = await fetch(apiUrl, {
+            const response = await fetch("/waitEmail", {
               method: 'GET', 
               headers: {
                 'Content-Type': 'application/json', 
+                'username': username
               },
             });
     
             const result = await response.json();
+            console.log(result)
+            if (result){
+              console.log(result)
+              navigate("/emailChecked", {state: {username: username}});
+            }
             setEmailChecked(result.emailChecked);
           } catch (error) {
             console.error("Error fetching data:", error);

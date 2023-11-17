@@ -67,4 +67,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
+
+    @GetMapping(path="/waitEmail")
+    public boolean waitEmail(@RequestHeader("username") String username){
+        return userService.checkEmail(username);
+
+    }
+
+    @GetMapping(path="/emailChecked")
+    public boolean waitAdmin(@RequestHeader("username") String username){
+        return userService.checkAdmin(username);
+    }
+
+
 }
