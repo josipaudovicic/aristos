@@ -37,7 +37,7 @@ public class UserService {
         );
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-        String link = "https://aristosi.onrender.com/register/confirm?token=" + token;
+        String link = "https://namefranjo.onrender.com/register/confirm?token=" + token;
         emailSender.send(user.getEmail(), buildEmail(user.getName(), link));
 
         return "sent an email";
