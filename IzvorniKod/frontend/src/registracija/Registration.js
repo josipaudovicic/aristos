@@ -39,7 +39,7 @@ function Registration() {
           formDataToSend.append(key, formData[key]);
         }
   
-        const response = await fetch('https://aristos.onrender.com/register', {
+        const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/register', {
           method: 'POST',
           body: formDataToSend,
         });
