@@ -25,7 +25,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "start-prod": "node app.js",
+    "start-prod": "cross-env NODE_ENV=production node app.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
