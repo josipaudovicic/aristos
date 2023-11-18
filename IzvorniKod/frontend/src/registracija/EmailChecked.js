@@ -12,7 +12,7 @@ function EmailChecked() {
     
     const fetchData = async () => {
       try {
-        const response = await fetch("/emailChecked", {
+        const response = await fetch(process.env.REACT_APP_API_BASE_URL + "/emailChecked", {
             method: 'GET', 
             headers: {
               'Content-Type': 'application/json', 
