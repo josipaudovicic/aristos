@@ -5,6 +5,7 @@ import '../App.css';
 function Registration() {
   console.log(process.env.REACT_APP_API_BASE_URL)
   console.log(process.env.API_BASE_URL)
+  console.log("https://aristos.onrender.com/")
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -41,7 +42,7 @@ function Registration() {
           formDataToSend.append(key, formData[key]);
         }
   
-        const response = await fetch(process.env.REACT_APP_API_BASE_URL + 'register', {
+        const response = await fetch( 'https://aristos.onrender.com/register', {
           method: 'POST',
           body: formDataToSend,
         });
