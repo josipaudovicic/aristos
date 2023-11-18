@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../App.css';
 
 function Registration() {
+  console.log(process.env.REACT_APP_API_BASE_URL)
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -39,7 +40,7 @@ function Registration() {
           formDataToSend.append(key, formData[key]);
         }
   
-        const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/register', {
+        const response = await fetch(process.env.REACT_APP_API_BASE_URL + 'register', {
           method: 'POST',
           body: formDataToSend,
         });
