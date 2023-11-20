@@ -3,6 +3,7 @@ Grupa 19 - Aristos <br>
 Asistent: Hrvoje Nuić <br>
 Demos: Dominik Babić <br> 
 Tema: WildTrack <br> 
+Render: https://aristosi.onrender.com
 
 # Opis projektnog zadatka
 Ovaj projekt je rezultat projektnog zadatka kolegija Programsko inženjerstvo na Fakultetu elektrotehnike i računarstva.
@@ -27,7 +28,7 @@ Za dokumentaciju je korišten latex.
 -Josipa Udovičić 
 
 # Podjela posla:
-Frontend - Stela Troskot, Domagoj Jurič, Josipa Udovičić
-Backend - Franjo Vuković, Marko Pongrac, Marko Kukolj
-Baza podataka - Franjo Vuković, Marko Pongrac, Marko Kukolj
+Frontend - Stela Troskot, Domagoj Jurič, Josipa Udovičić <br>
+Backend - Franjo Vuković, Marko Pongrac, Marko Kukolj <br>
+Baza podataka - Franjo Vuković, Marko Pongrac, Marko Kukolj <br>
 Dokumentacija - Stela Troskot, Josipa Udovičić, Domagoj Jurič, Gregor Mihaljević

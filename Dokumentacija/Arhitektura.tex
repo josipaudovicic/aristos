@@ -83,7 +83,7 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 			\item Pozicija životinje
 		\end{packed_item}
 
-
+		\eject
 			\subsection{Opis tablica}
 			
 				
@@ -281,6 +281,7 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 
 				\end{longtblr}
 
+			\eject
 
 			\subsection{Dijagram baze podataka}
 
@@ -295,13 +296,54 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 			
 			
 		\section{Dijagram razreda}
+
+		Na slikama \ref{fig:controllers}, \ref{fig:data_transfer_objects} i \ref{fig:models} su prikazani klasni dijagrami koji pripadaju backend dijelu MVC
+		arhitekture. Razredi prikazani na slici \ref{fig:controllers} nasljeđuju Controller razred. 
+		Metode implementirane u tim razredima manipuliraju s Data transfer object, a oni
+		su dohvaćeni s pomoću metoda u Model razredima. 
+
+		Metode unutar Controller razreda vraćaju JSON datoteke s odgovarajućim html status kodom.
+		Razredi su logički podijeljeni prema pravu pristupa metodama specifičnih aktora kako bi se smanjila prenapučenost unutar dijagrama.
+		Pri prikazu su naglašene samo ovisnosti između razreda koji pripadaju istom dijelu dijagrama radi jednostavnije organizacije.
+		Vrsta ovisnosti između različitim razredima može se zaključiti iz naziva i tipova atributa unutar tih razreda.
 		
-			\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
+		\eject
+
+			\begin{figure}[H]
+				\includegraphics[scale=0.4]{slike/klasni_dijagram_controllers.jpg}
+				\centering
+				\caption{Dijagram razreda - dio Controllers}
+				\label{fig:controllers}
+			\end{figure}
 			
-			\textbf{\textit{dio 1. revizije}}\\
+			\eject
+
+			\begin{figure}[H]
+				\includegraphics[scale=0.5]{slike/klasni_dijagram_data_transfer_objects.jpg}
+				\centering
+				\caption{Dijagram razreda - dio Data transfer objects}
+				\label{fig:data_transfer_objects}
+			\end{figure}
+
+			Model razredi prikazuju strukturu baze podataka u aplikaciji. 
+			Implementirane metode komuniciraju s bazom podataka te vraćaju tražene podatke. 
+			Razred Users predstavlja neregistriranog korisnika koji se može registrirati u 
+			sustav unošenjem informacija. Razred Administrator predstavlja administratora 
+			sustava koji ima najveće ovlasti. Razred Leader predstavlja voditelja postaje koji ima mogućnost postavljanja tragača određenom istraživaču.
+			Razred Researcher predstavlja istraživača koji ima pristup karti tragača i životinja te može tragaču zadati zadatak. 
+			Razred Searcher predstavlja tragača koji ima pristup karti životinja te može ispunjavati zadatke.
+
+
+			\eject
+
+			\begin{figure}[H]
+				\includegraphics[scale=0.4]{slike/klasni_dijagram_models.jpg}
+				\centering
+				\caption{Dijagram razreda - dio Models}
+				\label{fig:models}
+			\end{figure}
 			
-			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
-			
+
 			\textbf{\textit{dio 2. revizije}}\\			
 			
 			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
