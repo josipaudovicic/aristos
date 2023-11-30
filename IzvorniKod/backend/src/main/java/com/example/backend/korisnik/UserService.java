@@ -37,32 +37,32 @@ public class UserService {
         );
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-        String link = "https://aristosi.onrender.com/register/confirm?token=" + token;
+        String link = "http://localhost:8080/register/confirm?token=" + token;
         emailSender.send(user.getEmail(), buildEmail(user.getName(), link));
 
         return "sent an email";
     }
 
-    public boolean confirmToken(String token) {
+    public String confirmToken(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService
                 .getToken(token)
                 .orElseThrow(() ->
                         new IllegalStateException("token not found"));
 
         if (confirmationToken.getConfirmedAt() != null) {
-            return false;
+            throw new IllegalStateException("email already confirmed");
         }
 
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
-            return false;
+            throw new IllegalStateException("token expired");
         }
 
         confirmationTokenService.setConfirmedAt(token);
         userRepository.enableAppUser(
                 confirmationToken.getUser().getEmail());
-        return true;
+        return "confirmed";
     }
 
     public String login(Users user) {
