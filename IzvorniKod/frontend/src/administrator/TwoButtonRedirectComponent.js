@@ -10,9 +10,9 @@ function TwoButtonRedirectComponent() {
       //console.log(path);
       let response;
       if (path === "getUsers") {
-        response = await fetch(`/admin/getAllUsers`);
+        response = await fetch(`https://aristos.onrender.com/admin/getAllUsers`);
       } else {
-        response = await fetch(`/admin/toConfirm`);
+        response = await fetch(`https://aristos.onrender.com/admin/toConfirm`);
       }
 
       const data = await response.json();

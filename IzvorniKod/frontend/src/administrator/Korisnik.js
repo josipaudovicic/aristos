@@ -12,7 +12,7 @@ const Korisnik = () => {
 
   const handleEdit = async () => {
     try {
-      const response = await fetch(`/admin/users/${id}`, {
+      const response = await fetch(`https://aristos.onrender.com/admin/users/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ const Korisnik = () => {
 
   const handleDelete = async () => {
     try {
-      await fetch(`/admin/users/${user.username}`, {
+      await fetch(`https://aristos.onrender.com/admin/users/${user.username}`, {
         method: 'DELETE',
       });
       navigate('/admin');

@@ -12,7 +12,7 @@ function EmailChecked() {
     
     const fetchData = async () => {
       try {
-        const response = await fetch("/emailChecked", {
+        const response = await fetch("https://aristos.onrender.com/emailChecked", {
             method: 'GET', 
             headers: {
               'Content-Type': 'application/json', 

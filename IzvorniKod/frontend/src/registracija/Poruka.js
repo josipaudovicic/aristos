@@ -13,7 +13,7 @@ function Poruka() {
         
         const fetchData = async () => {
           try {
-            const response = await fetch("/waitEmail", {
+            const response = await fetch("https://aristos.onrender.com/waitEmail", {
               method: 'GET', 
               headers: {
                 'Content-Type': 'application/json', 
