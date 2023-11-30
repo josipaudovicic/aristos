@@ -12,7 +12,7 @@ const Korisnik = () => {
 
   const handleEdit = async () => {
     try {
-      const response = await fetch(`admin/users/${id}`, {
+      const response = await fetch(`/admin/users/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
