@@ -34,7 +34,7 @@ function Poruka() {
         };
     
         fetchData();
-      }, []); 
+      }, [navigate, username]); 
 
   useEffect(() => {
     if (emailChecked) {
