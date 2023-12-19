@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter , Routes, Route } from "react-router-dom";
+import Login from "./prijava/Login";
 import Registration from "./registracija/Registration";
 import Poruka from "./registracija/Poruka";
 import Korisnik from "./administrator/Korisnik";
@@ -13,7 +14,8 @@ function App() {
   return(
     <BrowserRouter>
         <Routes>
-            <Route path="/" element={<Registration />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/registration" element={<Registration />} />
             <Route path="/poruka" element={<Poruka />} />
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/emailChecked" element={<EmailChecked />} /> 
