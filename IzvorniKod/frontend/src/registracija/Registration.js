@@ -70,9 +70,9 @@ function Registration() {
       <form onSubmit={handleSubmit}>
         <fieldset> 
           <legend>Odaberite ulogu:</legend>
-          <label><input type="radio" name="status" value="Istraživač" checked={formData.status === 'Istraživač'} onChange={handleInputChange}/>istraživač</label><br/>
-          <label><input type="radio" name="status" value="Voditelj postaje" checked={formData.status === 'Voditelj postaje'} onChange={handleInputChange} />voditelj postaje</label><br/>
-          <label><input type="radio" name="status" value="Tragač" checked={formData.status === 'Tragač'} onChange={handleInputChange}/>tragač na terenu</label><br/>
+          <label className='roles1'><input type="radio" name="status" value="Istraživač" checked={formData.status === 'Istraživač'} onChange={handleInputChange}/>istraživač</label><br/>
+          <label className='roles2'><input type="radio" name="status" value="Voditelj postaje" checked={formData.status === 'Voditelj postaje'} onChange={handleInputChange} />voditelj postaje</label><br/>
+          <label className='roles3'><input type="radio" name="status" value="Tragač" checked={formData.status === 'Tragač'} onChange={handleInputChange}/>tragač na terenu</label><br/>
         </fieldset>
         <label htmlFor="username">Korisničko ime: <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} required/></label>
         <label htmlFor="file">Postavite svoju fotografiju: <input type="file" name="file" id="file" onChange={handleInputChange} required/></label>

@@ -9,6 +9,7 @@ import Requests from "./administrator/Requests";
 import TwoButtonRedirectComponent from "./administrator/TwoButtonRedirectComponent";
 import Welcome from "./registracija/Welcome";
 import EmailChecked from "./registracija/EmailChecked";
+import StationManager from "./voditelj/StationManager";
 
 function App() {
   return(
@@ -23,6 +24,7 @@ function App() {
             <Route path="/getUsers" element={<PregledSvihKorisnika />} />
             <Route path="/requests" element={<Requests />} />
             <Route path="/admin" element={<TwoButtonRedirectComponent />} />
+            <Route path="/manager" element={<StationManager />} />
         </Routes>
     </BrowserRouter>
 );
