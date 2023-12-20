@@ -35,13 +35,16 @@ function Login() {
           method: 'POST',
           body: formDataToSend,
         });
-  
-        navigate('/welcome', {state: {username: formData.username}});
         
         if (response.ok) {
-          console.log('Login successful');
+          const result = await response.text(); // Assuming the backend returns a simple string response
+          console.log(result);
+          if (result == "true") {navigate('/welcome', { state: { username: formData.username } });}
+          else {alert("Wrong password!")}
         } else {
-          console.error('Login failed');
+          const errorMessage = await response.json();
+          console.error('Login failed:', errorMessage);
+          alert(errorMessage.message);
         }
       } catch (error) {
         console.error('Error during login:', error.message);

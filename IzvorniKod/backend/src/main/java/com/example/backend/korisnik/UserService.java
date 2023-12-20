@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -65,12 +66,13 @@ public class UserService {
         return "confirmed";
     }
 
-    public String login(Users user) {
-        boolean exists = userRepository.existsById(user.getUsername());
+    public boolean login(String username, String password) {
+        boolean exists = userRepository.existsById(username);
         if (!exists) {
-            throw new IllegalStateException("User with username " + user.getUsername() + " does not exist!");
+            throw new IllegalStateException("User with username " + username + " does not exist!");
         }
-        return "redirect:/user/" + user.getRole().getRoleName();
+        Users user = userRepository.getReferenceById(username);
+        return Objects.equals(user.getPassword(), password);
     }
 
     public List<Users> getUsers() {

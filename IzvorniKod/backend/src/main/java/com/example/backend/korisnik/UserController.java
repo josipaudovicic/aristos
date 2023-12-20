@@ -64,13 +64,8 @@ public class UserController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<String> login(@RequestBody Users user) {
-        try {
-            String redirect = userService.login(user);
-            return ResponseEntity.ok("Login successful!");
-        } catch (IllegalStateException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }
+    public boolean login(@RequestParam("username") String username, @RequestParam("password") String password) {
+        return userService.login(username, password);
     }
 
     @GetMapping(path="/waitEmail")
