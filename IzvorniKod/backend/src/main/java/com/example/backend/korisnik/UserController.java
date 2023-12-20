@@ -1,11 +1,14 @@
 package com.example.backend.korisnik;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -78,6 +81,20 @@ public class UserController {
     public int waitAdmin(@RequestHeader("username") String username){
        return userService.checkAdmin(username);
     }
+
+    @GetMapping("/images/{imageName}")
+    public ResponseEntity<Resource> getUserImage(@PathVariable String imageName) {
+        try {
+            Path imagePath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static", imageName);
+            Resource resource = new UrlResource(imagePath.toUri());
+
+            return ResponseEntity.ok()
+                    .body(resource);
+        } catch (MalformedURLException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 
 }
