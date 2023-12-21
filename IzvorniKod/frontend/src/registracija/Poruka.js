@@ -7,6 +7,7 @@ function Poruka() {
     const navigate = useNavigate();
     const location = useLocation();
     const username = location.state.username
+    const role = location.state.role
     console.log(username)
 
     useEffect(() => { 
@@ -25,7 +26,7 @@ function Poruka() {
             console.log(result);
             if (result){
               console.log(result)
-              navigate("/emailChecked", {state: {username: username}});
+              navigate("/emailChecked", {state: {username: username, role: role}});
             }
             setEmailChecked(result.emailChecked);
           } catch (error) {
@@ -38,7 +39,7 @@ function Poruka() {
 
   useEffect(() => {
     if (emailChecked) {
-      navigate("/emailChecked");
+      navigate("/emailChecked", {state: {username: username, role: role}});
     }
   }, [emailChecked, navigate]);
 

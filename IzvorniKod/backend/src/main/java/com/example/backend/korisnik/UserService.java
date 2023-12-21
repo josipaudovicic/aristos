@@ -177,4 +177,9 @@ public class UserService {
         }
     }
 
+    public String getRole(String username){
+        Users user =  userRepository.findById(username).orElseThrow(() -> new IllegalStateException("Wrong username"));
+        return user.getRole().getRoleName();
+    }
+
 }
