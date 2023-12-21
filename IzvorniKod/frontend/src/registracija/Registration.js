@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
 
@@ -15,6 +16,8 @@ function Registration() {
     email: '',
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
     setFormData({
@@ -22,7 +25,10 @@ function Registration() {
       [name]: files ? files[0] : value,
     });
   };
-  
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +36,7 @@ function Registration() {
     var validate = validateForm();
   
     if (!validate) {
-      alert("Nisu popunjena sva polja!\n   Molimo sve ispunite!");
+      
     } else {
       try {
         const formDataToSend = new FormData();
@@ -59,10 +65,44 @@ function Registration() {
   
 
   function validateForm(){
-    if (formData.email === '' || formData.name === '' || formData.surname === '' || formData.password === '' || formData.username === '' || formData.status === '' || formData.file === null){
-      return false;
-    } return true;
-  }
+    const { email, name, surname, password, username, status, file } = formData;
+
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if (!emailRegex.test(email)) {
+        alert('Unesite ispravan email format!');
+        return false;
+      }
+
+      if (password.length < 8) {
+        alert('Lozinka mora imati najmanje 8 znakova!');
+        return false;
+      }
+
+      const allowedPictureExtensions = ['.png', '.jpg', '.jpeg'];
+      const fileName = file?.name || '';
+      const fileExtension = fileName.split('.').pop().toLowerCase();
+      console.log('File Extension:', fileExtension);
+
+      if (!allowedPictureExtensions.includes('.' + fileExtension)) {
+        alert('Format slike nije podržan! Molimo odaberite sliku u formatu .png, .jpg, ili .jpeg.');
+        return false;
+      }
+
+      if (
+        email === '' ||
+        name === '' ||
+        surname === '' ||
+        password === '' ||
+        username === '' ||
+        status === '' ||
+        file === null
+      ) {
+        alert("Nisu popunjena sva polja!\n   Molimo sve ispunite!");
+        return false;
+      }
+
+    return true;
+  };
 
   return (
     <div className='container'>
@@ -76,13 +116,27 @@ function Registration() {
         </fieldset>
         <label htmlFor="username">Korisničko ime: <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} required/></label>
         <label htmlFor="file">Postavite svoju fotografiju: <input type="file" name="file" id="file" onChange={handleInputChange} required/></label>
-        <label htmlFor="password">Lozinka: <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required/></label>
+        <label htmlFor="password">Lozinka:
+          <div style={{ position: 'relative' }}><input type={showPassword ? 'text' : 'password'} id="password" name="password" value={formData.password} onChange={handleInputChange}/>
+            <span
+              style={{
+                position: 'absolute',
+                top: '35%',
+                right: '10px',
+                transform: 'translateY(-50%)',
+                cursor: 'pointer',
+              }}
+              onClick={togglePasswordVisibility}>{showPassword ? '🔓' : '🔒'}
+            </span>
+          </div>
+        </label>        
         <label htmlFor="name">Ime: <input type="text" id="name" name="name" value={formData.name} onChange={handleInputChange} required/></label>
         <label htmlFor="surname">Prezime: <input type="text" id="surname" name="surname" value={formData.surname} onChange={handleInputChange} required/></label>
         <label htmlFor="email">E-mail: <input type="email" id='email' name='email' value={formData.email} onChange={handleInputChange} required/></label>
         <label> 
           <input type="submit" id="submitBtn" value={"Potvrdi"} onClick={handleSubmit} />
         </label>
+        <p>Već ste se registrirali? <Link to="/">Prijava</Link></p>
       </form>
     </div>
   );

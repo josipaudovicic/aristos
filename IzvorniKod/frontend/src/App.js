@@ -11,6 +11,8 @@ import Welcome from "./registracija/Welcome";
 import EmailChecked from "./registracija/EmailChecked";
 import StationManager from "./voditelj/StationManager";
 import Confirmation from "./registracija/Confirmation";
+import Profile from "./prijava/Profile";
+import EditProfile from "./prijava/EditProfile";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         <Route path="/admin" element={<TwoButtonRedirectComponent />} />
         <Route path="/manager" element={<StationManager />} />
         <Route path="/register/confirm/" element={<Confirmation />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
       </Routes>
     </BrowserRouter>
   );

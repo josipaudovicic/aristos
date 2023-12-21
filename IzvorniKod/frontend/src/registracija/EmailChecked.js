@@ -22,7 +22,15 @@ function EmailChecked() {
 
         const result = await response.json();
         if(result===2){
-          navigate("/welcome");
+          const res = await fetch("/role", {
+            method: 'GET', 
+            headers: {
+              'Content-Type': 'application/json', 
+              'username': username
+            },
+          });
+          const role = await res.json();
+          navigate(`/${role}`, { state: {username: username}})
         } if (result===0){
           alert("Odbijeni ste!");
           navigate("/registration")
@@ -36,9 +44,17 @@ function EmailChecked() {
     fetchData();
   }, [navigate, username]); 
 
-  useEffect(() => {
+  useEffect(async () => {
     if (adminChecked) {
-      navigate("/welcome");
+      const res = await fetch("/role", {
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json', 
+          'username': username
+        },
+      });
+      const role = await res.json();
+      navigate(`/${role}`, { state: {username: username}})
     }
   }, [adminChecked, navigate]);
 

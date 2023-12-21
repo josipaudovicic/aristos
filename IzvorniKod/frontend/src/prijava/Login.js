@@ -11,9 +11,15 @@ function Login() {
     password: '',
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e) => {
@@ -64,7 +70,20 @@ function Login() {
       <h2>Prijavi se:</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">Korisničko ime: <input type="text" id="username" name="username" value={formData.username} onChange={handleInputChange} required/></label>
-        <label htmlFor="password">Lozinka: <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange}/></label>
+        <label htmlFor="password">Lozinka:
+          <div style={{ position: 'relative' }}><input type={showPassword ? 'text' : 'password'} id="password" name="password" value={formData.password} onChange={handleInputChange}/>
+            <span
+              style={{
+                position: 'absolute',
+                top: '35%',
+                right: '10px',
+                transform: 'translateY(-50%)',
+                cursor: 'pointer',
+              }}
+              onClick={togglePasswordVisibility}>{showPassword ? '🔓' : '🔒'}
+            </span>
+          </div>
+        </label>
         <button type="submit" id="submitBtn">Prijava</button><br />
         <p>Niste se registrirali? <Link to="/registration">Registrirajte se</Link></p>
       </form>
