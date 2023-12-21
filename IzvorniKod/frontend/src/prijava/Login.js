@@ -45,7 +45,7 @@ function Login() {
         if (response.ok) {
           const result = await response.text(); // Assuming the backend returns a simple string response
           console.log(result);
-          if (result == "true") {navigate('/welcome', { state: { username: formData.username } });}
+          if (result === "true") {navigate('/welcome', { state: { username: formData.username } });}
           else {alert("Wrong password!")}
         } else {
           const errorMessage = await response.json();
