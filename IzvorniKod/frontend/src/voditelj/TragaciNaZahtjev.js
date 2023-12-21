@@ -1,0 +1,1 @@
+//dodam nakon sto se doda pregled tragača opceniti
