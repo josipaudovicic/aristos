@@ -58,7 +58,7 @@ public class UserController {
 
         try {
             Path uploadPath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static");
-            Path filePath = uploadPath.resolve(username+".jpg");
+            Path filePath = uploadPath.resolve(username);
             Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             String photo = "/images/" + username;
             user.setPhoto(photo);
