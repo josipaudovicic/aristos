@@ -1,11 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
+function rename(role){
+  if (role==="Istraživač"){
+    return "explorer"
+  } else if (role==="Tragač"){
+    return "tracker"
+  } else if (role==="Admin"){
+    return "admin";
+  } else if (role==="Voditelj postaje"){
+    return "manager";
+  }
+}
+
 function EmailChecked() {
     const [adminChecked, setAdminChecked] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const username = location.state.username
+    const role = location.state.role
     console.log(username)
 
   useEffect(() => {
@@ -22,15 +35,8 @@ function EmailChecked() {
 
         const result = await response.json();
         if(result===2){
-          const res = await fetch("/role", {
-            method: 'GET', 
-            headers: {
-              'Content-Type': 'application/json', 
-              'username': username
-            },
-          });
-          const role = await res.json();
-          navigate(`/${role}`, { state: {username: username}})
+          const newRole = rename(role);
+          navigate(`/${newRole}`, { state: {username: username}})
         } if (result===0){
           alert("Odbijeni ste!");
           navigate("/registration")
@@ -44,17 +50,10 @@ function EmailChecked() {
     fetchData();
   }, [navigate, username]); 
 
-  useEffect(async () => {
+  useEffect(() => {
     if (adminChecked) {
-      const res = await fetch("/role", {
-        method: 'GET', 
-        headers: {
-          'Content-Type': 'application/json', 
-          'username': username
-        },
-      });
-      const role = await res.json();
-      navigate(`/${role}`, { state: {username: username}})
+      const newRole = rename(role);
+      navigate(`/${newRole}`, { state: {username: username}})
     }
   }, [adminChecked, navigate]);
 

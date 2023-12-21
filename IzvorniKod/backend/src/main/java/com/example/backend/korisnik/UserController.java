@@ -40,6 +40,7 @@ public class UserController {
     public Map<String, String> mail(@RequestParam("token") String token) {
         Map<String, String> map = new HashMap<>();
         map.put("username", userService.mail(token));
+        map.put("role", userService.getRole(userService.mail(token)));
         return map;
     }
 
@@ -104,6 +105,20 @@ public class UserController {
         }
     }
 
-
+    @GetMapping("/role")
+    public Map<String, String> getRole(@RequestHeader("username") String username){
+        Map<String, String> map = new HashMap<>();
+        String role = userService.getRole(username);
+        if (Objects.equals(role, "Admin")) {
+            map.put("role", "admin");
+        } else if (Objects.equals(role, "Voditelj postaje")) {
+            map.put("role", "manager");
+        } else if (Objects.equals(role, "Istraživač")) {
+            map.put("role", "explorer");
+        } else if (Objects.equals(role, "Tragač")) {
+            map.put("role", "tracker");
+        }
+        return map;
+    }
 
 }

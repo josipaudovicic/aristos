@@ -25,7 +25,7 @@ function Confirmation() {
           const data = await response.json();
           console.log("Response:", data.username);
 
-          navigate("/emailChecked", {state: {username: data.username}});
+          navigate("/emailChecked", {state: {username: data.username, role: data.role}});
         } else {
           console.error("Error:", response.status, response.statusText);
         }

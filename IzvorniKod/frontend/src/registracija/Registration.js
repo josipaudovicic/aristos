@@ -50,7 +50,7 @@ function Registration() {
           body: formDataToSend,
         });
   
-        navigate('/poruka', {state: {username: formData.username}});
+        navigate('/poruka', {state: {username: formData.username, role: formData.status}});
         
         if (response.ok) {
           console.log('Registration successful');
