@@ -25,7 +25,7 @@ function EmailChecked() {
           navigate("/welcome");
         } if (result===0){
           alert("Odbijeni ste!");
-          navigate("/")
+          navigate("/registration")
         }
         setAdminChecked(result.adminChecked);
       } catch (error) {

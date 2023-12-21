@@ -25,4 +25,11 @@ public class ConfirmationTokenService {
         return confirmationTokenRepository.updateConfirmedAt(
                 token, LocalDateTime.now());
     }
+
+    public String getUsername(String token) {
+        Optional<ConfirmationToken> tokenOptional = confirmationTokenRepository.findByToken(token);
+        ConfirmationToken confirmationToken = tokenOptional.orElse(null);
+        assert confirmationToken != null;
+        return confirmationToken.getUser().getUsername();
+    }
 }

@@ -38,7 +38,7 @@ public class UserService {
         );
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-        String link = "http://localhost:8080/register/confirm?token=" + token;
+        String link = "http://localhost:3000/register/confirm?token=" + token;
         emailSender.send(user.getEmail(), buildEmail(user.getName(), link));
 
         return "sent an email";
@@ -146,6 +146,16 @@ public class UserService {
                 "  </tbody></table><div class=\"yj6qo\"></div><div class=\"adL\">\n" +
                 "\n" +
                 "</div></div>";
+    }
+
+    public String mail(String token) {
+        ConfirmationToken confirmationToken = confirmationTokenService
+                .getToken(token)
+                .orElseThrow(() ->
+                        new IllegalStateException("token not found"));
+        userRepository.enableAppUser(
+                confirmationToken.getUser().getEmail());
+        return confirmationTokenService.getUsername(token);
     }
 
     public boolean checkEmail(String username) {

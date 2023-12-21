@@ -13,6 +13,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -34,6 +36,13 @@ public class UserController {
         return userService.confirmToken(token);
     }
 
+    @GetMapping(path = "/mail")
+    public Map<String, String> mail(@RequestParam("token") String token) {
+        Map<String, String> map = new HashMap<>();
+        map.put("username", userService.mail(token));
+        return map;
+    }
+
     @GetMapping
     public String hello() {
         return "Hello world";
@@ -51,7 +60,7 @@ public class UserController {
             Path uploadPath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static");
             Path filePath = uploadPath.resolve(Objects.requireNonNull(image.getOriginalFilename()));
             Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-            String photo = "/images/" + image.getOriginalFilename();
+            String photo = "/images/" + username;
             user.setPhoto(photo);
         } catch (Exception e) {
             throw new IllegalStateException("no photo uploaded!");

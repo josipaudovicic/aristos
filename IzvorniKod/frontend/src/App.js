@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter , Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./prijava/Login";
 import Registration from "./registracija/Registration";
 import Poruka from "./registracija/Poruka";
@@ -10,24 +10,26 @@ import TwoButtonRedirectComponent from "./administrator/TwoButtonRedirectCompone
 import Welcome from "./registracija/Welcome";
 import EmailChecked from "./registracija/EmailChecked";
 import StationManager from "./voditelj/StationManager";
+import Confirmation from "./registracija/Confirmation";
 
 function App() {
-  return(
+  return (
     <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/registration" element={<Registration />} />
-            <Route path="/poruka" element={<Poruka />} />
-            <Route path="/welcome" element={<Welcome />} />
-            <Route path="/emailChecked" element={<EmailChecked />} /> 
-            <Route path="/user/:username" element={<Korisnik />} />
-            <Route path="/getUsers" element={<PregledSvihKorisnika />} />
-            <Route path="/requests" element={<Requests />} />
-            <Route path="/admin" element={<TwoButtonRedirectComponent />} />
-            <Route path="/manager" element={<StationManager />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/poruka" element={<Poruka />} />
+        <Route path="/welcome" element={<Welcome />} />
+        <Route path="/emailChecked" element={<EmailChecked />} />
+        <Route path="/user/:username" element={<Korisnik />} />
+        <Route path="/getUsers" element={<PregledSvihKorisnika />} />
+        <Route path="/requests" element={<Requests />} />
+        <Route path="/admin" element={<TwoButtonRedirectComponent />} />
+        <Route path="/manager" element={<StationManager />} />
+        <Route path="/register/confirm/" element={<Confirmation />} />
+      </Routes>
     </BrowserRouter>
-);
+  );
 }
 
 export default App;
