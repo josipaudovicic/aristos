@@ -43,6 +43,21 @@ const Korisnik = () => {
     return <p>Loading...</p>;
   }
 
+  const buttonContainerStyle = {
+    display: 'flex',
+    justifyContent: 'space-between', 
+    marginTop: '12px',
+  };
+
+  const buttonStyle = {
+    flex: '1', 
+    marginLeft: '8px',
+    padding: '8px 16px',
+    fontSize: '16px',
+    marginTop: '12px',
+  };
+
+
   return (
     <div>
       <h2>Korisnik: {user.username}</h2>
@@ -53,9 +68,9 @@ const Korisnik = () => {
       <p>Lozinka: {user.password}</p>
       <p>Uloga: {user.role}</p>
 
-      <div>
-        <button onClick={handleEdit}>Promjeni podatke</button>
-        <button onClick={handleDelete}>Izbriši korisnika</button>
+      <div style={buttonContainerStyle}>
+        <button style={buttonStyle} onClick={handleEdit}>Promjeni podatke</button>
+        <button style={buttonStyle} onClick={handleDelete}>Izbriši korisnika</button>
       </div>
     </div>
   );

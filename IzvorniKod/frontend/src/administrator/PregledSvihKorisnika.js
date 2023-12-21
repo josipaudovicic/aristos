@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function PregledSvihKorisnika() { //dobivam json sa domagojeve stranice o podatcima svih korisnika
   const location = useLocation()
@@ -21,16 +22,45 @@ function PregledSvihKorisnika() { //dobivam json sa domagojeve stranice o podatc
     }
   };
 
+  const buttonStyle = {
+      position: 'fixed',
+      top: '10px',
+      left: '10px',
+      padding: '8px 16px',
+      backgroundColor: '#5C5C5C',
+      color: '#fff',
+      borderRadius: '4px',
+      cursor: 'pointer',
+  };
+
   return (
-    <div>
+    <div className='container' style={{ textAlign: 'center', marginTop: '20px' }}>
       <h2>Lista registriranih korisnika:</h2>
-      <ul>
+      <ul style={{ listStyleType: 'none', padding: '0' }}>
         {users.map((user) => (
-          <li key={user.username} onClick={() => handleClick(user)} style={{ cursor: 'pointer' }}>
+          <li
+            key={user.username}
+            onClick={() => handleClick(user)}
+            style={{
+              cursor: 'pointer',
+              marginBottom: '10px',
+              padding: '10px',
+              border: '1px solid #ccc',
+              borderRadius: '5px',
+              transition: 'background-color 0.3s ease-in-out',
+            }}
+            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#f0f0f0')}
+            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+          >
             <strong>korisničko ime:</strong> {user.username}, <strong>uloga:</strong> {user.role}
           </li>
         ))}
       </ul>
+      <div>
+      <Link to="/admin">
+        <button style={buttonStyle}>Početna</button>
+      </Link>
+    </div>
     </div>
   );
 }

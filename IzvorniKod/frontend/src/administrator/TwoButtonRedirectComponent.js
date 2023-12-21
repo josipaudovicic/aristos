@@ -27,7 +27,7 @@ function TwoButtonRedirectComponent() {
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h2>Choose an Option:</h2>
+      <h2>Odaberi opciju:</h2>
       <button
         style={{
           fontSize: '1.5em',
@@ -36,7 +36,7 @@ function TwoButtonRedirectComponent() {
         }}
         onClick={() => redirectToPage('getUsers')}
       >
-        View Users
+        Pregled Korisnika
       </button>
       <button
         style={{
@@ -46,7 +46,7 @@ function TwoButtonRedirectComponent() {
         }}
         onClick={() => redirectToPage('requests')}
       >
-        View Requests
+        Pregled Zahtjeva
       </button>
     </div>
   );

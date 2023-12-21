@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Requests() {
   const [users, setUsers] = useState([]);
@@ -60,19 +61,49 @@ function Requests() {
     }
   };
 
+  const buttonStyle = {
+    flex: '1', 
+    marginLeft: '8px',
+    padding: '8px 16px',
+    fontSize: '16px',
+    marginTop: '12px',
+  };
+
+  const listStyle = {
+    paddingLeft: '0',
+    listStyleType: 'none',
+  };
+
+  const bStyle = {
+    position: 'fixed',
+    top: '10px',
+    left: '10px',
+    padding: '8px 16px',
+    backgroundColor: '#5C5C5C',
+    color: '#fff',
+    borderRadius: '4px',
+    cursor: 'pointer',
+};
+
   return (
-    <div>
+    <div className='container'>
       <h2>Requests</h2>
-      <ul>
+      <ul style={listStyle}>
         {users.map((user) => (
           <li key={user.username}>
             {user.username} - {user.role}
-            <button onClick={() => handleConfirm(user.username)}>Confirm</button>
-            <button onClick={() => handleDecline(user.username)}>Decline</button>
+            <button style={buttonStyle} onClick={() => handleConfirm(user.username)}>Confirm</button>
+            <button style={buttonStyle} onClick={() => handleDecline(user.username)}>Decline</button>
           </li>
         ))}
       </ul>
+      <div>
+      <Link to="/admin">
+        <button style={bStyle}>Početna</button>
+      </Link>
     </div>
+  </div>
+
   );
 }
 
