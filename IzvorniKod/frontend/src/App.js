@@ -13,6 +13,8 @@ import StationManager from "./voditelj/StationManager";
 import Confirmation from "./registracija/Confirmation";
 import Profile from "./prijava/Profile";
 import EditProfile from "./prijava/EditProfile";
+import Explorer from "./istrazivac/Explorer";
+import ListActions from "./istrazivac/ListActions";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
         <Route path="/register/confirm/" element={<Confirmation />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/explorer" element={<Explorer />} />
+        <Route path="/explorer/actions" element={<ListActions />} />
       </Routes>
     </BrowserRouter>
   );
