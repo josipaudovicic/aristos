@@ -1,22 +1,55 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function StationManager() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const username = location.state ? location.state.username : null
 
   const redirectToPage = async (path) => {
     try {
       let response;
       if (path === 'manager/trackers') {
-        response = await fetch(`/manager/trackers`);
+        console.log("Hello World");
+        response = await fetch(`/manager/trackers`,{
+          method: 'GET', 
+          headers: {
+            'Content-Type': 'application/json', 
+            'username': username
+          },
+        });
       } else if (path === 'manager/mytrackers') {
-        response = await fetch(`/manager/mytrackers`);
+        response = await fetch(`/manager/mytrackers`, {
+          method: 'GET', 
+          headers: {
+            'Content-Type': 'application/json', 
+            'username': username
+          },
+        });
       } else if (path === 'manager/actions') {
-        response = await fetch(`/manager/actions`);
+        response = await fetch(`/manager/actions`, {
+          method: 'GET', 
+          headers: {
+            'Content-Type': 'application/json', 
+            'username': username
+          },
+        });
       } else if (path === 'manager/requests') {
-        response = await fetch(`/manager/requests`);
+        response = await fetch(`/manager/requests`, {
+          method: 'GET', 
+          headers: {
+            'Content-Type': 'application/json', 
+            'username': username
+          },
+        });
       } else if (path === 'profile') {
-        response = await fetch(`/profile`);
+        response = await fetch(`/profile`, {
+          method: 'GET', 
+          headers: {
+            'Content-Type': 'application/json', 
+            'username': username
+          },
+        });
       }
 
       const data = await response.json();

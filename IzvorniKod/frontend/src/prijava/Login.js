@@ -45,7 +45,20 @@ function Login() {
         if (response.ok) {
           const result = await response.text(); // Assuming the backend returns a simple string response
           console.log(result);
-          if (result === "true") {navigate('/welcome', { state: { username: formData.username } });}
+          if (result === "true") {
+            const response = await fetch('/role', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'username': formData.username
+              },
+            });
+            const data = await response.json();
+            if (data.role === "admin") navigate('/admin', { state: { username: formData.username } });
+            else if (data.role === "explorer") navigate('/explorer', { state: { username: formData.username } });
+            else if (data.role === "tracker") navigate('/tracker', { state: { username: formData.username } });
+            else if (data.role === "manager") navigate('/manager', { state: { username: formData.username } });
+          }
           else {alert("Wrong password!")}
         } else {
           const errorMessage = await response.json();

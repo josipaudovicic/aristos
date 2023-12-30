@@ -10,6 +10,9 @@ import TwoButtonRedirectComponent from "./administrator/TwoButtonRedirectCompone
 import Welcome from "./registracija/Welcome";
 import EmailChecked from "./registracija/EmailChecked";
 import StationManager from "./voditelj/StationManager";
+import TragaciNaZahtjev from "./voditelj/TragaciNaZahtjev";
+//TODO: importati sve ostale stranice iz voditelja
+
 import Confirmation from "./registracija/Confirmation";
 import Profile from "./prijava/Profile";
 import EditProfile from "./prijava/EditProfile";
@@ -30,6 +33,7 @@ function App() {
         <Route path="/requests" element={<Requests />} />
         <Route path="/admin" element={<TwoButtonRedirectComponent />} />
         <Route path="/manager" element={<StationManager />} />
+        <Route path="/manager/trackers" element={<TragaciNaZahtjev />} />
         <Route path="/register/confirm/" element={<Confirmation />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
