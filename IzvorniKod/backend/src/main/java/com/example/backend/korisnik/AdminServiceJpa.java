@@ -21,7 +21,7 @@ public class AdminServiceJpa {
 
     public List<Map<String, String>> getRegisteredUsers() {
         List<Users> Users= userRepository.findAll();
-        List<Users> registered = Users.stream().filter(user -> (user.isEmailCheck() && user.isAdminCheck())).collect(Collectors.toList());
+        List<Users> registered = Users.stream().filter(user -> (user.isEmailCheck() && user.isAdminCheck() && user.getRole().getId() != 1)).collect(Collectors.toList());
 
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
         for (Users user : registered){

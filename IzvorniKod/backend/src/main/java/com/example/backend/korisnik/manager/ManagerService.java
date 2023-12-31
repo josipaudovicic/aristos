@@ -3,23 +3,24 @@ package com.example.backend.korisnik.manager;
 import com.example.backend.korisnik.HelpingTables.BelongsToStationRepository;
 import com.example.backend.korisnik.UserRepository;
 import com.example.backend.korisnik.Users;
+import com.example.backend.korisnik.action.Actions;
+import com.example.backend.korisnik.action.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class ManagerService {
     private final UserRepository userRepository;
     private final BelongsToStationRepository belongsToStationRepository;
+    private final ActionService actionService;
 
     @Autowired
-    public ManagerService(UserRepository userRepository, BelongsToStationRepository belongsToStationRepository) {
+    public ManagerService(UserRepository userRepository, BelongsToStationRepository belongsToStationRepository, ActionService actionService) {
         this.userRepository = userRepository;
         this.belongsToStationRepository = belongsToStationRepository;
+        this.actionService = actionService;
     }
 
     public List<Map<String,String>> getTrackers() {
@@ -59,6 +60,54 @@ public class ManagerService {
             kaoUser.put("file",user.getPhoto());
             returning.add(kaoUser);
         }
+        return returning;
+    }
+
+    public List<Map<String, String>> getActiveActions(String username) {
+        List<Actions> activeActions = actionService.getActive();
+
+        List<Map<String, String>> returning = new ArrayList<>(List.of());
+        for (Actions action : activeActions){
+            Map<String, String> kaoAction = new HashMap<>();
+            kaoAction.put("id",action.getActionId().toString());
+            kaoAction.put("name",action.getActionName());
+            kaoAction.put("active", action.isActive() ? "true" : "false");
+            kaoAction.put("username", action.getUser().getUsername());
+            returning.add(kaoAction);
+        }
+
+        return returning;
+    }
+
+    public List<Map<String, String>> getNonActiveActions(String username) {
+        List<Actions> activeActions = actionService.getNonActive();
+
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (Actions action : activeActions){
+            Map<String, String> kaoAction = new HashMap<>();
+            kaoAction.put("id",action.getActionId().toString());
+            kaoAction.put("name",action.getActionName());
+            kaoAction.put("active", action.isActive() ? "true" : "false");
+            kaoAction.put("username", action.getUser().getUsername());
+            returning.add(kaoAction);
+        }
+
+        return returning;
+    }
+
+    public List<Map<String, String>> getRequests(String username){
+        List<Actions> nonStartedActions = actionService.getNonStarted();
+
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (Actions action : nonStartedActions){
+            Map<String, String> kaoAction = new HashMap<>();
+            kaoAction.put("id",action.getActionId().toString());
+            kaoAction.put("name",action.getActionName());
+            kaoAction.put("active", action.isActive() ? "true" : "false");
+            kaoAction.put("username", action.getUser().getUsername());
+            returning.add(kaoAction);
+        }
+
         return returning;
     }
 }

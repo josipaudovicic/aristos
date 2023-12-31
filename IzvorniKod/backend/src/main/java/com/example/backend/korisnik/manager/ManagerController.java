@@ -30,5 +30,19 @@ public class ManagerController {
     public List<Map<String, String>> getMyTrackers(@RequestHeader("username") String username) {
         return managerService.getMyTrackers(username);
     }
-    
+
+    @GetMapping(path = "/activeActions")
+    public List<Map<String, String>> getActions(@RequestHeader("username") String username) {
+        return managerService.getActiveActions(username);
+    }
+
+    @GetMapping(path = "/inactiveActions")
+    public List<Map<String, String>> getNonActiveActions(@RequestHeader("username") String username) {
+        return managerService.getNonActiveActions(username);
+    }
+
+    @GetMapping(path = "/requests")
+    public List<Map<String, String>> getRequests(@RequestHeader("username") String username) {
+        return managerService.getRequests(username);
+    }
 }

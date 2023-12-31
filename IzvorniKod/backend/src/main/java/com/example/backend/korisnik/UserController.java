@@ -121,4 +121,9 @@ public class UserController {
         return map;
     }
 
+    @GetMapping("/profile")
+    public Map<String, String> getProfile(@RequestHeader("username") String username){
+        return userService.getProfile(username);
+    }
+
 }

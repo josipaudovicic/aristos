@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -180,6 +181,19 @@ public class UserService {
     public String getRole(String username){
         Users user =  userRepository.findById(username).orElseThrow(() -> new IllegalStateException("Wrong username"));
         return user.getRole().getRoleName();
+    }
+
+    public Map<String, String> getProfile(String username){
+        Users user =  userRepository.findById(username).orElseThrow(() -> new IllegalStateException("Wrong username"));
+        Map<String, String> kaoUser = new java.util.HashMap<>();
+        kaoUser.put("username",user.getUsername());
+        kaoUser.put("email",user.getEmail());
+        kaoUser.put("name",user.getName());
+        kaoUser.put("surname",user.getSurname());
+        kaoUser.put("password",user.getPassword());
+        kaoUser.put("role",user.getRole().getRoleName());
+        kaoUser.put("file",user.getPhoto());
+        return kaoUser;
     }
 
 }
