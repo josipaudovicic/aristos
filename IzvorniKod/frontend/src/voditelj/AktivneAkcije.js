@@ -29,6 +29,8 @@ function PregledAktivnihAkcija(){
     fetchActions();
     }, []);
 
+    //TODO: UVIJEK KORISTITI useLocation za prijenos podataka izmedu stranica
+
     const navigate = useNavigate();
     const redirectToPage = async (path) => {
         try {

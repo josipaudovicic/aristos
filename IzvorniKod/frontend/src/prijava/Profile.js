@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Profile() {
   const [userData, setUserData] = useState({});
+  const location = useLocation();
+  const username = location.state.username;
 
   useEffect(() => {
     fetch('/profile', {
-      method: 'GET'
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        username: username,
+      },
     })
       .then((response) => response.json())
       .then((data) => setUserData(data))
@@ -37,6 +43,11 @@ function Profile() {
     textAlign: 'center', 
   };
 
+  const img = {
+    width: '300px',
+    height: '200px',
+  }
+
   return (
     <div className="container" style={containerStyle}>
       <div style={centerStyle}>
@@ -64,11 +75,11 @@ function Profile() {
       </div>
       <div>
         <label style={labelStyle}>Uloga: </label>
-        <span style={spanStyle}>{userData.status}</span>
+        <span style={spanStyle}>{userData.role}</span>
       </div>
       <div>
         <label style={labelStyle}>Fotografija: </label>
-        <span style={spanStyle}>{userData.photo}</span>
+        <span style={spanStyle}>{<img src={userData.file} style={img}></img>}</span>
       </div>
       <div style={centerStyle}>
         <Link to="/edit-profile">

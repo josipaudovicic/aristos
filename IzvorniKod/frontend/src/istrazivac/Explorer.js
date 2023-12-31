@@ -1,8 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Explorer() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const username = location.state.username;
 
   const redirectToPage = async (path) => {
     try {
@@ -14,7 +16,7 @@ function Explorer() {
       } else if (path === 'explorer/animals') {
         response = await fetch(`/explorer/animals`);
       } else if (path === 'profile') {
-        response = await fetch(`/profile`);
+        navigate(`/profile`, { state: { username: username } });
       }
 
       const data = await response.json();

@@ -2,6 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function OdabirAkcija() {
+  
+  //TODO: UVIJEK KORISTITI useLocation za prijenos podataka izmedu stranica
+
   const navigate = useNavigate();
 
   const redirectToPage = async (path) => {
@@ -13,7 +16,7 @@ function OdabirAkcija() {
         response = await fetch(`/manager/activeActions`);
       }
       const data = await response.json();
-      navigate(`/${path}`, {state: {users: data}});
+      navigate(`/${path}`, {state: {users: data}}); // Mozda da se zove data, a ne users jer mogu slati i akcije umjesto korisnika
 
     } catch (error) {
       console.error(`Error fetching actions:`, error.message);
@@ -29,7 +32,7 @@ function OdabirAkcija() {
           padding: '10px 20px',
           margin: '10px',
         }}
-        onClick={() => redirectToPage('aktivne')}
+        onClick={() => redirectToPage('aktivne')} // ispred ovoga staviti /manager i mozda promjeniti na engleski
       >
         aktivne akcije
       </button>
@@ -39,7 +42,7 @@ function OdabirAkcija() {
           padding: '10px 20px',
           margin: '10px',
         }}
-        onClick={() => redirectToPage('neaktivne')}
+        onClick={() => redirectToPage('neaktivne')} // ispred ovoga staviti /manager i mozda promjeniti na engleski
       >
         neaktivne akcije
       </button>

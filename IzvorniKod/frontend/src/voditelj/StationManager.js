@@ -4,7 +4,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 function StationManager() {
   const navigate = useNavigate();
   const location = useLocation();
-  const username = location.state ? location.state.username : null
+  const username = location.state.username;
+  console.log(username);
 
   const redirectToPage = async (path) => {
     try {
@@ -43,17 +44,11 @@ function StationManager() {
           },
         });
       } else if (path === 'profile') {
-        response = await fetch(`/profile`, {
-          method: 'GET', 
-          headers: {
-            'Content-Type': 'application/json', 
-            'username': username
-          },
-        });
+        navigate(`/profile`, { state: { username: username } });
       }
 
       const data = await response.json();
-      navigate(`/${path}`, { state: { users: data } });
+      navigate(`/${path}`, { state: { users: data } }); // Mozda da se zove data, a ne users jer mogu slati i akcije umjesto korisnika
     } catch (error) {
       console.error(`Error fetching data:`, error.message);
     }

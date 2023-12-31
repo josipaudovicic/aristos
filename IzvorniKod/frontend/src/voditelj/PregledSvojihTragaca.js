@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 function PregledSvojihTragaca() {
   const location = useLocation();
-  const trackers = location.state.users;
+  const trackers = location.state.data;
   console.log(trackers);
   const navigate = useNavigate();
 
