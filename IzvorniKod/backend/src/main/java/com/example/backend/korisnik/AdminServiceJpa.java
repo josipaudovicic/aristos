@@ -1,5 +1,7 @@
 package com.example.backend.korisnik;
 
+import com.example.backend.korisnik.station.Station;
+import com.example.backend.korisnik.station.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +11,11 @@ import java.util.stream.Collectors;
 @Service
 public class AdminServiceJpa {
     private final UserRepository userRepository;
+    private final StationRepository stationRepository;
     @Autowired
-    public AdminServiceJpa(UserRepository user_repository) {
+    public AdminServiceJpa(UserRepository user_repository, StationRepository station_repository) {
         this.userRepository = user_repository;
+        this.stationRepository = station_repository;
     }
 
     public List<Users> findAllUsers() {
@@ -91,7 +95,6 @@ public class AdminServiceJpa {
         return true;
     }
 
-
     public boolean delete(Users user) {
         String username = user.getUsername();
 
@@ -101,5 +104,17 @@ public class AdminServiceJpa {
         } else {
             return false;
         }
+    }
+
+    public List<Station> getAllStations() {
+        return stationRepository.findAll();
+    }
+
+    public boolean setManagerStation(Users manager, Station station) {
+        if (!stationRepository.existsById(station.getStationId()) ||
+                !userRepository.existsById(manager.getUsername())) {
+            return false;
+        }
+        return true;
     }
 }
