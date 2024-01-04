@@ -14,7 +14,7 @@ public class AdminServiceJpa {
         this.userRepository = user_repository;
     }
 
-    public List<Users> findAll() {
+    public List<Users> findAllUsers() {
         System.out.println(userRepository.findAll());
         return userRepository.findAll();
     }
@@ -60,7 +60,7 @@ public class AdminServiceJpa {
     }
 
     public List<Map<String, String>> getUsersToConfirm() {
-        List<Users> allUsers = this.findAll();
+        List<Users> allUsers = this.findAllUsers();
         List<Users> listToConfirm = allUsers.stream().filter(user -> (user.getRole().getRoleName().equals("Voditelj postaje")
                 || user.getRole().getRoleName().equals("Istraživač")) && !user.isAdminCheck()).collect(Collectors.toList());
 
