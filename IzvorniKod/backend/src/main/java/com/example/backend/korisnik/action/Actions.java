@@ -1,6 +1,7 @@
 package com.example.backend.korisnik.action;
 
 import com.example.backend.korisnik.Users;
+import com.example.backend.korisnik.station.Station;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +14,9 @@ public class Actions {
     @ManyToOne
     @JoinColumn(name = "userName")
     private Users user;
+    @OneToOne
+    @JoinColumn(name = "stationId")
+    private Station station;
 
     public Long getActionId() {
         return actionId;
@@ -52,5 +56,13 @@ public class Actions {
 
     public void setStarted(boolean started) {
         this.started = started;
+    }
+
+    public Station getStation() {
+        return station;
+    }
+
+    public void setStation(Station station) {
+        this.station = station;
     }
 }

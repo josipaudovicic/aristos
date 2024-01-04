@@ -64,7 +64,7 @@ public class ManagerService {
     }
 
     public List<Map<String, String>> getActiveActions(String username) {
-        List<Actions> activeActions = actionService.getActive();
+        List<Actions> activeActions = actionService.getActive(username);
 
         List<Map<String, String>> returning = new ArrayList<>(List.of());
         for (Actions action : activeActions){
@@ -80,7 +80,7 @@ public class ManagerService {
     }
 
     public List<Map<String, String>> getNonActiveActions(String username) {
-        List<Actions> activeActions = actionService.getNonActive();
+        List<Actions> activeActions = actionService.getNonActive(username);
 
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
         for (Actions action : activeActions){
@@ -96,7 +96,7 @@ public class ManagerService {
     }
 
     public List<Map<String, String>> getRequests(String username){
-        List<Actions> nonStartedActions = actionService.getNonStarted();
+        List<Actions> nonStartedActions = actionService.getNonStarted(username);
 
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
         for (Actions action : nonStartedActions){
