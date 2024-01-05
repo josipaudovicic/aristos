@@ -81,7 +81,7 @@ const ListActions = () => {
                 </div>
 
                 <div>
-                    <Link to="/explorer">
+                    <Link to="/explorer"> {/*!!!!!! ne koristi Link nego navigate i prosljeduj mi username*/}
                         <button style={buttonStyle}>Početna</button>
                     </Link>
                 </div>

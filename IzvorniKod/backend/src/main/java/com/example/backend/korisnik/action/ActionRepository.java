@@ -10,4 +10,5 @@ public interface ActionRepository extends JpaRepository<Actions, Long> {
 
     List<Actions> findByActionActiveAndStartedAndStation(boolean active, boolean started, Station station);
     List<Actions> findByStartedAndStation(boolean b, Station station);
+    List<Actions> findByUserName(String username);
 }

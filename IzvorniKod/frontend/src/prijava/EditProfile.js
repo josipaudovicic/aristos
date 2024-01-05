@@ -117,7 +117,7 @@ function EditProfile() {
         <button style={buttonStyle} onClick={handleSaveChanges}>
           Spremi promjene
         </button>
-        <Link to="/profile">
+        <Link to="/profile"> {/*!!!!!! ne koristi Link nego navigate i prosljeduj mi username*/}
           <button style={buttonStyle}>Odustani</button>
         </Link>
       </div>

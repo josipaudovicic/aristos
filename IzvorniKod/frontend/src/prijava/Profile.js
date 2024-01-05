@@ -82,8 +82,8 @@ function Profile() {
         <span style={spanStyle}>{<img src={userData.file} style={img}></img>}</span>
       </div>
       <div style={centerStyle}>
-        <Link to="/edit-profile">
-          <button style={buttonStyle}>Uredi podatke</button>
+        <Link to="/edit-profile"> {/*!!!!!! ne koristi Link nego navigate i prosljeduj mi username*/}
+          <button style={buttonStyle}>Uredi podatke</button> 
         </Link>
       </div>
     </div>

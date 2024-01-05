@@ -33,4 +33,8 @@ public class ActionService {
         Station station = stationService.getStationByUserName(username);
         return actionRepository.findByStartedAndStation(false, station);
     }
+
+    public List<Actions> getAllActions(String username){
+        return actionRepository.findByUserName(username);
+    }
 }
