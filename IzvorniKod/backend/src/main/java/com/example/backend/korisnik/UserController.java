@@ -127,7 +127,7 @@ public class UserController {
     }
 
     @PutMapping("/save-profile-changes")
-    public void saveProfileChanges(@RequestHeader("username") String username, @RequestBody Users user){
+    public void saveProfileChanges(@RequestHeader("username") String username, @RequestBody Map<String, String> user){
         userService.saveProfileChanges(username, user);
     }
 
