@@ -5,12 +5,9 @@ import com.example.backend.korisnik.UserRepository;
 import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.action.Actions;
 import com.example.backend.korisnik.action.ActionService;
-import com.example.backend.korisnik.positions.SearcherPosition;
-import com.example.backend.korisnik.positions.SearcherPositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.*;
 
 @Service
@@ -18,14 +15,12 @@ public class ManagerService {
     private final UserRepository userRepository;
     private final BelongsToStationRepository belongsToStationRepository;
     private final ActionService actionService;
-    private final SearcherPositionRepository searcherPositionRepository;
 
     @Autowired
-    public ManagerService(UserRepository userRepository, BelongsToStationRepository belongsToStationRepository, ActionService actionService, SearcherPositionRepository searcherPositionRepository) {
+    public ManagerService(UserRepository userRepository, BelongsToStationRepository belongsToStationRepository, ActionService actionService) {
         this.userRepository = userRepository;
         this.belongsToStationRepository = belongsToStationRepository;
         this.actionService = actionService;
-        this.searcherPositionRepository = searcherPositionRepository;
     }
 
     public List<Map<String,String>> getTrackers() {
@@ -116,9 +111,5 @@ public class ManagerService {
         return returning;
     }
 
-    public String saveTrackerPosition(String username, Double latitude, Double longitude) {
-        searcherPositionRepository.save(new SearcherPosition(username, new Timestamp(System.currentTimeMillis()), (latitude), (longitude)));
-        return "OK";
-    }
 
 }

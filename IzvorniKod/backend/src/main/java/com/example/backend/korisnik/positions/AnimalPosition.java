@@ -1,42 +1,28 @@
 package com.example.backend.korisnik.positions;
 
-import com.example.backend.korisnik.Users;
-import com.example.backend.korisnik.action.Actions;
+import com.example.backend.korisnik.animal.Animal;
 import jakarta.persistence.*;
+
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
-@IdClass(SearcherPositionId.class)
-public class SearcherPosition {
+@IdClass(AnimalPositionId.class)
+public class AnimalPosition {
     @Id
     @ManyToOne
-    @JoinColumn(name = "user_name")
-    private Users user;
+    @JoinColumn(name = "animal_id")
+    private Animal animal;
     @Id
-    @ManyToOne
-    @JoinColumn(name = "action_id")
-    private Actions action;
-    @Id
-    @Column(columnDefinition = "TIMESTAMP(6) WITHOUT TIME ZONE")
     private Timestamp timeStamp;
     private Double latitude;
     private Double longitude;
 
-    public Users getUser() {
-        return user;
+    public Animal getAnimal() {
+        return animal;
     }
 
-    public void setUser(Users user) {
-        this.user = user;
-    }
-
-    public Actions getAction() {
-        return action;
-    }
-
-    public void setAction(Actions action) {
-        this.action = action;
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
     }
 
     public Timestamp getTimeStamp() {

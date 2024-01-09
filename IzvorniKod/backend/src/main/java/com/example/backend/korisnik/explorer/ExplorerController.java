@@ -33,4 +33,9 @@ public class ExplorerController {
     public List<String> getAnimals() {
         return explorerService.getAnimals();
     }
+
+    @GetMapping(path = "/animals/species")
+    public List<String> getSpecies(@RequestHeader("animal") String animal) {
+        return explorerService.getSpecies(animal);
+    }
 }

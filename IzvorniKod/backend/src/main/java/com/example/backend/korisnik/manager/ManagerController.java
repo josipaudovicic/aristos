@@ -42,8 +42,4 @@ public class ManagerController {
         return managerService.getRequests(username);
     }
 
-    @PostMapping(path = "/addTrackerPosition")
-    public String addTrackerPosition(@RequestParam("username") String username, @RequestParam("latitude") String latitude, @RequestParam("longitude") String longitude) {
-        return  managerService.saveTrackerPosition(username, Double.valueOf(latitude), Double.valueOf(longitude));
-    }
 }

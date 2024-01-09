@@ -15,4 +15,13 @@ public class AnimalService {
     public List<String> findAllDistinctAnimalNames() {
         return animalRepository.findAllDistinctAnimalNames();
     }
+
+    public List<String> findSpecies(String animal) {
+        List<Animal> animals = animalRepository.findByAnimalName(animal);
+        List<String> animalNames = new java.util.ArrayList<>();
+        for (Animal a : animals) {
+            animalNames.add(a.getAnimalName());
+        }
+        return animalNames;
+    }
 }

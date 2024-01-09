@@ -12,13 +12,11 @@ import java.util.Map;
 
 @Service
 public class ExplorerService {
-    private final UserRepository userRepository;
     private final ActionService actionService;
     private final AnimalService animalService;
 
     @Autowired
-    public ExplorerService(UserRepository userRepository, ActionService actionService, AnimalService animalService) {
-        this.userRepository = userRepository;
+    public ExplorerService(ActionService actionService, AnimalService animalService) {
         this.actionService = actionService;
         this.animalService = animalService;
     }
@@ -44,5 +42,9 @@ public class ExplorerService {
 
     public List<String> getAnimals() {
         return animalService.findAllDistinctAnimalNames();
+    }
+
+    public List<String> getSpecies(String animal) {
+        return animalService.findSpecies(animal);
     }
 }

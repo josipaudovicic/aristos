@@ -9,4 +9,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
     @Query("SELECT DISTINCT a.animalName FROM Animal a")
     List<String> findAllDistinctAnimalNames();
+
+    List<Animal> findByAnimalName(String animalName);
 }

@@ -206,6 +206,5 @@ public class UserService {
             newUser.setPhoto(user.get("photo"));
         }
         userRepository.save(newUser);
-
     }
 }

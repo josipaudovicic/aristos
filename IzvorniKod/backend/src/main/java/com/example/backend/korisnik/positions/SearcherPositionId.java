@@ -1,19 +1,22 @@
 package com.example.backend.korisnik.positions;
 
+import com.example.backend.korisnik.Users;
+import com.example.backend.korisnik.action.Actions;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class SearcherPositionId implements Serializable {
-    private String userName;
+    private Users user;
     private Timestamp timeStamp;
-    private Long actionId;
+    private Actions action;
 
-    public String getUserName() {
-        return userName;
+    public Users getUser() {
+        return user;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser(Users user) {
+        this.user = user;
     }
 
     public Timestamp getTimeStamp() {
@@ -24,11 +27,11 @@ public class SearcherPositionId implements Serializable {
         this.timeStamp = timeStamp;
     }
 
-    public Long getActionId() {
-        return actionId;
+    public Actions getAction() {
+        return action;
     }
 
-    public void setActionId(Long actionId) {
-        this.actionId = actionId;
+    public void setAction(Actions action) {
+        this.action = action;
     }
 }
