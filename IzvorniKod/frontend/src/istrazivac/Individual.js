@@ -22,7 +22,11 @@ function Species () {
       console.log(animalData)
     
       const handleClick = (animal) => {
-        navigate(`/explorer/animals/species/${animal}`, {state : {animal : animal}});
+        const parts = animal.split(': ');
+        const id = parts[1];
+        console.log('ID:', id);
+      
+        navigate(`/explorer/animals/species/${id}`, { state: { animal: animal } });
       };
 
       const renderAnimalList = () => {
