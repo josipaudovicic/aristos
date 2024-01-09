@@ -1,11 +1,7 @@
 package com.example.backend.korisnik.manager;
 
-import com.example.backend.korisnik.Users;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -44,5 +40,10 @@ public class ManagerController {
     @GetMapping(path = "/requests")
     public List<Map<String, String>> getRequests(@RequestHeader("username") String username) {
         return managerService.getRequests(username);
+    }
+
+    @PostMapping(path = "/addTrackerPosition")
+    public String addTrackerPosition(@RequestParam("username") String username, @RequestParam("latitude") String latitude, @RequestParam("longitude") String longitude) {
+        return  managerService.saveTrackerPosition(username, Double.valueOf(latitude), Double.valueOf(longitude));
     }
 }

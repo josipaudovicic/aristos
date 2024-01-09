@@ -196,4 +196,14 @@ public class UserService {
         return kaoUser;
     }
 
+    public void saveProfileChanges(String username, Users user) {
+        Users newUser =  userRepository.findById(username).orElseThrow(() -> new IllegalStateException("Wrong username"));
+        newUser.setName(user.getName());
+        newUser.setSurname(user.getSurname());
+        newUser.setPassword(user.getPassword());
+        newUser.setEmail(user.getEmail());
+        newUser.setPhoto(user.getPhoto());
+        newUser.setUsername(user.getUsername());
+        userRepository.save(newUser);
+    }
 }
