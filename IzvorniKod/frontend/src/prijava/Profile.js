@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Profile() {
   const [userData, setUserData] = useState({});
   const location = useLocation();
-  const username = location.state.username;
+  const navigate = useNavigate();
+  const username = location.state?.username;
 
   useEffect(() => {
-    fetch('/profile', {
+    fetch(`/profile`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        username: username,
+        username: username, 
       },
     })
       .then((response) => response.json())
       .then((data) => setUserData(data))
       .catch((error) => console.error('Error fetching user data:', error));
-  }, []);
+  }, [username]);
+
+  const handleEdit = () => {
+    navigate('/edit-profile', { state: {username: username }});
+  };
 
   const labelStyle = {
     display: 'block',
@@ -79,12 +84,12 @@ function Profile() {
       </div>
       <div>
         <label style={labelStyle}>Fotografija: </label>
-        <span style={spanStyle}>{<img src={userData.file} style={img}></img>}</span>
+        {userData.file && <span style={spanStyle}><img src={userData.file} style={img} alt="User" /></span>}
       </div>
       <div style={centerStyle}>
-        <Link to="/edit-profile"> {/*!!!!!! ne koristi Link nego navigate i prosljeduj mi username*/}
-          <button style={buttonStyle}>Uredi podatke</button> 
-        </Link>
+        <button style={buttonStyle} onClick={handleEdit}>
+          Uredi podatke
+        </button>
       </div>
     </div>
   );

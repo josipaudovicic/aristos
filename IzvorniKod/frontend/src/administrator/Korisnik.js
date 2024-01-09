@@ -1,26 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate, useLocation, Navigate } from 'react-router-dom';
 
 const Korisnik = () => {
   console.log("Renderamo korisnika");
-  const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const users = location.state.users;
   const [user] = useState(location.state.user);
+  const username = location.state?.username;
 
 
   const handleEdit = async () => {
     try {
       console.log("Saljemo zahtjev");
+      const updatedUser = {
+        ...user,
+        additionalData: '',
+      };
       const response = await fetch(`/admin/changeUserData/${user.username}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          username: username, 
         },
-        body: JSON.stringify(user), 
+        body: JSON.stringify(updatedUser), 
       });
-      navigate(`/user/${user.username}`, { state: {user: user }});
+      navigate(`/user/${user.username}`, { state: {user: updatedUser }});
     } catch (error) {
       console.error('Error updating user details:', error);
     }

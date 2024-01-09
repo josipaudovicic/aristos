@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-function EditProfile() {
+const EditProfile = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const formerUsername = location.state?.username;
   const [userData, setUserData] = useState({
     username: '',
     name: '',
@@ -14,16 +17,26 @@ function EditProfile() {
 
   useEffect(() => {
     fetch('/profile', {
-      method: 'GET'
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        username: formerUsername, 
+      },
     })
       .then((response) => response.json())
       .then((data) => setUserData(data))
       .catch((error) => console.error('Error fetching user data for editing:', error));
-  }, []);
+  }, [formerUsername]);
+  console.log(userData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleCancelClick = () => {
+    console.log(formerUsername);
+    navigate('/profile', { state: {username: formerUsername }});
   };
 
   const handleSaveChanges = async () => {
@@ -32,13 +45,14 @@ function EditProfile() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          username: formerUsername,
         },
         body: JSON.stringify(userData),
       });
 
       if (response.ok) {
         console.log('Profile changes saved successfully');
-        window.location.href = '/profile';
+        navigate('/profile', { state: {username: formerUsername }});
       } else {
         console.error('Failed to save profile changes');
       }
@@ -83,11 +97,7 @@ function EditProfile() {
   return (
     <div className="container" style={containerStyle}>
       <div style={centerStyle}>
-        <h2>Uredi podatke:</h2>
-      </div>
-      <div>
-        <label style={labelStyle}>Korisničko ime: </label>
-        <input type="text" name="username" value={userData.username} onChange={handleChange} style={inputStyle} />
+        <h2>Uredi podatke - korisnik {userData.username}</h2>
       </div>
       <div>
         <label style={labelStyle}>Ime: </label>
@@ -106,10 +116,6 @@ function EditProfile() {
         <input type="password" name="password" value={userData.password} onChange={handleChange} style={inputStyle} />
       </div>
       <div>
-        <label style={labelStyle}>Uloga: </label>
-        <span style={inputStyle}>{userData.status}</span>
-      </div>
-      <div>
         <label style={labelStyle}>Fotografija: </label>
         <input type="file" name="photo" value={userData.photo} onChange={handleChange} style={inputStyle} />
       </div>
@@ -117,9 +123,9 @@ function EditProfile() {
         <button style={buttonStyle} onClick={handleSaveChanges}>
           Spremi promjene
         </button>
-        <Link to="/profile"> {/*!!!!!! ne koristi Link nego navigate i prosljeduj mi username*/}
-          <button style={buttonStyle}>Odustani</button>
-        </Link>
+        <button style={buttonStyle} onClick={handleCancelClick}>
+          Odustani
+        </button>
       </div>
     </div>
   );
