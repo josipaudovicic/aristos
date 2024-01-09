@@ -12,7 +12,8 @@ const Korisnik = () => {
 
   const handleEdit = async () => {
     try {
-      const response = await fetch(`admin/users/${id}`, {
+      console.log("Saljemo zahtjev");
+      const response = await fetch(`/admin/changeUserData/${user.username}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

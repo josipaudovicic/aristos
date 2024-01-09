@@ -69,7 +69,7 @@ public class UserController {
 
         Roles role = rolesService.getByName(roleName);
         user.setRole(role);
-
+        System.out.println("Role set");
         user.setAdminCheck(!(role.getId() != 1 && role.getId() != 4));
         user.setEmailCheck(false);
 
