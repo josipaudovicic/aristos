@@ -12,7 +12,7 @@ const EditProfile = () => {
     email: '',
     password: '',
     status: '',
-    photo: '',
+    file: '',
   });
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const EditProfile = () => {
           'Content-Type': 'application/json',
           username: formerUsername,
         },
-        body: JSON.stringify(userData),
+        body: userData,
       });
 
       if (response.ok) {
@@ -117,7 +117,7 @@ const EditProfile = () => {
       </div>
       <div>
         <label style={labelStyle}>Fotografija: </label>
-        <input type="file" name="photo" value={userData.photo} onChange={handleChange} style={inputStyle} />
+        <input type="file" name="file" value={userData.photo} onChange={handleChange} style={inputStyle} />
       </div>
       <div style={buttonContainerStyle}>
         <button style={buttonStyle} onClick={handleSaveChanges}>

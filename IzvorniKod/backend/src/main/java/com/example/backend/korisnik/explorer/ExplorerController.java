@@ -1,9 +1,6 @@
 package com.example.backend.korisnik.explorer;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -37,5 +34,10 @@ public class ExplorerController {
     @GetMapping(path = "/animals/species")
     public List<String> getSpecies(@RequestHeader("animal") String animal) {
         return explorerService.getSpecies(animal);
+    }
+
+    @GetMapping(path = "/animals/species/{id}")
+    public Map<String, String> getIndividualById(@PathVariable Long id) {
+        return explorerService.getIndividualById(id);
     }
 }
