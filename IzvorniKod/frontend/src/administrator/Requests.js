@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 
 function Requests() {
   const [users, setUsers] = useState([]);
+  const [selectedStation, setSelectedStation] = useState('');
+  const [stationData, setStationData] = useState([]); 
 
   useEffect(() => {
-    // Fetch users with confirmed attribute set to NULL
     const fetchUsers = async () => {
       try {
         const response = await fetch('/admin/toConfirm');
@@ -20,27 +21,80 @@ function Requests() {
         console.error('Error:', error);
       }
     };
+    
+    const fetchStations = async () => {
+      try {
+        const response = await fetch('/admin/getAllStations');
+        if (response.ok) {
+          const stationData = await response.json();
+          console.log(stationData);
+          setStationData(stationData); 
+        } else {
+          console.error('Failed to fetch stations');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
 
     fetchUsers();
+    fetchStations();
   }, []); 
-  
-  const handleConfirm = async (userName) => {
-    try {
-      const response = await fetch(`/admin/users/${userName}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
 
-      if (response.ok) {
-        // Update the local state to reflect the change
-        setUsers((prevUsers) => prevUsers.filter((user) => user.username !== userName));
+  const handleConfirm = async (user) => {
+    // station managers
+    if (user.role === 'manager') {
+      if (selectedStation) {
+        console.log(`Confirmed for manager: ${user.username}, Station: ${selectedStation}`);
+        try {
+          const response = await fetch(`/admin/users/${user.username}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              confirmed: true,
+              station: selectedStation,
+            }),
+          });
+
+          if (response.ok) {
+            console.log('Manager confirmation sent to the backend successfully.');
+
+            setUsers((prevUsers) => prevUsers.filter((u) => u.username !== user.username));
+          } else {
+            console.error('Failed to send manager confirmation to the backend.');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
       } else {
-        console.error('Failed to update user confirmation status');
+        console.error('Please choose a station for manager confirmation.');
       }
-    } catch (error) {
-      console.error('Error:', error);
+    } else {
+      // druge uloge
+      try {
+        const response = await fetch(`/admin/users/${user.username}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            confirmed: true,
+          }),
+        });
+
+        if (response.ok) {
+
+          setUsers((prevUsers) => prevUsers.filter((u) => u.username !== user.username));
+        } else {
+          console.error('Failed to update user confirmation status');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+
+      console.log(`Confirmed for user: ${user.username}`);
     }
   };
 
@@ -51,7 +105,7 @@ function Requests() {
       });
 
       if (response.ok) {
-        // Remove the user from the local state
+
         setUsers((prevUsers) => prevUsers.filter((user) => user.username !== userName));
       } else {
         console.error('Failed to delete user');
@@ -83,7 +137,7 @@ function Requests() {
     color: '#fff',
     borderRadius: '4px',
     cursor: 'pointer',
-};
+  };
 
   return (
     <div className='container'>
@@ -92,18 +146,39 @@ function Requests() {
         {users.map((user) => (
           <li key={user.username}>
             {user.username} - {user.role}
-            <button style={buttonStyle} onClick={() => handleConfirm(user.username)}>Confirm</button>
-            <button style={buttonStyle} onClick={() => handleDecline(user.username)}>Decline</button>
+            
+            {/* Conditionally render dropdown for managers */}
+            {user.role === 'manager' && (
+              <select
+                value={selectedStation}
+                onChange={(e) => setSelectedStation(e.target.value)}
+              >
+                <option value="" disabled>
+                  Izaberi stanicu
+                </option>
+                {stationData.map((station) => (
+                  <option key={station.stationId} value={station.stationName}>
+                    {station.stationName}
+                  </option>
+                ))}
+              </select>
+            )}
+  
+            <button style={buttonStyle} onClick={() => handleConfirm(user)}>
+              Potvrdi
+            </button>
+            <button style={buttonStyle} onClick={() => handleDecline(user.username)}>
+              Odbij
+            </button>
           </li>
         ))}
       </ul>
       <div>
-      <Link to="/admin">
-        <button style={bStyle}>Početna</button>
-      </Link>
+        <Link to="/admin">
+          <button style={bStyle}>Početna</button>
+        </Link>
+      </div>
     </div>
-  </div>
-
   );
 }
 
