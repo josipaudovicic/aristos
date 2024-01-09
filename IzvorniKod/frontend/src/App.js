@@ -19,6 +19,8 @@ import Profile from "./prijava/Profile";
 import EditProfile from "./prijava/EditProfile";
 import Explorer from "./istrazivac/Explorer";
 import ListActions from "./istrazivac/ListActions";
+import Species from "./istrazivac/Species";
+import Individual from "./istrazivac/Individual";
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/explorer" element={<Explorer />} />
         <Route path="/explorer/actions" element={<ListActions />} />
+        <Route path="/explorer/animals" element={<Species />} />
+        <Route path="/explorer/animals/species" element={<Individual />} />
       </Routes>
     </BrowserRouter>
   );

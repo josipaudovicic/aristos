@@ -20,7 +20,7 @@ public class AnimalService {
         List<Animal> animals = animalRepository.findByAnimalName(animal);
         List<String> animalNames = new java.util.ArrayList<>();
         for (Animal a : animals) {
-            animalNames.add(a.getAnimalName());
+            animalNames.add(a.getAnimalName() + ", id: " +  a.getAnimalId());
         }
         return animalNames;
     }
