@@ -207,4 +207,8 @@ public class UserService {
         }
         userRepository.save(newUser);
     }
+
+    public Users getUserByUsername(String username) {
+        return userRepository.findById(username).orElseThrow(() -> new IllegalStateException("Wrong username"));
+    }
 }

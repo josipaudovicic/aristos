@@ -1,6 +1,7 @@
 package com.example.backend.korisnik.action;
 
 import com.example.backend.korisnik.UserService;
+import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.station.Station;
 import com.example.backend.korisnik.station.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,13 @@ import java.util.List;
 public class ActionService {
     private final ActionRepository actionRepository;
     private final StationService stationService;
+    private final UserService userService;
 
     @Autowired
-    public ActionService(ActionRepository actionRepository, StationService stationService) {
+    public ActionService(ActionRepository actionRepository, StationService stationService, UserService userService) {
         this.actionRepository = actionRepository;
         this.stationService = stationService;
+        this.userService = userService;
     }
 
     public List<Actions> getActive(String username){
@@ -35,6 +38,7 @@ public class ActionService {
     }
 
     public List<Actions> getAllActions(String username){
-        return actionRepository.findByUserName(username);
+        Users user = userService.getUserByUsername(username);
+        return actionRepository.findByUser(user);
     }
 }

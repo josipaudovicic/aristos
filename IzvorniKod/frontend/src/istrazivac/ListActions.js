@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 const ListActions = () => {
     const location = useLocation()
-    const actions = location.state?.actions || [];
+    const actions = location.state?.users || [];
     console.log(actions);
     const navigate = useNavigate();
 

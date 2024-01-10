@@ -10,7 +10,12 @@ function Explorer() {
     try {
       let response;
       if (path === 'explorer/actions') {
-        response = await fetch(`/explorer/actions`);
+        response = await fetch(`/explorer/actions` , {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            username: username,
+          },  });
       } else if (path === 'explorer/map') {
         response = await fetch(`/explorer/map`);
       } else if (path === 'explorer/animals') {

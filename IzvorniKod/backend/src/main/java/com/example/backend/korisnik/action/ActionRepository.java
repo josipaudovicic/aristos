@@ -1,5 +1,6 @@
 package com.example.backend.korisnik.action;
 
+import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.station.Station;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,5 +11,5 @@ public interface ActionRepository extends JpaRepository<Actions, Long> {
 
     List<Actions> findByActionActiveAndStartedAndStation(boolean active, boolean started, Station station);
     List<Actions> findByStartedAndStation(boolean b, Station station);
-    List<Actions> findByUserName(String username);
+    List<Actions> findByUser(Users user);
 }
