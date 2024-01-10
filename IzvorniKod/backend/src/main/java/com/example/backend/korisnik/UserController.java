@@ -131,4 +131,17 @@ public class UserController {
         userService.saveProfileChanges(username, user);
     }
 
+    @GetMapping("/images/{imageName}")
+    public ResponseEntity<Resource> getAnimalImage(@PathVariable String imageName) {
+        try {
+            Path imagePath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static", "animals", imageName);
+            Resource resource = new UrlResource(imagePath.toUri());
+
+            return ResponseEntity.ok()
+                    .body(resource);
+        } catch (MalformedURLException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
