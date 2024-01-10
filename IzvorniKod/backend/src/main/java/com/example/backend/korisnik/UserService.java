@@ -3,6 +3,7 @@ package com.example.backend.korisnik;
 import com.example.backend.korisnik.email.EmailSender;
 import com.example.backend.korisnik.token.ConfirmationToken;
 import com.example.backend.korisnik.token.ConfirmationTokenService;
+import org.hibernate.internal.log.SubSystemLogging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,7 @@ public class UserService {
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
         String link = "http://localhost:3000/register/confirm?token=" + token;
+        System.out.println("Saljemo mail--------------");
         emailSender.send(user.getEmail(), buildEmail(user.getName(), link));
 
         return "sent an email";
