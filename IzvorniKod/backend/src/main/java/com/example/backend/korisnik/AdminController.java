@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,11 @@ public class AdminController {
     @GetMapping("admin/toConfirm")
     public List<Map<String, String>> usersToConfirm(@RequestParam(name = "confirmed", required = false) boolean confirmed) {
         return adminService.getUsersToConfirm();
+    }
+
+    @GetMapping("admin/getAllStations")
+    public List<Map<String, String>> findAllStations(){
+        return adminService.findAllStations();
     }
 
     @PutMapping("/admin/users/{userName}")

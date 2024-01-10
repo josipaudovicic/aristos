@@ -43,7 +43,7 @@ function Requests() {
 
   const handleConfirm = async (user) => {
     // station managers
-    if (user.role === 'manager') {
+    if (user.role === 'Voditelj postaje') {
       if (selectedStation) {
         console.log(`Confirmed for manager: ${user.username}, Station: ${selectedStation}`);
         try {
@@ -148,7 +148,7 @@ function Requests() {
             {user.username} - {user.role}
             
             {/* Conditionally render dropdown for managers */}
-            {user.role === 'manager' && (
+            {user.role === 'Voditelj postaje' && (
               <select
                 value={selectedStation}
                 onChange={(e) => setSelectedStation(e.target.value)}
@@ -157,8 +157,8 @@ function Requests() {
                   Izaberi stanicu
                 </option>
                 {stationData.map((station) => (
-                  <option key={station.stationId} value={station.stationName}>
-                    {station.stationName}
+                  <option key={station.station_id} value={station.station_name}>
+                    {station.station_name}
                   </option>
                 ))}
               </select>

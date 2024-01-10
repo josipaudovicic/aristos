@@ -80,12 +80,18 @@ function Registration() {
 
       const allowedPictureExtensions = ['.png', '.jpg', '.jpeg'];
       const fileName = file?.name || '';
+      const maximumImageSize = 10240 * 1024;
       const fileExtension = fileName.split('.').pop().toLowerCase();
       console.log('File Extension:', fileExtension);
 
       if (!allowedPictureExtensions.includes('.' + fileExtension)) {
         alert('Format slike nije podržan! Molimo odaberite sliku u formatu .png, .jpg, ili .jpeg.');
         return false;
+      }
+
+      if (file.size > maximumImageSize) {
+        alert('Slika je prevelika. Ne smije zauzimati više od 10MB.');
+      return false;
       }
 
       if (
