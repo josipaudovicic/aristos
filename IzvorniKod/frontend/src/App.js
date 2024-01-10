@@ -6,6 +6,7 @@ import Poruka from "./registracija/Poruka";
 import Korisnik from "./administrator/Korisnik";
 import PregledSvihKorisnika from "./administrator/PregledSvihKorisnika";
 import Requests from "./administrator/Requests";
+import EditKorisnik from "./administrator/EditKorisnik";
 import TwoButtonRedirectComponent from "./administrator/TwoButtonRedirectComponent";
 import Welcome from "./registracija/Welcome";
 import EmailChecked from "./registracija/EmailChecked";
@@ -22,6 +23,7 @@ import ListActions from "./istrazivac/ListActions";
 import Species from "./istrazivac/Species";
 import Individual from "./istrazivac/Individual";
 import InfoAnimals from "./istrazivac/InfoAnimals";
+
 
 function App() {
   return (
@@ -46,6 +48,7 @@ function App() {
         <Route path="/explorer/animals" element={<Species />} />
         <Route path="/explorer/animals/species" element={<Individual />} />
         <Route path="/explorer/animals/species/:id" element={<InfoAnimals />} />
+        <Route path="/user/:username/edit" element={<EditKorisnik />} />
       </Routes>
     </BrowserRouter>
   );
