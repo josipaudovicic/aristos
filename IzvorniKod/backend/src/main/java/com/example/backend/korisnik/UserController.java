@@ -57,12 +57,20 @@ public class UserController {
 
         Users user = new Users(username, email, password, name, surname);
 
+        System.out.println("Trying to add user");
         try {
             Path uploadPath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static");
+            System.out.println("1");
             Path filePath = uploadPath.resolve(username);
+            System.out.println("2");
+            System.out.println(image);
+            System.out.println(filePath);
             Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("3");
             String photo = "/images/" + username;
+            System.out.println("4");
             user.setPhoto(photo);
+            System.out.println("5");
         } catch (Exception e) {
             throw new IllegalStateException("no photo uploaded!");
         }
@@ -73,6 +81,7 @@ public class UserController {
         user.setAdminCheck(!(role.getId() != 1 && role.getId() != 4));
         user.setEmailCheck(false);
 
+        System.out.println("Everything went fine. Adding the user.");
         return userService.addUser(user);
     }
 
@@ -84,7 +93,6 @@ public class UserController {
     @GetMapping(path="/waitEmail")
     public boolean waitEmail(@RequestHeader("username") String username){
         return userService.checkEmail(username);
-
     }
 
     @GetMapping(path="/emailChecked")
