@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const EditProfile = () => {
+const EditKorisnik = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const formerUsername = location.state?.username;
+  const formerUser = location.state?.user;
+  const formerUsername = location.state?.user.username;
+  console.log(formerUsername)
   const [userData, setUserData] = useState({
     username: '',
     name: '',
@@ -16,16 +18,21 @@ const EditProfile = () => {
   });
 
   useEffect(() => {
-    fetch('/profile', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        username: formerUsername, 
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => setUserData(data))
-      .catch((error) => console.error('Error fetching user data for editing:', error));
+    console.log(formerUsername);
+    if (formerUsername !== undefined){
+        fetch('/profile', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              username: formerUsername, 
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {setUserData(data);
+          console.log(data);})
+            .catch((error) => console.error('Error fetching user data for editing:', error));
+    }
+    
   }, [formerUsername]);
   console.log(userData);
 
@@ -36,12 +43,12 @@ const EditProfile = () => {
 
   const handleCancelClick = () => {
     console.log(formerUsername);
-    navigate('/profile', { state: {username: formerUsername }});
+    navigate(`/user/${formerUsername}`, { state: {user: formerUser }});
   };
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch('/save-profile-changes', {
+      const response = await fetch(`/admin/changeUserData/${userData.username}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +59,7 @@ const EditProfile = () => {
 
       if (response.ok) {
         console.log('Profile changes saved successfully');
-        navigate('/profile', { state: {username: formerUsername }});
+        navigate(`/user/${userData.username}`, { state: {username: userData.username }});
       } else {
         console.error('Failed to save profile changes');
       }
@@ -115,6 +122,19 @@ const EditProfile = () => {
         <label style={labelStyle}>Lozinka: </label>
         <input type="password" name="password" value={userData.password} onChange={handleChange} style={inputStyle} />
       </div>
+      <div>
+        <label style={labelStyle}>Uloga: </label>
+        <select
+          name="status"
+          value={userData.status}
+          onChange={handleChange}
+          style={inputStyle}
+        >
+          <option value="Tragač">Tragač</option>
+          <option value="Istraživač">Istraživač</option>
+          <option value="Voditelj postaje">Voditelj postaje</option>
+        </select>
+      </div>
       <div style={buttonContainerStyle}>
         <button style={buttonStyle} onClick={handleSaveChanges}>
           Spremi promjene
@@ -127,4 +147,4 @@ const EditProfile = () => {
   );
 }
 
-export default EditProfile;
+export default EditKorisnik;

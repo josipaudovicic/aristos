@@ -47,4 +47,8 @@ public class ExplorerService {
     public List<String> getSpecies(String animal) {
         return animalService.findSpecies(animal);
     }
+
+    public Map<String, String> getIndividualById(Long id) {
+        return animalService.findAnimalById(id);
+    }
 }
