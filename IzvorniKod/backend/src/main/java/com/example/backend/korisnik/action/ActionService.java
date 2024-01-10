@@ -41,4 +41,12 @@ public class ActionService {
         Users user = userService.getUserByUsername(username);
         return actionRepository.findByUser(user);
     }
+
+    public Actions getActionByName(String actionName) {
+        return actionRepository.findByActionName(actionName);
+    }
+
+    public Actions findById(Long actionId) {
+        return actionRepository.findById(actionId).orElse(null);
+    }
 }

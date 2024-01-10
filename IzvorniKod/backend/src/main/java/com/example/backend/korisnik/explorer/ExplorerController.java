@@ -20,6 +20,11 @@ public class ExplorerController {
         return explorerService.getActions(username);
     }
 
+    @GetMapping(path = "/action/{actionName}")
+    public List<Map<String, String>> getMap(@PathVariable String actionName, @RequestHeader("username") String username) {
+        return explorerService.getHeatMap(actionName, username);
+    }
+
     @GetMapping(path = "/map")
     public List<Map<String, String>> getMap() {
         //return explorerService.getMap();
@@ -40,4 +45,6 @@ public class ExplorerController {
     public Map<String, String> getIndividualById(@PathVariable Long id) {
         return explorerService.getIndividualById(id);
     }
+
+
 }

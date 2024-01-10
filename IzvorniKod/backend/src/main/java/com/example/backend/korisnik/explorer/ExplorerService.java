@@ -4,6 +4,10 @@ import com.example.backend.korisnik.UserRepository;
 import com.example.backend.korisnik.action.ActionService;
 import com.example.backend.korisnik.action.Actions;
 import com.example.backend.korisnik.animal.AnimalService;
+import com.example.backend.korisnik.positions.SearcherPosition;
+import com.example.backend.korisnik.positions.SearcherPositionService;
+import com.example.backend.korisnik.task.TaskService;
+import com.example.backend.korisnik.vehicle.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +18,15 @@ import java.util.Map;
 public class ExplorerService {
     private final ActionService actionService;
     private final AnimalService animalService;
+    private final SearcherPositionService searchersService;
+    private final TaskService taskService;
 
     @Autowired
-    public ExplorerService(ActionService actionService, AnimalService animalService) {
+    public ExplorerService(ActionService actionService, AnimalService animalService, SearcherPositionService searchersService, TaskService taskService) {
         this.actionService = actionService;
         this.animalService = animalService;
+        this.searchersService = searchersService;
+        this.taskService = taskService;
     }
 
     public List<Map<String, String>> getActions(String username) {
@@ -50,5 +58,23 @@ public class ExplorerService {
 
     public Map<String, String> getIndividualById(Long id) {
         return animalService.findAnimalById(id);
+    }
+
+    public List<Map<String, String>> getHeatMap(String actionName, String username) {
+        Actions action = actionService.getActionByName(actionName);
+
+        List<SearcherPosition> allSearchers = searchersService.findByAction(action.getActionId());
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (SearcherPosition searcher : allSearchers) {
+            Map<String, String> kaoSearcher = new java.util.HashMap<>();
+            Vehicle vehicle = taskService.getVehicleByActionAndUserName(action, searcher);
+            kaoSearcher.put("username", searcher.getUser().getUsername());
+            kaoSearcher.put("latitude", searcher.getLatitude().toString());
+            kaoSearcher.put("longitude", searcher.getLongitude().toString());
+            kaoSearcher.put("vehicleId", vehicle.getVehicleId().toString());
+            returning.add(kaoSearcher);
+        }
+
+        return returning;
     }
 }

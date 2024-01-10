@@ -10,7 +10,7 @@ const ListActions = () => {
     const handleClick = async (action) => { 
         try {
             console.log(action);
-            navigate(`/explorer/action/${action.actionName}`, { state: {action: action, actions: actions}});
+            navigate(`/explorer/action/${action.actionName}`, { state: {action: action, actions: actions, username: action.username}});
     
         } catch (error) {
             console.error('Error fetching action details:', error.message);
