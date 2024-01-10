@@ -8,7 +8,7 @@ function infoStranica() {
       try {
       let response;
       if (path === "popisZadataka") {
-        response = await fetch(`/explorer/getAllTasks`);
+        response = await fetch(`/explorer/allTasks`);
       } else {
         response = await fetch(`/explorer/requestForTrackers`);
       }

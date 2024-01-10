@@ -5,14 +5,12 @@ function IzradaZahtjeva(){
 
     const [actions, setActions] = useState([]);
     const [description, setDescription] = useState([]);
-    const [selectedAction, setSelectedAction] = useState('');
-    const navigate = useNavigate();
-    
+    const [selectedAction, setSelectedAction] = useState('');    
 
     useEffect(() => {
     const fetchActions = async () => { //dohvaca akcije od istrazivaca za dropdown
         try {
-          const response = await fetch('');
+          const response = await fetch('api/explorer/actions');
           if (response.ok) {
             const data = await response.json();
             console.log(data);
@@ -28,7 +26,7 @@ function IzradaZahtjeva(){
       }, []);
     
     
-      const handleSubmit = () => {
+      const handleSubmit = async() => {
         alert('Zahtjev je poslan');
 
         try {
@@ -53,7 +51,7 @@ function IzradaZahtjeva(){
         setSelectedAction(event.target.value);
       };
 
-      const handleChange=(event){
+      const handleChange=(event) => {
         setDescription(event.target.value)
       }
 
