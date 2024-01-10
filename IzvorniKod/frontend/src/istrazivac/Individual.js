@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-function Species () {
+function Individual () {
     const [animalData, setAnimalData] = useState({});
     const [anima, setAnima] = useState({});
     const navigate = useNavigate();
@@ -21,24 +21,29 @@ function Species () {
           .catch((error) => console.error('Error fetching user data:', error));
       }, [animal]);
       console.log(animalData)
+
     
       const handleClick = (animal) => {
         const parts = animal.split(': ');
         const id = parts[1];
-        console.log('ID:', id);
       
         fetch(`/explorer/animals/species/${id}`, {
-            method: 'GET', 
-            headers: {
-                'Content-Type': 'application/json',
-              },
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         })
-        .then((response) => response.json())
-        .then((data) => setAnima(data))
-        .catch((error) => console.error('Error fetching user data:', error));
-        console.log(anima);
-        navigate(`/explorer/animals/species/${id}`, { state: { animal: anima } });
-      };
+          .then((response) => {
+            console.log('Raw Response:', response);
+            return response.json();
+          })
+          .then((data) => {
+            var animals = data;
+            console.log(animals);
+            navigate(`/explorer/animals/species/${id}`, {state : {animal : animals}});
+          })
+          .catch((error) => console.error('Error fetching user data:', error));
+      }
 
       const renderAnimalList = () => {
         const elements = [];
@@ -76,4 +81,4 @@ function Species () {
    ); 
 }
 
-export default Species;
+export default Individual;

@@ -17,11 +17,17 @@ function InfoAnimals() {
         src = '/animalImages/sivivuk.jpg';
     }
 
-
+    const imageStyle = {
+        width: '400px',
+        height: '300px',
+      };
 
     return(
         <div className='container'>
-            <img src={src}></img>
+            <img src={src} alt="animal image" style={imageStyle}></img>
+            <h2>{animal.animalName} id: {animal.id}</h2>
+            <p>Latinski naziv: {animal.latinName}</p>
+            <p>Opis: {animal.description}</p>
         </div>
     );
 }
