@@ -131,7 +131,7 @@ public class UserController {
         userService.saveProfileChanges(username, user);
     }
 
-    @GetMapping("/images/{imageName}")
+    @GetMapping("/animalImages/{imageName}")
     public ResponseEntity<Resource> getAnimalImage(@PathVariable String imageName) {
         try {
             Path imagePath = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "static", "animals", imageName);

@@ -21,6 +21,7 @@ import Explorer from "./istrazivac/Explorer";
 import ListActions from "./istrazivac/ListActions";
 import Species from "./istrazivac/Species";
 import Individual from "./istrazivac/Individual";
+import InfoAnimals from "./istrazivac/InfoAnimals";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route path="/explorer/actions" element={<ListActions />} />
         <Route path="/explorer/animals" element={<Species />} />
         <Route path="/explorer/animals/species" element={<Individual />} />
+        <Route path="/explorer/animals/species/:id" element={<InfoAnimals />} />
       </Routes>
     </BrowserRouter>
   );

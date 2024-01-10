@@ -47,7 +47,7 @@ const EditProfile = () => {
           'Content-Type': 'application/json',
           username: formerUsername,
         },
-        body: userData,
+        body: JSON.stringify(userData),
       });
 
       if (response.ok) {
@@ -114,10 +114,6 @@ const EditProfile = () => {
       <div>
         <label style={labelStyle}>Lozinka: </label>
         <input type="password" name="password" value={userData.password} onChange={handleChange} style={inputStyle} />
-      </div>
-      <div>
-        <label style={labelStyle}>Fotografija: </label>
-        <input type="file" name="file" value={userData.photo} onChange={handleChange} style={inputStyle} />
       </div>
       <div style={buttonContainerStyle}>
         <button style={buttonStyle} onClick={handleSaveChanges}>

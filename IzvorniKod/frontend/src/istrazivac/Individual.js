@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 function Species () {
     const [animalData, setAnimalData] = useState({});
+    const [anima, setAnima] = useState({});
     const navigate = useNavigate();
     const location = useLocation();
     const animal = location.state?.animal;
@@ -18,7 +19,7 @@ function Species () {
           .then((response) => response.json())
           .then((data) => setAnimalData(data))
           .catch((error) => console.error('Error fetching user data:', error));
-      }, []);
+      }, [animal]);
       console.log(animalData)
     
       const handleClick = (animal) => {
@@ -26,7 +27,17 @@ function Species () {
         const id = parts[1];
         console.log('ID:', id);
       
-        navigate(`/explorer/animals/species/${id}`, { state: { animal: animal } });
+        fetch(`/explorer/animals/species/${id}`, {
+            method: 'GET', 
+            headers: {
+                'Content-Type': 'application/json',
+              },
+        })
+        .then((response) => response.json())
+        .then((data) => setAnima(data))
+        .catch((error) => console.error('Error fetching user data:', error));
+        console.log(anima);
+        navigate(`/explorer/animals/species/${id}`, { state: { animal: anima } });
       };
 
       const renderAnimalList = () => {
