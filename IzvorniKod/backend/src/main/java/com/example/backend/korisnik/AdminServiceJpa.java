@@ -99,13 +99,23 @@ public class AdminServiceJpa {
     }
 
 
-    public boolean confirm(Users user) {
+    public boolean stationAlreadyHasManager(String stationName) {
+       return false;
+    }
+
+    public boolean confirmUser(Users user, String stationName) {
         String username = user.getUsername();
         Users user_confirm = userRepository.getReferenceById(username);
 
         user_confirm.setAdminCheck(true);
+        if (stationName != null) {
+            if (!this.stationAlreadyHasManager(stationName)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
         userRepository.saveAndFlush(user_confirm);
-
         return true;
     }
 

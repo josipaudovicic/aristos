@@ -41,11 +41,12 @@ public class AdminController {
     }
 
     @PutMapping("/admin/users/{userName}")
-    public ResponseEntity<String> confirmUser(@PathVariable String userName) {
+    public ResponseEntity<String> confirmUser(@PathVariable String userName, @RequestBody Map<String, String> confirmationParameters) {
         Users user = adminService.getUserById(userName);
-        System.out.println(user);
         if (user != null) {
-            if (adminService.confirm(user)) {
+            String stationName = confirmationParameters.get("station");
+            System.out.println(stationName);
+            if (adminService.confirmUser(user, stationName)) {
                 return ResponseEntity.ok("User succesfully confirmed");
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: User could not be confirmed");
