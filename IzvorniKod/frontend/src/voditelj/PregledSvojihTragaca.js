@@ -14,15 +14,16 @@ function PregledSvojihTragaca() {
 
   return (
     <div>
-      <h2>Lista mojih tragača:</h2>
+      <h2>Lista svojih tragača:</h2>
       <ul>
         {trackers.map((tracker) => (
           <li key={tracker.id} style={{ cursor: 'pointer' }}>
             <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}, <strong>ID:</strong> {tracker.id}, <strong>Uloga:</strong> {tracker.role}
+
             <button onClick={() => handleClick(tracker)}>Uredi</button>
           </li>
         ))}
-      </ul>
+      </ul>   
     </div>
   );
 }
