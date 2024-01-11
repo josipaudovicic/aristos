@@ -120,15 +120,24 @@ public class AdminServiceJpa {
         }
     }
 
-    public List<Station> getAllStations() {
-        return stationRepository.findAll();
-    }
-
     public boolean setManagerStation(Users manager, Station station) {
         if (!stationRepository.existsById(station.getStationId()) ||
                 !userRepository.existsById(manager.getUsername())) {
             return false;
         }
+        return true;
+    }
+
+    public boolean changeUserData(String username, Map<String, String> user) {
+        Users newUser =  userRepository.findById(username).orElseThrow(() -> new IllegalStateException("Wrong username"));
+        newUser.setName(user.get("name"));
+        newUser.setSurname(user.get("surname"));
+        newUser.setPassword(user.get("password"));
+        newUser.setEmail(user.get("email"));
+        if (user.get("photo") != null) {
+            newUser.setPhoto(user.get("photo"));
+        }
+        userRepository.save(newUser);
         return true;
     }
 }

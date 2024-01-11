@@ -71,12 +71,12 @@ public class AdminController {
     }
 
     @PutMapping("/admin/changeUserData/{username}")
-    public ResponseEntity<String> changeUserData(@PathVariable String username) {
+    public ResponseEntity<String> changeUserData(@PathVariable String username, @RequestBody Map<String, String> newUserData) {
         System.out.print("Username to change ");
-        System.out.print(username);
+        System.out.println(newUserData.get("username"));
         Users user = adminService.getUserById(username);
         if (user != null) {
-            //Here should come update of the row in databse before return
+            adminService.changeUserData(username, newUserData);
             return ResponseEntity.ok("User data succesfully changed");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: User does not exist");
