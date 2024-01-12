@@ -6,20 +6,16 @@ import com.example.backend.korisnik.animal.Animal;
 import jakarta.persistence.*;
 
 @Entity
-@IdClass(UserCommentId.class)
 public class UserComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long commentId;
-    @Id
     @ManyToOne
     @JoinColumn(name = "animal_id")
     Animal animal;
-    @Id
     @ManyToOne
     @JoinColumn(name = "user_name")
     Users user;
-    @Id
     @ManyToOne
     @JoinColumn(name = "action_id")
     Actions action;

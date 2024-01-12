@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserCommentRepository extends JpaRepository<UserComment, UserCommentId> {
+public interface UserCommentRepository extends JpaRepository<UserComment, Long> {
     List<UserComment> findByAnimal(Animal animal);
 }
