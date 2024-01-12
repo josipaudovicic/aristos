@@ -25,10 +25,9 @@ public class ExplorerController {
         return explorerService.getHeatMap(actionName, username);
     }
 
-    @GetMapping(path = "/map")
-    public List<Map<String, String>> getMap() {
-        //return explorerService.getMap();
-        return null;
+    @GetMapping(path = "/action/{actionName}/trackers")
+    public Map<String, List<Map<String, String>>> getTrackers(@PathVariable String actionName) {
+        return explorerService.getTrackersAndVehicles(actionName);
     }
 
     @GetMapping(path = "/animals")
@@ -55,6 +54,5 @@ public class ExplorerController {
     public void postComment(@PathVariable Long id, @RequestBody Map<String, String> body) {
         explorerService.postComment(id, body.get("comment"), body.get("username"));
     }
-
 
 }

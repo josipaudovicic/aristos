@@ -5,7 +5,9 @@ import com.example.backend.korisnik.positions.SearcherPosition;
 import com.example.backend.korisnik.vehicle.Vehicle;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class TaskService {
@@ -22,5 +24,14 @@ public class TaskService {
             System.out.println("vehicle: " + t.getVehicle().getVehicleName());
         }
         return tasks.get(0).getVehicle();
+    }
+
+    public List<Vehicle> getVehiclesByAction(Actions action) {
+        List<Task> task = taskRepository.findByAction(action);
+        Set<Vehicle> vehicles = new HashSet<>();
+        for (Task t : task) {
+            vehicles.add(t.getVehicle());
+        }
+        return List.copyOf(vehicles);
     }
 }

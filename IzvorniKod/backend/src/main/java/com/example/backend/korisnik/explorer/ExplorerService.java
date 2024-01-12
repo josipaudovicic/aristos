@@ -1,5 +1,6 @@
 package com.example.backend.korisnik.explorer;
 
+import com.example.backend.korisnik.HelpingTables.BelongsToActionService;
 import com.example.backend.korisnik.UserService;
 import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.action.ActionService;
@@ -27,15 +28,17 @@ public class ExplorerService {
     private final TaskService taskService;
     private final UserCommentService userCommentService;
     private final UserService userService;
+    private final BelongsToActionService belongsToActionService;
 
     @Autowired
-    public ExplorerService(ActionService actionService, AnimalService animalService, SearcherPositionService searchersService, TaskService taskService, UserCommentService userCommentService, UserService userService) {
+    public ExplorerService(ActionService actionService, AnimalService animalService, SearcherPositionService searchersService, TaskService taskService, UserCommentService userCommentService, UserService userService, BelongsToActionService belongsToActionService) {
         this.actionService = actionService;
         this.animalService = animalService;
         this.searchersService = searchersService;
         this.taskService = taskService;
         this.userCommentService = userCommentService;
         this.userService = userService;
+        this.belongsToActionService = belongsToActionService;
     }
 
     public List<Map<String, String>> getActions(String username) {
@@ -113,5 +116,29 @@ public class ExplorerService {
         Actions action = actionService.getActionById(0L);
         UserComment userComment = new UserComment(animal, user, action, comment);
         userCommentService.save(userComment);
+    }
+
+    public Map<String, List<Map<String, String>>> getTrackersAndVehicles(String actionName) {
+        Actions action = actionService.getActionByName(actionName);
+        List<Users> trackers = belongsToActionService.getTrackers(action);
+        List<Vehicle> vehicles = taskService.getVehiclesByAction(action);
+        List<Map<String, String>> asUser = new java.util.ArrayList<>(List.of());
+        Map<String, String> kaoTracker = new java.util.HashMap<>();
+        for (Users tracker : trackers) {
+            kaoTracker.put("username", tracker.getUsername());
+            asUser.add(kaoTracker);
+        }
+        List<Map<String, String>> asVehicle = new java.util.ArrayList<>(List.of());
+        Map<String, String> kaoVehicle = new java.util.HashMap<>();
+        for (Vehicle vehicle : vehicles) {
+            kaoVehicle.put("vehicleId", vehicle.getVehicleId().toString());
+            kaoVehicle.put("vehicleName", vehicle.getVehicleName());
+            asVehicle.add(kaoVehicle);
+        }
+        Map<String, List<Map<String, String>>> returning = new java.util.HashMap<>();
+        returning.put("trackers", asUser);
+        returning.put("vehicles", asVehicle);
+
+        return returning;
     }
 }
