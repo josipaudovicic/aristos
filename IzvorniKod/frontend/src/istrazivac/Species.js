@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Species () {
     const [animalData, setAnimalData] = useState({});
     const navigate = useNavigate();
+    const location = useLocation();
+    const username = location.state?.username;
 
     useEffect(() => {
         fetch(`/explorer/animals`, {
@@ -19,7 +21,8 @@ function Species () {
       console.log(animalData)
     
       const handleClick = (animal) => {
-        navigate('/explorer/animals/species', {state : {animal : animal}});
+        console.log(username);
+        navigate('/explorer/animals/species', {state : {animal : animal, username: username}});
       };
 
       const renderAnimalList = () => {

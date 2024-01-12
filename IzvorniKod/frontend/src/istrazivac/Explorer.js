@@ -25,7 +25,8 @@ function Explorer() {
       }
 
       const data = await response.json();
-      navigate(`/${path}`, { state: { users: data } });
+      console.log(username);
+      navigate(`/${path}`, { state: { users: data, username: username } });
     } catch (error) {
       console.error(`Error fetching data:`, error.message);
     }
