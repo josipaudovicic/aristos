@@ -110,7 +110,7 @@ public class ExplorerService {
     public void postComment(Long id, String comment, String username) {
         Animal animal = animalService.returnById(id);
         Users user = userService.getUserByUsername(username);
-        UserComment userComment = new UserComment(animal, user, null, comment);
+        UserComment userComment = new UserComment(animal, user, new Actions(), comment);
         userCommentService.save(userComment);
     }
 }

@@ -1,42 +1,46 @@
 package com.example.backend.korisnik.comment;
 
+import com.example.backend.korisnik.Users;
+import com.example.backend.korisnik.action.Actions;
+import com.example.backend.korisnik.animal.Animal;
+
 import java.io.Serializable;
 
 public class UserCommentId implements Serializable {
-    private String animal;
-    private String user;
-    private Long actions;
+    private Animal animal;
+    private Users user;
+    private Actions action;
 
     public UserCommentId() {
     }
 
-    public UserCommentId(String animal, String user, Long actions) {
+    public UserCommentId(Animal animal, Users user, Actions action) {
         this.animal = animal;
         this.user = user;
-        this.actions = actions;
+        this.action = action;
     }
 
-    public String getAnimal() {
+    public Animal getAnimal() {
         return animal;
     }
 
-    public String getUser() {
-        return user;
-    }
-
-    public Long getActions() {
-        return actions;
-    }
-
-    public void setAnimal(String animal) {
+    public void setAnimal(Animal animal) {
         this.animal = animal;
     }
 
-    public void setUser(String user) {
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
         this.user = user;
     }
 
-    public void setActions(Long actions) {
-        this.actions = actions;
+    public Actions getAction() {
+        return action;
+    }
+
+    public void setAction(Actions action) {
+        this.action = action;
     }
 }

@@ -18,6 +18,9 @@ public class Actions {
     @JoinColumn(name = "stationId")
     private Station station;
 
+    public Actions() {
+    }
+
     public Long getActionId() {
         return actionId;
     }

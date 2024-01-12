@@ -15,8 +15,8 @@ public class UserCommentService {
         this.userCommentRepository = userCommentRepository;
     }
 
-    public UserComment save(UserComment userComment) {
-        return userCommentRepository.save(userComment);
+    public void save(UserComment userComment) {
+        userCommentRepository.save(userComment);
     }
 
     public List<UserComment> findByAnimal(Animal animal) {
