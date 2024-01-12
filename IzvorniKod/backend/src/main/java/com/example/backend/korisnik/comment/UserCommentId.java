@@ -7,6 +7,7 @@ import com.example.backend.korisnik.animal.Animal;
 import java.io.Serializable;
 
 public class UserCommentId implements Serializable {
+    private Long commentId;
     private Animal animal;
     private Users user;
     private Actions action;
@@ -14,10 +15,19 @@ public class UserCommentId implements Serializable {
     public UserCommentId() {
     }
 
-    public UserCommentId(Animal animal, Users user, Actions action) {
+    public UserCommentId(Long commentId, Animal animal, Users user, Actions action) {
+        this.commentId = commentId;
         this.animal = animal;
         this.user = user;
         this.action = action;
+    }
+
+    public Long getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
     }
 
     public Animal getAnimal() {

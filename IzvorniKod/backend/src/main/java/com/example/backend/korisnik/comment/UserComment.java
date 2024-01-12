@@ -9,6 +9,9 @@ import jakarta.persistence.*;
 @IdClass(UserCommentId.class)
 public class UserComment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long commentId;
+    @Id
     @ManyToOne
     @JoinColumn(name = "animal_id")
     Animal animal;
@@ -30,6 +33,14 @@ public class UserComment {
         this.user = user;
         this.action = action;
         this.sentComment = comment;
+    }
+
+    public Long getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
     }
 
     public Animal getAnimal() {
