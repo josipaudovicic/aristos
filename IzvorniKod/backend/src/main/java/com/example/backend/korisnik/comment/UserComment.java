@@ -6,6 +6,7 @@ import com.example.backend.korisnik.animal.Animal;
 import jakarta.persistence.*;
 
 @Entity
+@IdClass(UserCommentId.class)
 public class UserComment {
     @Id
     @ManyToOne
@@ -20,6 +21,9 @@ public class UserComment {
     @JoinColumn(name = "action_id")
     Actions action;
     String sentComment;
+
+    public UserComment() {
+    }
 
     public UserComment(Animal animal, Users user, Actions action, String comment) {
         this.animal = animal;
