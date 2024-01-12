@@ -7,6 +7,7 @@ function Individual () {
     const navigate = useNavigate();
     const location = useLocation();
     const animal = location.state?.animal;
+    const username = location.state?.username;
 
     useEffect(() => {
         fetch(`/explorer/animals/species`, {
@@ -23,27 +24,35 @@ function Individual () {
       console.log(animalData)
 
     
-      const handleClick = (animal) => {
+      const handleClick = async (animal) => {
         const parts = animal.split(': ');
         const id = parts[1];
+                try {
+            const response1 = await fetch(`/explorer/animals/species/${id}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+        
+            const data1 = await response1.json();
+
+            const response2 = await fetch(`/explorer/animals/species/${id}/comments`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+        
+            const data2 = await response2.json();
       
-        fetch(`/explorer/animals/species/${id}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-          .then((response) => {
-            console.log('Raw Response:', response);
-            return response.json();
-          })
-          .then((data) => {
-            var animals = data;
-            console.log(animals);
-            navigate(`/explorer/animals/species/${id}`, {state : {animal : animals}});
-          })
-          .catch((error) => console.error('Error fetching user data:', error));
-      }
+            navigate(`/explorer/animals/species/${id}`, {
+              state: { animal: data1, username: username, comments: data2 },
+            });
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        }
 
       const renderAnimalList = () => {
         const elements = [];
