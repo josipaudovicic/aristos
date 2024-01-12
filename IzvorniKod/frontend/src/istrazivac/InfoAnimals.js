@@ -6,11 +6,12 @@ function InfoAnimals() {
     const animal = location.state?.animal;
     const username = location.state?.username;
     const id = location.state?.id;
+    const comments = location.state?.comments;
     const [comment, setComment] = useState('');
     const [commentsList, setCommentsList] = useState([]);
     var src = null;
 
-    console.log(animal.animalName);
+    console.log(comments);
     if (animal.animalName === "Sivi sokol") {
         src = '/animalImages/sivisokol.jpg';
     } else if (animal.animalName === "Smedi medvjed") {
@@ -78,10 +79,7 @@ function InfoAnimals() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: {
-            username: username,
-            comment: comment,
-          },
+          body: JSON.stringify({ username: username, comment: comment,}),
         })
       };
     

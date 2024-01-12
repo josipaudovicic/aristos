@@ -49,4 +49,8 @@ public class ActionService {
     public Actions findById(Long actionId) {
         return actionRepository.findById(actionId).orElse(null);
     }
+
+    public Actions getActionById(Long actionId) {
+        return actionRepository.findById(actionId).orElse(null);
+    }
 }

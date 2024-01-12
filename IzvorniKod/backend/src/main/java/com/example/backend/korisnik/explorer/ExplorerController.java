@@ -52,8 +52,8 @@ public class ExplorerController {
     }
 
     @PostMapping(path = "/animals/species/{id}/comment")
-    public void postComment(@PathVariable Long id, @RequestParam("comment") String comment, @RequestParam("username") String username) {
-        explorerService.postComment(id, comment, username);
+    public void postComment(@PathVariable Long id, @RequestBody Map<String, String> body) {
+        explorerService.postComment(id, body.get("comment"), body.get("username"));
     }
 
 
