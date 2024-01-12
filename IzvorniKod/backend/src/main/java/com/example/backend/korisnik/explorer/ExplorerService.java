@@ -1,9 +1,13 @@
 package com.example.backend.korisnik.explorer;
 
-import com.example.backend.korisnik.UserRepository;
+import com.example.backend.korisnik.UserService;
+import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.action.ActionService;
 import com.example.backend.korisnik.action.Actions;
+import com.example.backend.korisnik.animal.Animal;
 import com.example.backend.korisnik.animal.AnimalService;
+import com.example.backend.korisnik.comment.UserComment;
+import com.example.backend.korisnik.comment.UserCommentService;
 import com.example.backend.korisnik.positions.SearcherPosition;
 import com.example.backend.korisnik.positions.SearcherPositionService;
 import com.example.backend.korisnik.task.TaskService;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class ExplorerService {
@@ -20,13 +25,17 @@ public class ExplorerService {
     private final AnimalService animalService;
     private final SearcherPositionService searchersService;
     private final TaskService taskService;
+    private final UserCommentService userCommentService;
+    private final UserService userService;
 
     @Autowired
-    public ExplorerService(ActionService actionService, AnimalService animalService, SearcherPositionService searchersService, TaskService taskService) {
+    public ExplorerService(ActionService actionService, AnimalService animalService, SearcherPositionService searchersService, TaskService taskService, UserCommentService userCommentService, UserService userService) {
         this.actionService = actionService;
         this.animalService = animalService;
         this.searchersService = searchersService;
         this.taskService = taskService;
+        this.userCommentService = userCommentService;
+        this.userService = userService;
     }
 
     public List<Map<String, String>> getActions(String username) {
@@ -76,5 +85,32 @@ public class ExplorerService {
         }
 
         return returning;
+    }
+
+    public List<Map<String, String>> getComments(Long id) {
+        Animal animal = animalService.returnById(id);
+        List<UserComment> comments = userCommentService.findByAnimal(animal);
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (UserComment comment : comments) {
+            Map<String, String> kaoComment = new java.util.HashMap<>();
+            if (Objects.equals(comment.getUser().getRole().getRoleName(), "Tragač")) {
+                kaoComment.put("username", comment.getUser().getUsername());
+                kaoComment.put("comment", comment.getSentComment());
+                kaoComment.put("action", comment.getAction().getActionName());
+            } else {
+                kaoComment.put("username", comment.getUser().getUsername());
+                kaoComment.put("comment", comment.getSentComment());
+            }
+            returning.add(kaoComment);
+        }
+
+        return returning;
+    }
+
+    public void postComment(Long id, String comment, String username) {
+        Animal animal = animalService.returnById(id);
+        Users user = userService.getUserByUsername(username);
+        UserComment userComment = new UserComment(animal, user, null, comment);
+        userCommentService.save(userComment);
     }
 }

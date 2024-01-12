@@ -46,5 +46,15 @@ public class ExplorerController {
         return explorerService.getIndividualById(id);
     }
 
+    @GetMapping(path = "/animals/species/{id}/comments")
+    public List<Map<String, String>> getComments(@PathVariable Long id) {
+        return explorerService.getComments(id);
+    }
+
+    @PostMapping(path = "/animals/species/{id}/comment")
+    public void postComment(@PathVariable Long id, @RequestParam("comment") String comment, @RequestParam("username") String username) {
+        explorerService.postComment(id, comment, username);
+    }
+
 
 }

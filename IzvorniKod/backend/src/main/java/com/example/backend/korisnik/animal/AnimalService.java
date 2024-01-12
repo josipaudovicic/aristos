@@ -35,4 +35,8 @@ public class AnimalService {
         kaoAnimal.put("description", animal.getDescription());
         return kaoAnimal;
     }
+
+    public Animal returnById(Long id) {
+        return animalRepository.findById(id).orElseThrow(() -> new IllegalStateException("Animal with id " + id + " does not exist!"));
+    }
 }
