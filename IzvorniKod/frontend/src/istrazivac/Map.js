@@ -42,10 +42,6 @@ const Map = () => {
         navigate('/explorer/map', {state : {actionName: actionName}});
     }
 
-    const handleClick = () => {
-        navigate('/explorer/action/newAction', {state : {actionName: actionName}});
-    }
-
     const handleInfo = () => {
         navigate(`/explorer/action/${actionName}/info`, {state : {actionName: actionName}});
     }
@@ -280,7 +276,7 @@ const Map = () => {
                   <div>
                     <p style={{ margin: '0', fontWeight: 'bold' }}>Trackers:</p>
                     {trackers.map((tracker) => (
-                      <div key={tracker.username} style={optionStyle} onClick={() => handleOptionClick(tracker)}>
+                      <div key={tracker.username} style={optionStyle} onClick={() => handleOptionClick(tracker.username)}>
                         {tracker.username}
                       </div>))}
                   </div>)}
@@ -288,7 +284,7 @@ const Map = () => {
                   <div>
                     <p style={{ margin: '0', fontWeight: 'bold' }}>Vehicles:</p>
                     {vehicles.map((vehicle) => (
-                      <div key={vehicle.vehicleId} style={optionStyle} onClick={() => handleOptionClick2(vehicle)}>
+                      <div key={vehicle.vehicleId} style={optionStyle} onClick={() => handleOptionClick2(vehicle.vehicleName)}>
                         {vehicle.vehicleName}
                       </div>))}
                   </div>)}</>)}
@@ -304,7 +300,6 @@ const Map = () => {
             <button onClick={handleAnimals} style={button2Style}>Životinje</button>
             {showDropdown && <Dropdown />}
             <button onClick={handleInfo} style={b2Style}>Info</button>
-            <button onClick={handleClick} style={bStyle}>+</button>
         </div>
     );
 };
