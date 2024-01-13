@@ -29,6 +29,11 @@ import Animals from "./istrazivac/Animals";
 import NewAction from "./istrazivac/NewAction";
 
 
+import Tracker from "./tragac/Tracker";
+import SpeciesT from "./tragac/SpeciesT";
+import IndividualT from "./tragac/IndividualT";
+import InfoAnimalsT from "./tragac/InfoAnimalsT";
+
 function App() {
   return (
     <BrowserRouter>
@@ -57,6 +62,10 @@ function App() {
         <Route path="/explorer/action/:actionName/info" element={<Info />} />
         <Route path="/explorer/map" element={<Animals />} />
         <Route path="/explorer/action/newAction" element={<NewAction />} />
+        <Route path="/tracker" element={<Tracker />} />
+        <Route path="/tracker/animals" element={<SpeciesT />} />
+        <Route path="/tracker/animals/species" element={<IndividualT />} />
+        <Route path="/tracker/animals/species/:id" element={<InfoAnimalsT />} />
       </Routes>
     </BrowserRouter>
   );
