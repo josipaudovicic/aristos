@@ -82,6 +82,19 @@ function InfoAnimals() {
           body: JSON.stringify({ username: username, comment: comment,}),
         })
       };
+
+      const handleDelete = (index) => {
+        const updatedCommentsList = [...commentsList];
+        updatedCommentsList.splice(index, 1);
+        setCommentsList(updatedCommentsList);
+    
+        fetch(`/explorer/animals/species/${id}/comment/delete`, {
+           method: 'DELETE',
+           headers: {
+             'Content-Type': 'application/json',
+           },
+         });
+      };
     
       const handleQuit = () => {
         console.log('Quitting comment');
@@ -91,6 +104,15 @@ function InfoAnimals() {
       const h2Style = {
         textAlign: 'center',
       };
+
+      const deleteButton = {
+        background: 'none',
+        border: 'none',
+        color: 'black',
+        fontSize: '12px',
+        cursor: 'pointer',
+        marginTop: '-10px',
+      };
     
 
     return(
@@ -99,14 +121,15 @@ function InfoAnimals() {
             <h2 style={h2Style}>{animal.animalName} id: {animal.id}</h2>
             <p>Latinski naziv: {animal.latinName}</p>
             <p>Opis: {animal.description}</p>
+            <p style={commentStyles.commentHeader}>Komentari:</p>
 
       {comments && comments.length > 0 && (
         <div style={commentStyles.commentSection}>
-          <p style={commentStyles.commentHeader}>Komentari:</p>
           <ul style={commentStyles.commentList}>
             {comments.map((dbComment, index) => (
-              <li key={index} style={commentStyles.commentItem}>
-                <p style={commentStyles.commentText}>{`${dbComment.username} : ${dbComment.comment}`}</p>
+              <li key={index} style={{ ...commentStyles.commentItem, display: 'flex', justifyContent: 'space-between' }}>
+                <p style={commentStyles.commentText}>{`${dbComment.username}: ${dbComment.comment}`}</p>
+                <button style={deleteButton} onClick={() => handleDelete(index)}>x</button>
               </li>
             ))}
           </ul>
@@ -115,11 +138,11 @@ function InfoAnimals() {
 
             {commentsList.length > 0 && (
         <div style={commentStyles.commentSection}>
-          <p style={commentStyles.commentHeader}>Komentari:</p>
           <ul style={commentStyles.commentList}>
             {commentsList.map((comment, index) => (
-              <li key={index} style={commentStyles.commentItem}>
-                <p style={commentStyles.commentText}>{comment}</p>
+              <li key={index} style={{ ...commentStyles.commentItem, display: 'flex', justifyContent: 'space-between' }}>
+              <p style={commentStyles.commentText}>{comment}</p>
+                <button style={deleteButton} onClick={() => handleDelete(index)}>x</button>
               </li>
             ))}
           </ul>

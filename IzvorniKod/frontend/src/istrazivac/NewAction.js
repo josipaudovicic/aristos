@@ -10,6 +10,7 @@ function NewAction() {
         actionName: '',
         username: '',
         stationId: '',
+        task: '',
     });
 
     useEffect(() => {
@@ -36,9 +37,29 @@ function NewAction() {
         console.log(actions);
         navigate(`/explorer/actions`, { state: {actions: actions }});
     };
+
+    const isActionNameUnique = () => {
+      return actions.every((action) => action.actionName !== actionData.actionName);
+  };
     
       const handleSaveChanges = async () => {
         try {
+
+          if (
+            !actionData.actionName ||
+            !actionData.username ||
+            !actionData.stationId ||
+            !actionData.task
+        ) {
+            alert('Popunite sva polja');
+            return;
+        }
+
+        if (!isActionNameUnique()) {
+          alert('Ime akcije već postoji');
+          return;
+      }
+
           const response = await fetch(`/explorer/actions/newAction`, {
             method: 'POST',
             headers: {
@@ -107,6 +128,10 @@ function NewAction() {
           <div>
             <label style={labelStyle}>Šifra postaje: </label>
             <input type="text" name="stationId" value={actionData.stationId} onChange={handleChange} style={inputStyle} />
+          </div>
+          <div>
+            <label style={labelStyle}>Zadatak: </label>
+            <input type="text" name="task" value={actionData.task} onChange={handleChange} style={inputStyle} />
           </div>
           <div style={buttonContainerStyle}>
             <button style={buttonStyle} onClick={handleSaveChanges}>Stvori akciju</button>
