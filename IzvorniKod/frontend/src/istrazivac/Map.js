@@ -42,6 +42,10 @@ const Map = () => {
         navigate('/explorer/map', {state : {actionName: actionName}});
     }
 
+    const handleClick = () => {
+        navigate('/explorer/action/newAction', {state : {actionName: actionName}});
+    }
+
     const handleInfo = () => {
         navigate(`/explorer/action/${actionName}/info`, {state : {actionName: actionName}});
     }
@@ -94,6 +98,16 @@ const Map = () => {
         width: '180px',
     };
 
+    const bStyle = {
+        position: 'fixed',
+        bottom: '30px',
+        right: '30px',
+        padding: '6px 16px',
+        borderRadius: '50%',
+        cursor: 'pointer',
+        fontSize: '30px',
+    };
+
     const b2Style = {
         position: 'fixed',
         bottom: '20px',
@@ -128,8 +142,7 @@ const Map = () => {
                 if (mapContainer && !mapContainer._leaflet_id) {
                     const map = L.map(mapContainer, {
                         center: [45.1, 16.3],
-                        zoom: 7,
-                        
+                        zoom: 7,                  
                     });
             
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -267,7 +280,7 @@ const Map = () => {
                   <div>
                     <p style={{ margin: '0', fontWeight: 'bold' }}>Trackers:</p>
                     {trackers.map((tracker) => (
-                      <div key={tracker.username} style={optionStyle} onClick={() => handleOptionClick(tracker.username)}>
+                      <div key={tracker.username} style={optionStyle} onClick={() => handleOptionClick(tracker)}>
                         {tracker.username}
                       </div>))}
                   </div>)}
@@ -275,7 +288,7 @@ const Map = () => {
                   <div>
                     <p style={{ margin: '0', fontWeight: 'bold' }}>Vehicles:</p>
                     {vehicles.map((vehicle) => (
-                      <div key={vehicle.vehicleId} style={optionStyle} onClick={() => handleOptionClick2(vehicle.vehicleName)}>
+                      <div key={vehicle.vehicleId} style={optionStyle} onClick={() => handleOptionClick2(vehicle)}>
                         {vehicle.vehicleName}
                       </div>))}
                   </div>)}</>)}
@@ -291,6 +304,7 @@ const Map = () => {
             <button onClick={handleAnimals} style={button2Style}>Životinje</button>
             {showDropdown && <Dropdown />}
             <button onClick={handleInfo} style={b2Style}>Info</button>
+            <button onClick={handleClick} style={bStyle}>+</button>
         </div>
     );
 };

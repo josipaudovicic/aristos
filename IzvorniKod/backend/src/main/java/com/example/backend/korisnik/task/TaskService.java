@@ -1,5 +1,6 @@
 package com.example.backend.korisnik.task;
 
+import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.action.Actions;
 import com.example.backend.korisnik.positions.SearcherPosition;
 import com.example.backend.korisnik.vehicle.Vehicle;
@@ -33,5 +34,14 @@ public class TaskService {
             vehicles.add(t.getVehicle());
         }
         return List.copyOf(vehicles);
+    }
+
+    public List<Users> getUsersByActionAndVehicle(Actions action, Vehicle vehicle) {
+        List<Task> task = taskRepository.findByActionAndVehicle(action, vehicle);
+        Set<Users> users = new HashSet<>();
+        for (Task t : task) {
+            users.add(t.getUser());
+        }
+        return List.copyOf(users);
     }
 }

@@ -20,14 +20,24 @@ public class ExplorerController {
         return explorerService.getActions(username);
     }
 
-    @GetMapping(path = "/action/{actionName}")
+    @GetMapping(path = "/action/{actionName}/tracker")
     public List<Map<String, String>> getMap(@PathVariable String actionName, @RequestHeader("username") String username) {
-        return explorerService.getHeatMap(actionName, username);
+        return explorerService.getHeatMapOfTracker(actionName, username);
+    }
+
+    @GetMapping(path = "/action/{actionName}/vehicle")
+    public List<Map<String, String>> getVehicles(@PathVariable String actionName, @RequestHeader("vehicle") String vehicle) {
+        return explorerService.getHeatMapOfVehicle(actionName, vehicle);
     }
 
     @GetMapping(path = "/action/{actionName}/trackers")
     public Map<String, List<Map<String, String>>> getTrackers(@PathVariable String actionName) {
         return explorerService.getTrackersAndVehicles(actionName);
+    }
+
+    @GetMapping(path="/actions/station")
+    public List<String> getStations(){
+        return explorerService.getStations();
     }
 
     @GetMapping(path = "/animals")

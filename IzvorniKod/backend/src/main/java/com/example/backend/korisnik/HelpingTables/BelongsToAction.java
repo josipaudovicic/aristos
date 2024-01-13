@@ -2,6 +2,7 @@ package com.example.backend.korisnik.HelpingTables;
 
 import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.action.Actions;
+import com.example.backend.korisnik.vehicle.Vehicle;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,9 @@ public class BelongsToAction {
     @ManyToOne
     @JoinColumn(name = "user_name")
     private Users user;
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
 
     public BelongsToAction() {
     }
@@ -33,5 +37,13 @@ public class BelongsToAction {
 
     public void setUser(Users user) {
         this.user = user;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 }
