@@ -35,6 +35,7 @@ import NewAction from "./istrazivac/NewAction";
 import IzradaZahtjeva from "./istrazivac/IzradaZahtjeva";
 import NoviZadatak from "./istrazivac/NoviZadatak";
 import UrediZadatak from "./istrazivac/UrediZadatak";
+import PopisZadataka from "./istrazivac/PopisZadataka";
 
 import Tracker from "./tragac/Tracker";
 import SpeciesT from "./tragac/SpeciesT";
@@ -73,6 +74,7 @@ function App() {
         <Route path="/tracker/animals" element={<SpeciesT />} />
         <Route path="/tracker/animals/species" element={<IndividualT />} />
         <Route path="/tracker/animals/species/:id" element={<InfoAnimalsT />} />
+        <Route path="/explorer/action/info/tasks" element={<PopisZadataka />} />
         <Route path="/explorer/action/info/requests" element={<IzradaZahtjeva />} />
         <Route path="/explorer/action/info/tasks/newTask" element={<NoviZadatak />} />
         <Route path="/explorer/action/info/tasks/editTask" element={<UrediZadatak />} />
