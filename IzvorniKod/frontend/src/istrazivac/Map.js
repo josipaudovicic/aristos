@@ -94,16 +94,6 @@ const Map = () => {
         width: '180px',
     };
 
-    const bStyle = {
-        position: 'fixed',
-        bottom: '30px',
-        right: '30px',
-        padding: '6px 16px',
-        borderRadius: '50%',
-        cursor: 'pointer',
-        fontSize: '30px',
-    };
-
     const b2Style = {
         position: 'fixed',
         bottom: '20px',
@@ -268,7 +258,7 @@ const Map = () => {
         return (
           <div style={dropdownStyle}>
             {selectedOption ? (<>
-                <p style={selectedOptionStyle}>Odabrano: {selectedOption.username || selectedOption.vehicleName}</p>
+                <p style={selectedOptionStyle}>Odabrano: {selectedOption}</p>
                 <div style={backButtonStyle} onClick={handleBackToList}>
                   Natrag na listu
                 </div></>) : (<>

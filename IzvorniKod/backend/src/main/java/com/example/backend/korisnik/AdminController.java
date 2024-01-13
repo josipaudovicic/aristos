@@ -1,5 +1,7 @@
 package com.example.backend.korisnik;
 
+import com.example.backend.korisnik.HelpingTables.BelongsToStation;
+import com.example.backend.korisnik.station.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +14,9 @@ import java.util.Map;
 @RestController
 @RequestMapping()
 public class AdminController {
-    @Autowired
+
     private final AdminServiceJpa adminService;
+
     @Autowired
     public AdminController(AdminServiceJpa adminService) {
         this.adminService = adminService;

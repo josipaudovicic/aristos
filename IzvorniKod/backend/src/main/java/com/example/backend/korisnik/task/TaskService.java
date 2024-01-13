@@ -21,9 +21,6 @@ public class TaskService {
 
     public Vehicle getVehicleByActionAndUserName(Actions action, SearcherPosition searcher) {
         List<Task> tasks = taskRepository.findByActionAndUser(action, searcher.getUser());
-        for (Task t : tasks) {
-            System.out.println("vehicle: " + t.getVehicle().getVehicleName());
-        }
         return tasks.get(0).getVehicle();
     }
 

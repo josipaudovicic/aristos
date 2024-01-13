@@ -153,14 +153,10 @@ public class ExplorerService {
 
     public List<Map<String, String>> getHeatMapOfTracker(String actionName, String username) {
         Actions action = actionService.getActionByName(actionName);
-        System.out.println("user like object?: " + username);
         Users user = userService.getUserByUsername(username);
         List<SearcherPosition> allSearchers = searcherPositionService.findByActionAndUser(action, user);
         List<SearcherPosition> filtered = new java.util.ArrayList<>(List.of());
         for (SearcherPosition searcher : allSearchers) {
-            System.out.println("searcher: " + searcher.getUser().getUsername());
-            System.out.println("time: " + searcher.getTimeStamp());
-            System.out.println("is true?: " + actionService.isBetweenTime(searcher.getTimeStamp(), action));
             if (actionService.isBetweenTime(searcher.getTimeStamp(), action)) {
                 filtered.add(searcher);
             }
