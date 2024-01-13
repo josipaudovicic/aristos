@@ -1,5 +1,8 @@
 package com.example.backend.korisnik;
 
+import com.example.backend.korisnik.HelpingTables.BelongsToStation;
+import com.example.backend.korisnik.HelpingTables.BelongsToStationId;
+import com.example.backend.korisnik.HelpingTables.BelongsToStationRepository;
 import com.example.backend.korisnik.station.Station;
 import com.example.backend.korisnik.station.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +15,12 @@ import java.util.stream.Collectors;
 public class AdminServiceJpa {
     private final UserRepository userRepository;
     private final StationRepository stationRepository;
+    private final BelongsToStationRepository belongsToStationRepository;
     @Autowired
-    public AdminServiceJpa(UserRepository user_repository, StationRepository station_repository) {
+    public AdminServiceJpa(UserRepository user_repository, StationRepository station_repository, BelongsToStationRepository belongs_to_station_repository) {
         this.userRepository = user_repository;
         this.stationRepository = station_repository;
+        this.belongsToStationRepository = belongs_to_station_repository;
     }
 
     public List<Users> findAllUsers() {
@@ -23,16 +28,20 @@ public class AdminServiceJpa {
         return userRepository.findAll();
     }
 
+
+    //This also removes all stations that already have a manager
     public List<Map<String, String>> findAllStations() {
         List<Station> allStations = stationRepository.findAll();
 
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
 
         for (Station station : allStations) {
-            Map<String, String> kaoStation = new HashMap<>();
-            kaoStation.put("station_id", station.getStationId().toString());
-            kaoStation.put("station_name", station.getStationName());
-            returning.add(kaoStation);
+            if (this.stationHasManager(station.getStationName()) == false) {
+                Map<String, String> kaoStation = new HashMap<>();
+                kaoStation.put("station_id", station.getStationId().toString());
+                kaoStation.put("station_name", station.getStationName());
+                returning.add(kaoStation);
+            }
         }
         return returning;
     }
@@ -98,24 +107,58 @@ public class AdminServiceJpa {
         return kaoUseri;
     }
 
+    public boolean stationHasManager(String stationName) {
+        Long id = null;
 
-    public boolean stationAlreadyHasManager(String stationName) {
-       return false;
+        for (Station station : stationRepository.findAll()) {
+            if (station.getStationName().equals(stationName)) {
+                id = station.getStationId();
+                break;
+            }
+        }
+
+        if (id == null) {
+            throw new IllegalStateException("Station with that name does not exist.");
+        } else {
+            long primitive_id = id.longValue();
+            List<BelongsToStation> pairsToObserve = belongsToStationRepository.findAll().stream().filter(pair -> (pair.getStationId().longValue() == primitive_id)).collect(Collectors.toList());
+
+            for (BelongsToStation pair : pairsToObserve) {
+                String username = pair.getUserName();
+
+                if (userRepository.getReferenceById(username).getRole().getRoleName().equals("Voditelj postaje")) {
+                    return true;
+                }
+            }
+
+        }
+        return false;
     }
+
 
     public boolean confirmUser(Users user, String stationName) {
         String username = user.getUsername();
         Users user_confirm = userRepository.getReferenceById(username);
-
         user_confirm.setAdminCheck(true);
+
         if (stationName != null) {
-            if (!this.stationAlreadyHasManager(stationName)) {
-                return true;
-            } else {
+            if (this.stationHasManager(stationName) == true) {
                 return false;
+            } else {
+                Long id = null;
+                for (Station station : stationRepository.findAll()) {
+                    if (station.getStationName().equals(stationName)) {
+                        id = station.getStationId();
+                        break;
+                    }
+                }
+                System.out.println("Station has no manager. Save new.");
+                BelongsToStation newEntry = new BelongsToStation(username, id);
+                belongsToStationRepository.save(newEntry);
             }
+
         }
-        userRepository.saveAndFlush(user_confirm);
+        userRepository.save(user_confirm);
         return true;
     }
 
@@ -123,6 +166,12 @@ public class AdminServiceJpa {
         String username = user.getUsername();
 
         if (userRepository.existsById(username)) {
+            for (BelongsToStation pair : belongsToStationRepository.findAll()) {
+                if (pair.getUserName().equals(username)) {
+                    belongsToStationRepository.delete(pair);
+                    break;
+                }
+            }
             userRepository.deleteById(username);
             return true;
         } else {
