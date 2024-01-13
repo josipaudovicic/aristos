@@ -24,6 +24,8 @@ import Species from "./istrazivac/Species";
 import Individual from "./istrazivac/Individual";
 import InfoAnimals from "./istrazivac/InfoAnimals";
 import Map from "./istrazivac/Map";
+import Info from "./istrazivac/Info";
+import Animals from "./istrazivac/Animals";
 
 
 function App() {
@@ -51,6 +53,8 @@ function App() {
         <Route path="/explorer/animals/species/:id" element={<InfoAnimals />} />
         <Route path="/user/:username/edit" element={<EditKorisnik />} />
         <Route path="/explorer/action/:actionName" element={<Map />} />
+        <Route path="/explorer/action/:actionName/info" element={<Info />} />
+        <Route path="/explorer/map" element={<Animals />} />
       </Routes>
     </BrowserRouter>
   );

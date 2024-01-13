@@ -1,20 +1,20 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function InfoStranica() {
+function Animals() {
   const navigate = useNavigate();
 
   const redirectToPage = async (path) => {
       try {
       let response;
-      if (path === "popisZadataka") {
-        response = await fetch(`/explorer/allTasks`);
+      if (path === "species") {
+        response = await fetch(`/explorer/map/species`);
       } else {
-        response = await fetch(`/explorer/requestForTrackers`);
+        response = await fetch(`/explorer/map/individual`);
       }
 
       const data = await response.json();
-      navigate(`/${path}`, {state: {users: data}});
+      navigate(`/${path}`, {state: {data: data}});
 
     } catch (error) {
       console.error(`Error fetching`, error.message);
@@ -30,10 +30,10 @@ function InfoStranica() {
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <button onClick={() => redirectToPage('popisZadataka')} style={regularButtonStyle}>Popis zadataka</button>
-      <button onClick={() => redirectToPage('zahtjevZaTragacima')} style={regularButtonStyle}>Zahtjev za tragačima</button>
+      <button onClick={() => redirectToPage('species')} style={regularButtonStyle}>Karta po vrsti</button>
+      <button onClick={() => redirectToPage('individual')} style={regularButtonStyle}>Karta po jedinci</button>
     </div>
   );
 }
 
-export default InfoStranica;
+export default Animals;
