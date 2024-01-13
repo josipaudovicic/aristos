@@ -1,8 +1,8 @@
-import React from 'react';
 import React, { useState, useEffect }  from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function IzradaZahtjeva(){
-
+    const navigate = useNavigate();
     const [actions, setActions] = useState([]);
     const [description, setDescription] = useState([]);
     const [selectedAction, setSelectedAction] = useState('');    

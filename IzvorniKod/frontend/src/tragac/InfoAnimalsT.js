@@ -99,14 +99,14 @@ function InfoAnimals() {
             <h2 style={h2Style}>{animal.animalName} id: {animal.id}</h2>
             <p>Latinski naziv: {animal.latinName}</p>
             <p>Opis: {animal.description}</p>
+            <p style={commentStyles.commentHeader}>Komentari:</p>
 
       {comments && comments.length > 0 && (
         <div style={commentStyles.commentSection}>
-          <p style={commentStyles.commentHeader}>Komentari:</p>
           <ul style={commentStyles.commentList}>
             {comments.map((dbComment, index) => (
               <li key={index} style={commentStyles.commentItem}>
-                <p style={commentStyles.commentText}>{`${dbComment.username} : ${dbComment.comment}`}</p>
+                <p style={commentStyles.commentText}>{`${dbComment.username}: ${dbComment.comment}`}</p>
               </li>
             ))}
           </ul>
@@ -115,7 +115,6 @@ function InfoAnimals() {
 
             {commentsList.length > 0 && (
         <div style={commentStyles.commentSection}>
-          <p style={commentStyles.commentHeader}>Komentari:</p>
           <ul style={commentStyles.commentList}>
             {commentsList.map((comment, index) => (
               <li key={index} style={commentStyles.commentItem}>

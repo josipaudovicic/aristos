@@ -1,23 +1,28 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./prijava/Login";
+
 import Registration from "./registracija/Registration";
 import Poruka from "./registracija/Poruka";
+import Welcome from "./registracija/Welcome";
+import EmailChecked from "./registracija/EmailChecked";
+import Confirmation from "./registracija/Confirmation";
+import Login from "./prijava/Login";
+import Profile from "./prijava/Profile";
+import EditProfile from "./prijava/EditProfile";
+
+
 import Korisnik from "./administrator/Korisnik";
 import PregledSvihKorisnika from "./administrator/PregledSvihKorisnika";
 import Requests from "./administrator/Requests";
 import EditKorisnik from "./administrator/EditKorisnik";
 import TwoButtonRedirectComponent from "./administrator/TwoButtonRedirectComponent";
-import Welcome from "./registracija/Welcome";
-import EmailChecked from "./registracija/EmailChecked";
+
+
 import StationManager from "./voditelj/StationManager";
 import OdabirAkcija from "./voditelj/OdabirAkcija";
 
 //TODO: importati sve ostale stranice iz voditelja
 
-import Confirmation from "./registracija/Confirmation";
-import Profile from "./prijava/Profile";
-import EditProfile from "./prijava/EditProfile";
 import Explorer from "./istrazivac/Explorer";
 import ListActions from "./istrazivac/ListActions";
 import Species from "./istrazivac/Species";
@@ -27,7 +32,9 @@ import Map from "./istrazivac/Map";
 import Info from "./istrazivac/Info";
 import Animals from "./istrazivac/Animals";
 import NewAction from "./istrazivac/NewAction";
-
+import IzradaZahtjeva from "./istrazivac/IzradaZahtjeva";
+import NoviZadatak from "./istrazivac/NoviZadatak";
+import UrediZadatak from "./istrazivac/UrediZadatak";
 
 import Tracker from "./tragac/Tracker";
 import SpeciesT from "./tragac/SpeciesT";
@@ -66,6 +73,9 @@ function App() {
         <Route path="/tracker/animals" element={<SpeciesT />} />
         <Route path="/tracker/animals/species" element={<IndividualT />} />
         <Route path="/tracker/animals/species/:id" element={<InfoAnimalsT />} />
+        <Route path="/explorer/action/info/requests" element={<IzradaZahtjeva />} />
+        <Route path="/explorer/action/info/tasks/newTask" element={<NoviZadatak />} />
+        <Route path="/explorer/action/info/tasks/editTask" element={<UrediZadatak />} />
       </Routes>
     </BrowserRouter>
   );

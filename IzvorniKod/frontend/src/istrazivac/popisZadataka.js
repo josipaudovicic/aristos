@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-function popisZadataka() {
+function PopisZadataka() {
     const [tasks, setTasks] = useState([]);
     const navigate = useNavigate();
 
@@ -29,7 +28,7 @@ function popisZadataka() {
 
       const redirectToPage = async (path) => {
         try {
-
+        let response;
         if (path === "noviZd"){
             response = await fetch(`/explorer/createNewTask`);
         }else{
@@ -46,12 +45,12 @@ function popisZadataka() {
   
 
   const handleEdit = () => {
-    redirectToPage(urediZd)
+    redirectToPage('/explorer/action/info/tasks/editTask')
   };
 
   const handleDelete = async() =>{
     try {
-        await fetch(`/explorer/tasks/${task.id}`, {
+        await fetch(`/explorer/tasks/`, {
           method: 'DELETE',
         });
         navigate('/explorer/allTasks');
@@ -114,10 +113,10 @@ function popisZadataka() {
         ))}
       </ul>
 
-      <button style={buttonStyle2} onClick={() => redirectToPage(noviZd)}>Dodaj novi zadatak</button>
+      <button style={buttonStyle2} onClick={() => redirectToPage('/explorer/action/info/tasks/newTask')}>Dodaj novi zadatak</button>
       
     </div>
   );
 }
 
-export default popisZadataka;
+export default PopisZadataka;

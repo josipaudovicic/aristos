@@ -1,9 +1,10 @@
-import React from 'react';
 import React, { useState, useEffect }  from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function NoviZadatak(){
 
-
+    const navigate = useNavigate();
+    const [description, setDescription] = useState([]);
     const [selectedAction, setSelectedAction] = useState('');
     const [actions, setActions] = useState([]);
 

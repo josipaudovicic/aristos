@@ -7,10 +7,10 @@ function InfoStranica() {
   const redirectToPage = async (path) => {
       try {
       let response;
-      if (path === "popisZadataka") {
-        response = await fetch(`/explorer/allTasks`);
+      if (path === "/explorer/action/info/tasks") {
+        response = await fetch(`/explorer/action/info/tasks`);
       } else {
-        response = await fetch(`/explorer/requestForTrackers`);
+        response = await fetch(`/explorer/action/info/requests`);
       }
 
       const data = await response.json();
@@ -30,8 +30,8 @@ function InfoStranica() {
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <button onClick={() => redirectToPage('popisZadataka')} style={regularButtonStyle}>Popis zadataka</button>
-      <button onClick={() => redirectToPage('zahtjevZaTragacima')} style={regularButtonStyle}>Zahtjev za tragačima</button>
+      <button onClick={() => redirectToPage('/explorer/action/info/tasks')} style={regularButtonStyle}>Popis zadataka</button>
+      <button onClick={() => redirectToPage('/explorer/action/info/requests')} style={regularButtonStyle}>Zahtjev za tragačima</button>
     </div>
   );
 }

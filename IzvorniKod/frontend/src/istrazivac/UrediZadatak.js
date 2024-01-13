@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-
-
-function UrediZadatak({ taskId }) {
+function UrediZadatak() {
+  const navigate = useNavigate();
   const [selectedAction, setSelectedAction] = useState('');
   const [description, setDescription] = useState('');
   const [actions, setActions] = useState([]);
