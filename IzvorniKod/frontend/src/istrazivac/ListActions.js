@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const ListActions = () => {
     const location = useLocation()
     const actions = location.state?.actions || [];
+    const username = location.state?.username;
     console.log(actions);
     const navigate = useNavigate();
 
@@ -20,7 +21,7 @@ const ListActions = () => {
 
       const handleAction =  () => { 
         console.log(actions);
-        navigate('/explorer/action/newAction', {state : {actions: actions}});
+        navigate('/explorer/action/newAction', {state : {actions: actions, username: username}});
       };
 
 

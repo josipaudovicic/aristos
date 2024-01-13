@@ -5,12 +5,12 @@ function NewAction() {
     const navigate = useNavigate();
     const location = useLocation();
     const actions = location.state?.actions;
+    const username = location.state?.username;
     const [station, setStation] = useState([]);
     const [actionData, setActionData] = useState({
         actionName: '',
-        username: '',
         stationId: '',
-        task: '',
+        username: username,
     });
 
     useEffect(() => {
@@ -35,7 +35,7 @@ function NewAction() {
     
     const handleCancelClick = () => {
         console.log(actions);
-        navigate(`/explorer/actions`, { state: {actions: actions }});
+        navigate(`/explorer/actions`, { state: {actions: actions, username: username }});
     };
 
     const isActionNameUnique = () => {
@@ -47,9 +47,7 @@ function NewAction() {
 
           if (
             !actionData.actionName ||
-            !actionData.username ||
-            !actionData.stationId ||
-            !actionData.task
+            !actionData.stationId
         ) {
             alert('Popunite sva polja');
             return;
@@ -122,16 +120,8 @@ function NewAction() {
             <input type="text" name="actionName" value={actionData.actionName} onChange={handleChange} style={inputStyle} />
           </div>
           <div>
-            <label style={labelStyle}>Ime istraživača: </label>
-            <input type="text" name="username" value={actionData.username} onChange={handleChange} style={inputStyle} />
-          </div>
-          <div>
             <label style={labelStyle}>Šifra postaje: </label>
             <input type="text" name="stationId" value={actionData.stationId} onChange={handleChange} style={inputStyle} />
-          </div>
-          <div>
-            <label style={labelStyle}>Zadatak: </label>
-            <input type="text" name="task" value={actionData.task} onChange={handleChange} style={inputStyle} />
           </div>
           <div style={buttonContainerStyle}>
             <button style={buttonStyle} onClick={handleSaveChanges}>Stvori akciju</button>

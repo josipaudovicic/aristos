@@ -92,6 +92,7 @@ function InfoAnimals() {
            method: 'DELETE',
            headers: {
              'Content-Type': 'application/json',
+             comment: comment,
            },
          });
       };
