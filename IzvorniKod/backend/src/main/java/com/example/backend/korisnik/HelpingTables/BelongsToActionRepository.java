@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface BelongsToActionRepository extends JpaRepository<BelongsToAction, BelongsToActionId> {
-    List<Users> findByAction(Actions action);
+    List<BelongsToAction> findByAction(Actions action);
 }
