@@ -7,6 +7,7 @@ import com.example.backend.korisnik.station.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -52,5 +53,12 @@ public class ActionService {
 
     public Actions getActionById(Long actionId) {
         return actionRepository.findById(actionId).orElse(null);
+    }
+
+    public boolean isBetweenTime(Timestamp time, Actions action) {
+        if (!action.getActionActive()){
+            return time.after(action.getStartTime()) && time.before(action.getEndTime());
+        }
+        return time.after(action.getStartTime());
     }
 }

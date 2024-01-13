@@ -11,8 +11,11 @@ import com.example.backend.korisnik.comment.UserComment;
 import com.example.backend.korisnik.comment.UserCommentService;
 import com.example.backend.korisnik.positions.SearcherPosition;
 import com.example.backend.korisnik.positions.SearcherPositionService;
+import com.example.backend.korisnik.station.Station;
+import com.example.backend.korisnik.station.StationService;
 import com.example.backend.korisnik.task.TaskService;
 import com.example.backend.korisnik.vehicle.Vehicle;
+import com.example.backend.korisnik.vehicle.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +32,12 @@ public class ExplorerService {
     private final UserCommentService userCommentService;
     private final UserService userService;
     private final BelongsToActionService belongsToActionService;
+    private final SearcherPositionService searcherPositionService;
+    private final VehicleRepository vehicleRepository;
+    private final StationService stationService;
 
     @Autowired
-    public ExplorerService(ActionService actionService, AnimalService animalService, SearcherPositionService searchersService, TaskService taskService, UserCommentService userCommentService, UserService userService, BelongsToActionService belongsToActionService) {
+    public ExplorerService(ActionService actionService, AnimalService animalService, SearcherPositionService searchersService, TaskService taskService, UserCommentService userCommentService, UserService userService, BelongsToActionService belongsToActionService, SearcherPositionService searcherPositionService, VehicleRepository vehicleRepository, StationService stationService) {
         this.actionService = actionService;
         this.animalService = animalService;
         this.searchersService = searchersService;
@@ -39,6 +45,9 @@ public class ExplorerService {
         this.userCommentService = userCommentService;
         this.userService = userService;
         this.belongsToActionService = belongsToActionService;
+        this.searcherPositionService = searcherPositionService;
+        this.vehicleRepository = vehicleRepository;
+        this.stationService = stationService;
     }
 
     public List<Map<String, String>> getActions(String username) {
@@ -123,14 +132,14 @@ public class ExplorerService {
         List<Users> trackers = belongsToActionService.getTrackers(action);
         List<Vehicle> vehicles = taskService.getVehiclesByAction(action);
         List<Map<String, String>> asUser = new java.util.ArrayList<>(List.of());
-        Map<String, String> kaoTracker = new java.util.HashMap<>();
         for (Users tracker : trackers) {
+            Map<String, String> kaoTracker = new java.util.HashMap<>();
             kaoTracker.put("username", tracker.getUsername());
             asUser.add(kaoTracker);
         }
         List<Map<String, String>> asVehicle = new java.util.ArrayList<>(List.of());
-        Map<String, String> kaoVehicle = new java.util.HashMap<>();
         for (Vehicle vehicle : vehicles) {
+            Map<String, String> kaoVehicle = new java.util.HashMap<>();
             kaoVehicle.put("vehicleId", vehicle.getVehicleId().toString());
             kaoVehicle.put("vehicleName", vehicle.getVehicleName());
             asVehicle.add(kaoVehicle);
@@ -138,6 +147,56 @@ public class ExplorerService {
         Map<String, List<Map<String, String>>> returning = new java.util.HashMap<>();
         returning.put("trackers", asUser);
         returning.put("vehicles", asVehicle);
+
+        return returning;
+    }
+
+    public List<Map<String, String>> getHeatMapOfTracker(String actionName, String username) {
+        Actions action = actionService.getActionByName(actionName);
+        Users user = userService.getUserByUsername(username);
+        List<SearcherPosition> allSearchers = searcherPositionService.findByActionAndUser(action, user);
+        List<SearcherPosition> filtered = new java.util.ArrayList<>(List.of());
+        for (SearcherPosition searcher : allSearchers) {
+            if (actionService.isBetweenTime(searcher.getTimeStamp(), action)) {
+                filtered.add(searcher);
+            }
+        }
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (SearcherPosition searcher : filtered) {
+            Map<String, String> kaoSearcher = new java.util.HashMap<>();
+            Vehicle vehicle = taskService.getVehicleByActionAndUserName(action, searcher);
+            kaoSearcher.put("username", searcher.getUser().getUsername());
+            kaoSearcher.put("latitude", searcher.getLatitude().toString());
+            kaoSearcher.put("longitude", searcher.getLongitude().toString());
+            kaoSearcher.put("vehicleId", vehicle.getVehicleId().toString());
+            returning.add(kaoSearcher);
+        }
+
+        return returning;
+    }
+
+    public List<Map<String, String>> getHeatMapOfVehicle(String actionName, String vehicleName) {
+        Actions action = actionService.getActionByName(actionName);
+        Vehicle vehicle = vehicleRepository.findByVehicleName(vehicleName);
+        List<SearcherPosition> searchersWithVehicle = searcherPositionService.findByActionAndVehicle(action, vehicle);
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (SearcherPosition searcher : searchersWithVehicle) {
+            Map<String, String> kaoSearcher = new java.util.HashMap<>();
+            kaoSearcher.put("username", searcher.getUser().getUsername());
+            kaoSearcher.put("latitude", searcher.getLatitude().toString());
+            kaoSearcher.put("longitude", searcher.getLongitude().toString());
+            returning.add(kaoSearcher);
+        }
+
+        return returning;
+    }
+
+    public List<String> getStations() {
+        List<Station> allStations = stationService.getUsableStations();
+        List<String> returning = new java.util.ArrayList<>(List.of());
+        for (Station station : allStations) {
+            returning.add(station.getStationName());
+        }
 
         return returning;
     }

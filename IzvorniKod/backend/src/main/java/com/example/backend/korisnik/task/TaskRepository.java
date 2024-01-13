@@ -10,4 +10,5 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Task, TaskId> {
     List<Task> findByActionAndUser(Actions action, Users user);
     List<Task> findByAction(Actions action);
+    List<Task> findByActionAndVehicle(Actions action, Vehicle vehicle);
 }

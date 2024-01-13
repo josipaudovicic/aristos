@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function infoStranica() {
+function InfoStranica() {
   const navigate = useNavigate();
 
   const redirectToPage = async (path) => {
@@ -25,6 +25,7 @@ function infoStranica() {
     padding: '18px 18px',
     fontSize: 20,
     cursor: 'pointer',
+    margin: '10px',
   };
 
   return (
@@ -35,4 +36,4 @@ function infoStranica() {
   );
 }
 
-export default infoStranica;
+export default InfoStranica;

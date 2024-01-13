@@ -1,9 +1,9 @@
 import React from "react";
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const ListActions = () => {
     const location = useLocation()
-    const actions = location.state?.users || [];
+    const actions = location.state?.actions || [];
     console.log(actions);
     const navigate = useNavigate();
 
@@ -18,16 +18,12 @@ const ListActions = () => {
       };
 
 
-    const buttonStyle = {
-        position: 'fixed',
-        top: '10px',
-        left: '10px',
-        padding: '8px 16px',
-        backgroundColor: '#5C5C5C',
-        color: '#fff',
-        borderRadius: '4px',
-        cursor: 'pointer',
-    };
+      const handleAction =  () => { 
+        console.log(actions);
+        navigate('/explorer/action/newAction', {state : {actions: actions}});
+      };
+
+
 
     const listItemStyle = {
         cursor: 'pointer',
@@ -75,15 +71,7 @@ const ListActions = () => {
                 ))}
                 </ul>
                 <div>
-                    <Link to="/explorer/newAction">
-                        <button style={bStyle} title="Stvori novu akciju">+</button>
-                    </Link>
-                </div>
-
-                <div>
-                    <Link to="/explorer"> {/*!!!!!! ne koristi Link nego navigate i prosljeduj mi username*/}
-                        <button style={buttonStyle}>Početna</button>
-                    </Link>
+                    <button onClick={handleAction} style={bStyle} title="Stvori novu akciju">+</button>
                 </div>
             </div>
         </div>

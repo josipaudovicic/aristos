@@ -4,6 +4,7 @@ import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.action.Actions;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +20,11 @@ public class BelongsToActionService {
     }
 
     public List<Users> getTrackers(Actions action) {
-        return belongsToActionRepository.findByAction(action);
+        List<BelongsToAction> users = belongsToActionRepository.findByAction(action);
+        List<Users> kaoUser = new ArrayList<>();
+        for (BelongsToAction b : users){
+            kaoUser.add(b.getUser());
+        }
+        return kaoUser;
     }
 }
