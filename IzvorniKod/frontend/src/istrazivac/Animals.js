@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
 function Animals() {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [showListSpecies, setShowListSpecies] = useState(false);
   const [showListIndividual, setShowListIndividual] = useState(false);
 
-  const redirectToPage = async (path) => {
+  /*const redirectToPage = async (path) => {
       try {
       let response;
       if (path === "/explorer/map/species") {
@@ -21,7 +21,7 @@ function Animals() {
     } catch (error) {
       console.error(`Error fetching`, error.message);
     }
-  };
+  };*/
 
   const regularButtonStyle = {
     padding: '18px 18px',
@@ -66,34 +66,25 @@ function Animals() {
   };
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px', position: 'relative' }}>
-      <button onClick={handleShowListSpecies} style={regularButtonStyle}>
-        Karta po vrsti
-      </button>
+    <div style={{ textAlign: 'center', marginTop: '-100px', position: 'relative' }}>
+      <button onClick={handleShowListSpecies} style={regularButtonStyle}>Karta po vrsti</button>
       {showListSpecies && (
         <div style={listStyle}>
-          <div style={{ margin: '0', fontWeight: 'bold' }}>Animals:</div>
-          {['a', 'b', 'c', 'd'].map((animal) => (
+          <div style={{ margin: '0', fontWeight: 'bold' }}></div>
+          {['Sivi vuk', 'Smedi medvjed', 'Kuna bjelica', 'Sivi sokol'].map((animal) => (
             <div key={animal} style={optionStyle} onClick={() => handleOptionClick(animal)}>
               {animal}
-            </div>
-          ))}
-        </div>
-      )}
-
-      <button onClick={handleShowListIndividual} style={regularButtonStyle}>
-        Karta po jedinci
-      </button>
+            </div>))}
+        </div>)}
+      <button onClick={handleShowListIndividual} style={regularButtonStyle}>Karta po jedinci</button>
       {showListIndividual && (
         <div style={listStyle}>
-          <div style={{ margin: '0', fontWeight: 'bold' }}>Animals:</div>
-          {['e', 'f', 'g', 'h'].map((animal) => (
+          <div style={{ margin: '0', fontWeight: 'bold' }}></div>
+          {['Sivi vuk id:7', 'Sivi vuk id:8', 'Smedi medvjed id:1', 'Smedi medvjed id:2', 'Smedi medvjed id:3', 'Kuna bjelica id:6', 'Kuna bjelica id:4', 'Kuna bjelica id:5', 'Sivi sokol id:9', 'Sivi sokol id:10'].map((animal) => (
             <div key={animal} style={optionStyle} onClick={() => handleOptionClick(animal)}>
               {animal}
-            </div>
-          ))}
-        </div>
-      )}
+            </div>))}
+        </div>)}
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import React from "react";
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const ListActions = () => {
     const location = useLocation()
-    const actions = location.state?.users || [];
+    const actions = location.state?.actions || [];
     console.log(actions);
     const navigate = useNavigate();
 
@@ -19,7 +19,8 @@ const ListActions = () => {
 
 
       const handleAction =  () => { 
-        navigate('/explorer/action/newAction', {state : {actionName: actions.actionName}});
+        console.log(actions);
+        navigate('/explorer/action/newAction', {state : {actions: actions}});
       };
 
 
