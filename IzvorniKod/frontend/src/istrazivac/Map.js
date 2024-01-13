@@ -223,6 +223,7 @@ const Map = () => {
           zIndex: '1000',
           border: '1px solid #ddd',
           minWidth: '180px',
+          maxWidth: '180px',
         };
       
         const optionStyle = {
