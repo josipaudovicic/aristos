@@ -8,7 +8,7 @@ function NoviZadatak(){
     const [selectedAction, setSelectedAction] = useState('');
     const [actions, setActions] = useState([]);
 
-    useEffect(() => {
+    useEffect(() => { 
         const fetchActions = async () => { //dohvaca akcije od istrazivaca za dropdown
             try {
               const response = await fetch('api/explorer/actions');
