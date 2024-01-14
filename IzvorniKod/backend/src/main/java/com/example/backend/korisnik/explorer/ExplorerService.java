@@ -1,6 +1,8 @@
 package com.example.backend.korisnik.explorer;
 
 import com.example.backend.korisnik.HelpingTables.BelongsToActionService;
+import com.example.backend.korisnik.HelpingTables.TaskComment;
+import com.example.backend.korisnik.HelpingTables.TaskCommentService;
 import com.example.backend.korisnik.UserService;
 import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.action.ActionService;
@@ -39,9 +41,10 @@ public class ExplorerService {
     private final VehicleRepository vehicleRepository;
     private final VehicleService vehicleService;
     private final StationService stationService;
+    private final TaskCommentService taskCommentService;
 
     @Autowired
-    public ExplorerService(ActionService actionService, AnimalService animalService, SearcherPositionService searchersService, TaskService taskService, UserCommentService userCommentService, UserService userService, BelongsToActionService belongsToActionService, SearcherPositionService searcherPositionService, VehicleRepository vehicleRepository, VehicleService vehicleService, StationService stationService) {
+    public ExplorerService(ActionService actionService, AnimalService animalService, SearcherPositionService searchersService, TaskService taskService, UserCommentService userCommentService, UserService userService, BelongsToActionService belongsToActionService, SearcherPositionService searcherPositionService, VehicleRepository vehicleRepository, VehicleService vehicleService, StationService stationService, TaskCommentService taskCommentService) {
         this.actionService = actionService;
         this.animalService = animalService;
         this.searchersService = searchersService;
@@ -53,6 +56,7 @@ public class ExplorerService {
         this.vehicleRepository = vehicleRepository;
         this.vehicleService = vehicleService;
         this.stationService = stationService;
+        this.taskCommentService = taskCommentService;
     }
 
     public List<Map<String, String>> getActions(String username) {
@@ -242,12 +246,26 @@ public class ExplorerService {
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
         for (Task task : tasks) {
             Map<String, String> kaoTask = new java.util.HashMap<>();
+            kaoTask.put("taskId", task.getTaskId().toString());
             kaoTask.put("taskText", task.getTaskText());
             kaoTask.put("username", task.getUser().getUsername());
             kaoTask.put("vehicleName", vehicleService.findVehicleById(task.getVehicle().getVehicleId()).getVehicleName());
             kaoTask.put("animalName", task.getAnimal().getAnimalName());
             kaoTask.put("done", String.valueOf(task.isDone()));
             returning.add(kaoTask);
+        }
+
+        return returning;
+    }
+
+    public List<Map<String, String>> getAllTaskComments() {
+        List<TaskComment> comments = taskCommentService.getAllComments();
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (TaskComment comment : comments) {
+            Map<String, String> kaoComment = new java.util.HashMap<>();
+            kaoComment.put("taskId", comment.getTask().getTaskId().toString());
+            kaoComment.put("comment", comment.getComment());
+            returning.add(kaoComment);
         }
 
         return returning;

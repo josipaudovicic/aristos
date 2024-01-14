@@ -80,4 +80,9 @@ public class ExplorerController {
         return explorerService.getTasks(action);
     }
 
+    @GetMapping(path = "/action/info/tasks/comments")
+    public List<Map<String, String>> getTaskComments() {
+        return explorerService.getAllTaskComments();
+    }
+
 }
