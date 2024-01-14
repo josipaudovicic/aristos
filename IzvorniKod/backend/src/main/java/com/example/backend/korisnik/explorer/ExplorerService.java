@@ -9,6 +9,7 @@ import com.example.backend.korisnik.animal.Animal;
 import com.example.backend.korisnik.animal.AnimalService;
 import com.example.backend.korisnik.comment.UserComment;
 import com.example.backend.korisnik.comment.UserCommentService;
+import com.example.backend.korisnik.positions.AnimalPosition;
 import com.example.backend.korisnik.positions.SearcherPosition;
 import com.example.backend.korisnik.positions.SearcherPositionService;
 import com.example.backend.korisnik.station.Station;
@@ -197,6 +198,35 @@ public class ExplorerService {
         List<String> returning = new java.util.ArrayList<>(List.of());
         for (Station station : allStations) {
             returning.add(station.getStationName());
+        }
+
+        return returning;
+    }
+
+    public List<Map<String, String>> getMapSpecies(String animal) {
+        List<AnimalPosition> animalPositions = animalService.getAnimalPositions(animal);
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (AnimalPosition animalPosition : animalPositions) {
+            Map<String, String> kaoAnimal = new java.util.HashMap<>();
+            kaoAnimal.put("latitude", animalPosition.getLatitude().toString());
+            kaoAnimal.put("longitude", animalPosition.getLongitude().toString());
+            kaoAnimal.put("animalName", animalPosition.getAnimal().getAnimalName());
+            returning.add(kaoAnimal);
+        }
+
+        return returning;
+    }
+
+    public List<Map<String, String>> getMapIndividual(Long id) {
+        List<AnimalPosition> animalPositions = animalService.getSingleAnimalPositions(id);
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (AnimalPosition animalPosition : animalPositions) {
+            Map<String, String> kaoAnimal = new java.util.HashMap<>();
+            kaoAnimal.put("latitude", animalPosition.getLatitude().toString());
+            kaoAnimal.put("longitude", animalPosition.getLongitude().toString());
+            kaoAnimal.put("animalName", animalPosition.getAnimal().getAnimalName());
+            kaoAnimal.put("animalId", animalPosition.getAnimal().getAnimalId().toString());
+            returning.add(kaoAnimal);
         }
 
         return returning;

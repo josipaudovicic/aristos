@@ -1,5 +1,7 @@
 package com.example.backend.korisnik.animal;
 
+import com.example.backend.korisnik.positions.AnimalPosition;
+import com.example.backend.korisnik.positions.AnimalPositionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,9 +10,11 @@ import java.util.Map;
 @Service
 public class AnimalService {
     private final AnimalRepository animalRepository;
+    private final AnimalPositionService animalPositionService;
 
-    public AnimalService(AnimalRepository animalRepository) {
+    public AnimalService(AnimalRepository animalRepository, AnimalPositionService animalPositionService) {
         this.animalRepository = animalRepository;
+        this.animalPositionService = animalPositionService;
     }
 
     public List<String> findAllDistinctAnimalNames() {
@@ -38,5 +42,19 @@ public class AnimalService {
 
     public Animal returnById(Long id) {
         return animalRepository.findById(id).orElseThrow(() -> new IllegalStateException("Animal with id " + id + " does not exist!"));
+    }
+
+    public List<AnimalPosition> getAnimalPositions(String animalName) {
+        List<Animal> animal = animalRepository.findByAnimalName(animalName);
+        List<AnimalPosition> animalPositions = new java.util.ArrayList<>();
+        for (Animal a : animal) {
+            animalPositions.addAll(animalPositionService.findByAnimal(a));
+        }
+        return animalPositions;
+    }
+
+    public List<AnimalPosition> getSingleAnimalPositions(Long id) {
+        Animal animal = animalRepository.findById(id).orElseThrow(() -> new IllegalStateException("Animal with id " + id + " does not exist!"));
+        return animalPositionService.findByAnimal(animal);
     }
 }

@@ -80,7 +80,7 @@ function Animals() {
       {showListIndividual && (
         <div style={listStyle}>
           <div style={{ margin: '0', fontWeight: 'bold' }}></div>
-          {['Sivi vuk id:7', 'Sivi vuk id:8', 'Smedi medvjed id:1', 'Smedi medvjed id:2', 'Smedi medvjed id:3', 'Kuna bjelica id:6', 'Kuna bjelica id:4', 'Kuna bjelica id:5', 'Sivi sokol id:9', 'Sivi sokol id:10'].map((animal) => (
+          {['Smedi medvjed id:1', 'Smedi medvjed id:2', 'Smedi medvjed id:3', 'Kuna bjelica id:4', 'Kuna bjelica id:5', 'Kuna bjelica id:6','Sivi vuk id:7', 'Sivi vuk id:8', 'Sivi sokol id:9', 'Sivi sokol id:10'].map((animal) => (
             <div key={animal} style={optionStyle} onClick={() => handleOptionClick(animal)}>
               {animal}
             </div>))}

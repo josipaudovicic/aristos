@@ -65,4 +65,14 @@ public class ExplorerController {
         explorerService.postComment(id, body.get("comment"), body.get("username"));
     }
 
+    @GetMapping(path = "/map/species")
+    public List<Map<String, String>> getMapSpecies(@RequestHeader("animal") String animal) {
+        return explorerService.getMapSpecies(animal);
+    }
+
+    @GetMapping(path = "/map/species/{id}")
+    public List<Map<String, String>> getMapIndividual(@PathVariable Long id) {
+        return explorerService.getMapIndividual(id);
+    }
+
 }

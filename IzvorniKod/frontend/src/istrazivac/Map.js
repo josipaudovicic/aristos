@@ -43,11 +43,11 @@ const Map = () => {
       }, []);
 
     const handleAnimals  = () => {
-        navigate('/explorer/map', {state : {actionName: actionName}});
+        navigate('/explorer/map', {state : {actionName: actionName, username: username}});
     }
 
     const handleInfo = () => {
-        navigate(`/explorer/action/${actionName}/info`, {state : {actionName: actionName}});
+        navigate(`/explorer/action/${actionName}/info`, {state : {actionName: actionName, username: username}});
     }
 
     const handleTrackers = () => {
@@ -139,7 +139,7 @@ const Map = () => {
                     const heatmapData = markers.map((marker) => [marker.latitude, marker.longitude, 100]);
                     if (map) {
                       const newHeatLayer = L.heatLayer(heatmapData, {
-                          radius: markers.vehicleId * 20
+                          radius: markers[0].vehicleId * 8
                       }).addTo(map);
 
                       setHeatLayer(newHeatLayer);
@@ -187,7 +187,7 @@ const Map = () => {
                   const heatmapData = markers.map((marker) => [marker.latitude, marker.longitude, 100]);
                     if (map) {
                       const newHeatLayer = L.heatLayer(heatmapData, {
-                          radius: markers.vehicleId * 20
+                          radius: markers[0].vehicleId * 8
                       }).addTo(map);
 
                     setHeatLayer(newHeatLayer);
