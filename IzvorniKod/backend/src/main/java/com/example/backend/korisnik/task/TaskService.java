@@ -41,4 +41,8 @@ public class TaskService {
         }
         return List.copyOf(users);
     }
+
+    public List<Task> getTasks(Actions action) {
+        return taskRepository.findByAction(action);
+    }
 }

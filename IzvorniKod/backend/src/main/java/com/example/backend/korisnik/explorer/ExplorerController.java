@@ -75,4 +75,9 @@ public class ExplorerController {
         return explorerService.getMapIndividual(id);
     }
 
+    @GetMapping(path = "/action/info/tasks")
+    public List<Map<String, String>> getTasks(@RequestHeader("actionName") String action) {
+        return explorerService.getTasks(action);
+    }
+
 }

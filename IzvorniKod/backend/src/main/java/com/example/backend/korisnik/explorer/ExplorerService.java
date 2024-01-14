@@ -14,9 +14,11 @@ import com.example.backend.korisnik.positions.SearcherPosition;
 import com.example.backend.korisnik.positions.SearcherPositionService;
 import com.example.backend.korisnik.station.Station;
 import com.example.backend.korisnik.station.StationService;
+import com.example.backend.korisnik.task.Task;
 import com.example.backend.korisnik.task.TaskService;
 import com.example.backend.korisnik.vehicle.Vehicle;
 import com.example.backend.korisnik.vehicle.VehicleRepository;
+import com.example.backend.korisnik.vehicle.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,10 +37,11 @@ public class ExplorerService {
     private final BelongsToActionService belongsToActionService;
     private final SearcherPositionService searcherPositionService;
     private final VehicleRepository vehicleRepository;
+    private final VehicleService vehicleService;
     private final StationService stationService;
 
     @Autowired
-    public ExplorerService(ActionService actionService, AnimalService animalService, SearcherPositionService searchersService, TaskService taskService, UserCommentService userCommentService, UserService userService, BelongsToActionService belongsToActionService, SearcherPositionService searcherPositionService, VehicleRepository vehicleRepository, StationService stationService) {
+    public ExplorerService(ActionService actionService, AnimalService animalService, SearcherPositionService searchersService, TaskService taskService, UserCommentService userCommentService, UserService userService, BelongsToActionService belongsToActionService, SearcherPositionService searcherPositionService, VehicleRepository vehicleRepository, VehicleService vehicleService, StationService stationService) {
         this.actionService = actionService;
         this.animalService = animalService;
         this.searchersService = searchersService;
@@ -48,6 +51,7 @@ public class ExplorerService {
         this.belongsToActionService = belongsToActionService;
         this.searcherPositionService = searcherPositionService;
         this.vehicleRepository = vehicleRepository;
+        this.vehicleService = vehicleService;
         this.stationService = stationService;
     }
 
@@ -227,6 +231,23 @@ public class ExplorerService {
             kaoAnimal.put("animalName", animalPosition.getAnimal().getAnimalName());
             kaoAnimal.put("animalId", animalPosition.getAnimal().getAnimalId().toString());
             returning.add(kaoAnimal);
+        }
+
+        return returning;
+    }
+
+    public List<Map<String, String>> getTasks(String actionName) {
+        Actions action = actionService.getActionByName(actionName);
+        List<Task> tasks = taskService.getTasks(action);
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (Task task : tasks) {
+            Map<String, String> kaoTask = new java.util.HashMap<>();
+            kaoTask.put("taskText", task.getTaskText());
+            kaoTask.put("username", task.getUser().getUsername());
+            kaoTask.put("vehicleName", vehicleService.findVehicleById(task.getVehicle().getVehicleId()).getVehicleName());
+            kaoTask.put("animalName", task.getAnimal().getAnimalName());
+            kaoTask.put("done", String.valueOf(task.isDone()));
+            returning.add(kaoTask);
         }
 
         return returning;
