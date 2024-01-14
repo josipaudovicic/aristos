@@ -7,7 +7,7 @@ function UrediZadatak() {
   const [description, setDescription] = useState('');
   const [actions, setActions] = useState([]);
 
-  //nije gotovo{
+  //nije gotovo{ 
 
   const location = useLocation();
   //const [task] = useState(location.state.task);

@@ -1,119 +1,141 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function PopisZadataka() {
-    const [tasks, setTasks] = useState([]);
     const navigate = useNavigate();
+    const location = useLocation();
+    const actionName = location.state?.actionName;
+    const username = location.state?.username;
+    const [tasks, setTasks] = useState([]);
+    const [comments, setComments] = useState([]);
 
-    useEffect(() => {
-        // Fetch users with confirmed attribute set to NULL
-        const fetchTasks = async () => {
-          try {
-            const response = await fetch('/explorer/allTasks');
-            if (response.ok) {
-              const data = await response.json();
-              console.log(data);
-              setTasks(data);
-            } else {
-              console.error('Failed to fetch Tasks');
-            }
-          } catch (error) {
-            console.error('Error:', error);
-          }
-        };
+
+  useEffect(() => { 
+    const fetchTasks = () => {
+    try {
+      fetch('/explorer/action/info/tasks', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          actionName: actionName,
+        },
+    }).then((response1) => response1.json())
+      .then((data) => {setTasks(data);
+          fetch('/explorer/action/info/tasks/comments', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+      }).then((response2) => response2.json())
+        .then((data2) => setComments(data2))
+        .catch((error) => console.error('Error fetching data:', error));
+    })
+      .catch((error) => console.error('Error fetching data:', error));
+
+    } catch (error) {
+      console.error('Error:', error);
+    }};
     
-        fetchTasks();
-      }, []); 
+    fetchTasks();
+  }, []); 
 
-      const redirectToPage = async (path) => {
-        try {
-        let response;
-        if (path === "noviZd"){
-            response = await fetch(`/explorer/createNewTask`);
-        }else{
-            response = await fetch(`/explorer/Task`);
-        }
-            const data = await response.json();
-            navigate(`/${path}`, {state: {tasks: data}});
-  
-      } catch (error) {
-            console.error(`Error fetching`, error.message);
-      }
-    };
 
-  
-
-  const handleEdit = () => {
-    redirectToPage('/explorer/action/info/tasks/editTask')
+  const handleNewTask = () => {
+      navigate('/explorer/action/info/tasks/newTask', {state: { actionName: actionName}});
   };
 
-  const handleDelete = async() =>{
+  const handleDelete = (task) =>{
     try {
-        await fetch(`/explorer/tasks/`, {
+        fetch(`/explorer/action/info/tasks/delete`, {
           method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            task: task,
+          },
         });
-        navigate('/explorer/allTasks');
       } catch (error) {
         console.error('Error deleting task:', error);
       }
   }
 
-  const handleComment = async() => {
-      //nije gotovo
+  const handleComment = () => {
+    
   }
 
-  const CUTTING_EXPRESSION = /\s+[^\s]*$/;
-
-    const createShortcut = (text, limit) => {
-        if (text.length > limit) {
-            const part = text.slice(0, limit - 3);
-            if (part.match(CUTTING_EXPRESSION)) {
-                return part.replace(CUTTING_EXPRESSION, ' ...');
-            }
-            return part + '...';
-        }
-        return text;
-    };
-
-    const Component = ({text, limit}) => {
-        const shortcut = createShortcut(text, limit);
-        return (
-            <div title={text}>{shortcut}</div>
-        );
-    };
 
   const buttonStyle = {
-    flex: '1', 
-    marginLeft: '8px',
+    marginLeft: '393px',
     padding: '8px 16px',
     fontSize: '16px',
-    marginTop: '12px',
+    marginTop: '-40px',
+    cursor: 'pointer',
+  };
+
+  const button2Style = {
+    marginLeft: '393px',
+    padding: '8px 16px',
+    fontSize: '16px',
+    marginTop: '3px',
+    cursor: 'pointer',
   };
 
   const buttonStyle2 = {
-    flex: '1', 
-    marginLeft: '8px',
     padding: '8px 16px',
     fontSize: '16px',
-    marginTop: '12px',
+    cursor: 'pointer',
+    display: 'block',
+    margin: '0 auto',
   };
 
+  const ul = {
+    listStyleType: 'none',
+    padding: '0',
+  };
+
+  const li = {
+    border: '1px solid #ccc',
+    marginBottom: '3px',
+    padding: '5px',
+    display: 'flex',
+    flexDirection: 'column',
+  };
+
+  const container = {
+    backgroundColor: '#ffffff',
+    borderRadius: '8px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    padding: '15px',
+    width: '550px',
+  };
+
+  const pStyle = {
+    margin: '3px',
+  };
+
+  const h2style = {
+    textAlign: 'center',
+  };
+
+  console.log(comments);
+
   return (
-    <div>
-      <h2>Lista zadataka:</h2> 
-      <ul>
+    <div style={container}>
+      <h2 style={h2style}>Lista zadataka:</h2> 
+      <ul style={ul}>
         {tasks.map((task) => (
-          <li key={task.id} style={{ cursor: 'pointer' }}>
-            <strong>opis:</strong> <Component text={task.description} limit={17}/>
-            <button style={buttonStyle} onClick={() => handleEdit(task.id)}>Uredi</button>
-            <button style={buttonStyle} onClick={() => handleDelete(task.id)}>Obriši</button>
-            <button style={buttonStyle} onClick={() => handleComment(task.id)}>Dodaj komentar</button>
+          <li style={li} key={task.username}>
+            <p style={pStyle}><b>zadatak: </b>{task.taskText} </p> 
+            <p style={pStyle}><b>životinja:</b> {task.animalName} </p>
+            <p style={pStyle}><b>tragač:</b> {task.username} </p>
+            <p style={pStyle}><b>vozilo:</b> {task.vehicleName} </p>
+            <p style={pStyle}><b>završeno:</b> {task.done ? '✔️' : '❌'} </p>
+            <button style={buttonStyle} onClick={() => handleDelete(task)}>Obriši</button>
+            <button style={button2Style} onClick={() => handleComment(task)}>Dodaj komentar</button>
           </li>
         ))}
       </ul>
 
-      <button style={buttonStyle2} onClick={() => redirectToPage('/explorer/action/info/tasks/newTask')}>Dodaj novi zadatak</button>
+      <button style={buttonStyle2} onClick={handleNewTask}>Dodaj novi zadatak</button>
       
     </div>
   );
