@@ -297,7 +297,7 @@
 						\item \textbf{Glavni sudionik: }  Korisnik
 						\item  \textbf{Cilj:} Pregled svojih osobnih podataka
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:} 
 						
 						
@@ -318,7 +318,7 @@
 						\item \textbf{Glavni sudionik: }  Administrator
 						\item  \textbf{Cilj:} Pregledati registrirane korisnike
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Korisnik je registriran i dodijeljena su mu prava administratora
+						\item  \textbf{Preduvjet:} Admin je prijavljen
 						\item  \textbf{Opis osnovnog tijeka:} 
 						
 						
@@ -486,7 +486,7 @@
 						\item \textbf{Glavni sudionik: }  Voditelj postaje
 						\item  \textbf{Cilj:} Pregled vlastite postaje
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Voditelj je već odabrao barem jednog tragača
+						\item  \textbf{Preduvjet:} Postoji barem jedan tragač u postaji
 						\item  \textbf{Opis osnovnog tijeka:} 
 						
 						
@@ -506,7 +506,7 @@
 						\item \textbf{Glavni sudionik: }  Voditelj postaje
 						\item  \textbf{Cilj:} Uređivanje sposobnosti tragača
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Voditelj je odabrao barem jednpog tragača
+						\item  \textbf{Preduvjet:} Postoji barem jedan tragač u postaji
 						\item  \textbf{Opis osnovnog tijeka:} 
 						
 						
@@ -548,9 +548,9 @@
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: }  Voditelj postaje
-						\item  \textbf{Cilj:} iz nesvrstanih tragača voditelj postaje bira one za svoju postaju
+						\item  \textbf{Cilj:} Iz nesvrstanih tragača voditelj postaje bira one za svoju postaju
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Korisnik je u ulozi voditelja i postoje nesvrstani tragači
+						\item  \textbf{Preduvjet:} Korisnik ima ulogu voditelja i postoje nesvrstani tragači
 						\item  \textbf{Opis osnovnog tijeka:} 
 						
 						
@@ -615,7 +615,7 @@
 						\item \textbf{Glavni sudionik: }  Voditelj postaje
 						\item  \textbf{Cilj:} Pregled zahtjeva
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Postoji neizvršeni zahtjev
+						\item  \textbf{Preduvjet:} Postoji neispunjeni zahtjev
 						\item  \textbf{Opis osnovnog tijeka:} 
 						
 						
@@ -660,7 +660,7 @@
 						\item \textbf{Glavni sudionik: } Istraživač, tragač
 						\item  \textbf{Cilj:} Pregledati informacije o životinji
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Preduvjet:} Postoji barem jedna životinja s gdps uređajem
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -677,7 +677,7 @@
 					\noindent \underbar{\textbf{UC21 - Dodavanje komentara o životinjama }}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }: Tragač ili iistraživač 
+						\item \textbf{Glavni sudionik: }: Tragač ili istraživač 
 						\item  \textbf{Cilj:} Dodavanje komentara o praćenoj životinji
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:}Korisnik je u ulozi tragača i pratio je životinju o kojoj piše komentar ili je istraživač koji je započeo akciju
@@ -699,10 +699,10 @@
 					\noindent \underbar{\textbf{UC22 - Brisanje komentara}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Tragač ili iistraživač 
-						\item  \textbf{Cilj:} brisanje komentara o životinji
+						\item \textbf{Glavni sudionik: }Tragač ili istraživač 
+						\item  \textbf{Cilj:} Brisanje komentara o životinji
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Korisnik je u ulozi tragača i pratio je životinju o kojoj piše komentar ili je istraživač koji je započeo akciju
+						\item  \textbf{Preduvjet:} Korisnik ima ulogu tragača na zadatku praćenja životinje ili ulogu istraživača koji stvara akciju
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -774,7 +774,7 @@
 						\item \textbf{Glavni sudionik: } Tragač
 						\item  \textbf{Cilj:} Označavanje zadatka gotovim
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Zadatak je riješen
+						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -793,7 +793,7 @@
 						\item \textbf{Glavni sudionik: } Tragač
 						\item  \textbf{Cilj:} Pregled pozicija ostalih tragača na akciji
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:}
+						\item  \textbf{Preduvjet:} Postoji barem jedan tragač na akciji
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -867,7 +867,7 @@
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          30         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-					\noindent \underbar{\textbf{UC30 – slanje zahtjeva voditelju stanice za tragačima}}
+					\noindent \underbar{\textbf{UC30 – Slanje zahtjeva za tragačima}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: } Istraživač
@@ -888,7 +888,7 @@
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          31         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-					\noindent \underbar{\textbf{UC31 – Dodavanje opisa o tragačima}}
+					\noindent \underbar{\textbf{UC31 – Dodavanje kvalifikacija tragačima}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik: } Istraživač
@@ -954,7 +954,7 @@
 						\item \textbf{Glavni sudionik: } Istraživač
 						\item  \textbf{Cilj:} Uređivanje zadataka
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:}
+						\item  \textbf{Preduvjet:} Postoji barem jedan zadatak
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -989,7 +989,7 @@
 						\item \textbf{Glavni sudionik: } Istraživač
 						\item  \textbf{Cilj:} Brisanje zadataka
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:}
+						\item  \textbf{Preduvjet:} Postoji barem jedan zadatak
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -1023,7 +1023,7 @@
 						\item \textbf{Glavni sudionik: } Istraživač
 						\item  \textbf{Cilj:} Dodavanje komentara na zadatke
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:}
+						\item  \textbf{Preduvjet:} Postoji barem jedan zadatak
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -1045,7 +1045,7 @@
 						\item \textbf{Glavni sudionik: } Istraživač
 						\item  \textbf{Cilj:} : Stvaranje nove akcije pretraživanja i praćenja s detaljima o određenim vrstama, jedinkama ili staništima za proučavanje
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:} Istraživač nema aktivnu akciju
+						\item  \textbf{Preduvjet:} 
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
