@@ -1,27 +1,38 @@
-import React, { useState } from 'react';
-//import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Animals() {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [animalData, setAnimalData] = useState([]);
+  const [speciesData, setSpeciesData] = useState([]);
   const [showListSpecies, setShowListSpecies] = useState(false);
   const [showListIndividual, setShowListIndividual] = useState(false);
 
-  /*const redirectToPage = async (path) => {
-      try {
-      let response;
-      if (path === "/explorer/map/species") {
-        response = await fetch(`/explorer/map/species`);
-      } else {
-        response = await fetch(`/explorer/map/individual`);
-      }
+  useEffect(() => {
+    fetch(`/explorer/animals`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setSpeciesData(data))
+      .catch((error) => console.error('Error fetching user data:', error));
+  }, []);
 
-      const data = await response.json();
-      navigate(`/${path}`, {state: {data: data}});
+  useEffect(() => {
+    fetch(`/explorer/animals/species`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        animal: "no animal"
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setAnimalData(data.sort()))
+      .catch((error) => console.error('Error fetching user data:', error));
+    }, []);
 
-    } catch (error) {
-      console.error(`Error fetching`, error.message);
-    }
-  };*/
 
   const regularButtonStyle = {
     padding: '18px 18px',
@@ -63,6 +74,39 @@ function Animals() {
 
   const handleOptionClick = (animal) => {
     console.log(`Clicked on animal: ${animal}`);
+    fetch(`/explorer/map/species`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        animal: animal,
+      },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        const newAnimal = data;
+        navigate(`/explorer/map/animal`, {state: { animal: newAnimal}});
+    })
+    .catch((error) => console.error('Error fetching user data:', error));
+
+  };
+
+  const handleOptionClick2 = (animal) => {
+    console.log(`Clicked on animal: ${animal}`);
+    const id = animal.split(': ')[1];
+
+    fetch(`/explorer/map/species/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        const newAnimal = data;
+        navigate(`/explorer/map/animal`, {state: { animal: newAnimal}});
+    })
+    .catch((error) => console.error('Error fetching user data:', error));
+
   };
 
   return (
@@ -71,7 +115,7 @@ function Animals() {
       {showListSpecies && (
         <div style={listStyle}>
           <div style={{ margin: '0', fontWeight: 'bold' }}></div>
-          {['Sivi vuk', 'Smedi medvjed', 'Kuna bjelica', 'Sivi sokol'].map((animal) => (
+          {speciesData.map((animal) => (
             <div key={animal} style={optionStyle} onClick={() => handleOptionClick(animal)}>
               {animal}
             </div>))}
@@ -80,8 +124,8 @@ function Animals() {
       {showListIndividual && (
         <div style={listStyle}>
           <div style={{ margin: '0', fontWeight: 'bold' }}></div>
-          {['Smedi medvjed id:1', 'Smedi medvjed id:2', 'Smedi medvjed id:3', 'Kuna bjelica id:4', 'Kuna bjelica id:5', 'Kuna bjelica id:6','Sivi vuk id:7', 'Sivi vuk id:8', 'Sivi sokol id:9', 'Sivi sokol id:10'].map((animal) => (
-            <div key={animal} style={optionStyle} onClick={() => handleOptionClick(animal)}>
+          {animalData.map((animal) => (
+            <div key={animal} style={optionStyle} onClick={() => handleOptionClick2(animal)}>
               {animal}
             </div>))}
         </div>)}

@@ -32,6 +32,11 @@ function NewAction() {
         const { name, value } = e.target;
         setActionData((prevData) => ({ ...prevData, [name]: value }));
     };
+
+    const handleDropdownChange = (e) => {
+      const { value } = e.target;
+      setActionData((prevData) => ({ ...prevData, stationId: value }));
+    };
     
     const handleCancelClick = () => {
         console.log(actions);
@@ -82,7 +87,15 @@ function NewAction() {
         marginBottom: '4px',
         fontWeight: 'bold',
       };
+
     
+      const dropStyle = {
+        marginBottom: '8px',
+        padding: '8px',
+        marginLeft: '15px',
+        borderRadius: '6px',
+      };
+
       const inputStyle = {
         marginBottom: '8px',
         padding: '8px',
@@ -120,8 +133,16 @@ function NewAction() {
             <input type="text" name="actionName" value={actionData.actionName} onChange={handleChange} style={inputStyle} />
           </div>
           <div>
-            <label style={labelStyle}>Šifra postaje: </label>
-            <input type="text" name="stationId" value={actionData.stationId} onChange={handleChange} style={inputStyle} />
+            <label style={labelStyle}> Šifra postaje:   
+            <select id="dropdown" value={actionData.stationId} onChange={handleDropdownChange} style={dropStyle}>
+                <option value=""></option>
+                {station.map((action) => (
+              <option key={action} value={action}>
+                {action}
+              </option>
+            ))}
+            </select>
+          </label>
           </div>
           <div style={buttonContainerStyle}>
             <button style={buttonStyle} onClick={handleSaveChanges}>Stvori akciju</button>

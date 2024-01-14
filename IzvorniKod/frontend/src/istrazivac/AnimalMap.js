@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';  
 import 'leaflet.heat';
 
 const Map = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const actionName = location.state?.action.actionName || '';
-    const username = location.state?.username || '';
-    const [trackers, setTrackers] = useState();
     const [map, setMap] = useState(null);
     const [heatLayer, setHeatLayer] = useState(null);
-    const [vehicles, setVehicles] = useState();
-    const [showDropdown, setShowDropdown] = useState(false);
+    const [showDropdown1, setShowDropdown1] = useState(false);
+    const [showDropdown2, setShowDropdown2] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
+    const [animalData, setAnimalData] = useState([]);
+    const [speciesData, setSpeciesData] = useState([]);
 
     useEffect(() => {
         const initializeMap = () => {
@@ -43,26 +39,35 @@ const Map = () => {
       }, []);
 
     const handleAnimals  = () => {
-        navigate('/explorer/map');
-    }
-
-    const handleInfo = () => {
-        navigate(`/explorer/action/${actionName}/info`, {state : {actionName: actionName, username: username}});
-    }
-
-    const handleTrackers = () => {
-        fetch(`/explorer/action/${actionName}/trackers`, {
+        fetch(`/explorer/animals`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
             },
           })
             .then((response) => response.json())
-            .then((data) => {
+            .then((data) => {setAnimalData(data);
                 console.log(data);
-                setTrackers(data.trackers);
-                setVehicles(data.vehicles);
-                setShowDropdown(true);
+                setShowDropdown2(false);
+                setShowDropdown1(true);
+            })
+            .catch((error) => console.error('Error fetching user data:', error));
+
+    }
+
+    const handleSpecies = () => {
+          fetch(`/explorer/animals/species`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              animal: "no animal"
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {setSpeciesData(data.sort());
+                console.log(data);
+                setShowDropdown1(false);
+                setShowDropdown2(true);
             })
             .catch((error) => console.error('Error fetching user data:', error));
     };
@@ -98,25 +103,18 @@ const Map = () => {
         width: '180px',
     };
 
-    const b2Style = {
-        position: 'fixed',
-        bottom: '20px',
-        right: '20px',
-        padding: '6px 16px',
-        width: '100px',
-        fontSize: '20px',
-    };
 
     const handleOptionClick = (option) => {
         setSelectedOption(option);
+        console.log(option);
 
         const fetchData = async () => {
             try {
-                const response = await fetch(`/explorer/action/${actionName}/tracker`, {
+                const response = await fetch(`/explorer/map/species`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        username: option,
+                        animal: option,
                     },
                 });
 
@@ -133,13 +131,12 @@ const Map = () => {
                     const markers = data.map((marker) => ({
                         latitude: marker.latitude,
                         longitude: marker.longitude,
-                        vehicleId: marker.vehicleId,
                     }));
             
                     const heatmapData = markers.map((marker) => [marker.latitude, marker.longitude, 100]);
                     if (map) {
                       const newHeatLayer = L.heatLayer(heatmapData, {
-                          radius: markers[0].vehicleId * 8
+                          radius: 25
                       }).addTo(map);
 
                       setHeatLayer(newHeatLayer);
@@ -160,11 +157,11 @@ const Map = () => {
 
         const fetchData = async () => {
             try {
-                const response = await fetch(`/explorer/action/${actionName}/vehicle`, {
+                const id = option.split(': ')[1];
+                const response = await fetch(`/explorer/map/species/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        vehicle: option,
                     },
                 });
 
@@ -181,13 +178,12 @@ const Map = () => {
                   const markers = data.map((marker) => ({
                       latitude: marker.latitude,
                       longitude: marker.longitude,
-                      vehicleId: marker.vehicleId,
                   }));
           
                   const heatmapData = markers.map((marker) => [marker.latitude, marker.longitude, 100]);
                     if (map) {
                       const newHeatLayer = L.heatLayer(heatmapData, {
-                          radius: markers[0].vehicleId * 8
+                          radius: 25
                       }).addTo(map);
 
                     setHeatLayer(newHeatLayer);
@@ -203,7 +199,7 @@ const Map = () => {
         fetchData();
     };
 
-    const Dropdown = () => {
+    const Dropdown1 = () => {
         const dropdownStyle = {
           position: 'absolute',
           top: '165px',
@@ -231,6 +227,7 @@ const Map = () => {
           backgroundColor: '#f0f0f0',
           fontWeight: 'bold',
           Width: '180px',
+          textAlign: 'center',
         };
       
         const backButtonStyle = {
@@ -253,27 +250,94 @@ const Map = () => {
           }
         };
       
+        console.log(animalData);
+
         return (
           <div style={dropdownStyle}>
             {selectedOption ? (<>
-                <p style={selectedOptionStyle}>Odabrano: {selectedOption}</p>
+                <p style={selectedOptionStyle}>{selectedOption}</p>
                 <div style={backButtonStyle} onClick={handleBackToList}>
                   Natrag na listu
                 </div></>) : (<>
-                {trackers && (
+                {animalData && (
                   <div>
-                    <p style={{ margin: '0', fontWeight: 'bold' }}>Trackers:</p>
-                    {trackers.map((tracker) => (
-                      <div key={tracker.username} style={optionStyle} onClick={() => handleOptionClick(tracker.username)}>
-                        {tracker.username}
+                    <p style={{ margin: '0', fontWeight: 'bold' }}>Vrste:</p>
+                    {animalData.map((animal) => (
+                      <div key={animal} style={optionStyle} onClick={() => handleOptionClick(animal)}>
+                        {animal}
                       </div>))}
                   </div>)}
-                {vehicles && (
+                </>)}
+          </div>
+        );
+      };
+
+      const Dropdown2 = () => {
+        const dropdownStyle = {
+          position: 'absolute',
+          top: '165px',
+          left: '8px',
+          backgroundColor: '#fff',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+          borderRadius: '4px',
+          padding: '8px',
+          zIndex: '1000',
+          border: '1px solid #ddd',
+          minWidth: '180px',
+          maxWidth: '180px',
+        };
+      
+        const optionStyle = {
+          cursor: 'pointer',
+          padding: '8px',
+          borderBottom: '1px solid #eee',
+          transition: 'background-color 0.3s',
+          Width: '180px',
+        };
+      
+        const selectedOptionStyle = {
+          ...optionStyle,
+          backgroundColor: '#f0f0f0',
+          fontWeight: 'bold',
+          Width: '180px',
+          textAlign: 'center',
+        };
+      
+        const backButtonStyle = {
+          cursor: 'pointer',
+          padding: '8px',
+          backgroundColor: '#f0f0f0',
+          borderRadius: '4px',
+          marginTop: '8px',
+          textAlign: 'center',
+          color: '#333',
+          Width: '180px',
+        };
+      
+        const handleBackToList = () => {
+          setSelectedOption(null);
+
+          if (map && heatLayer) {
+            map.removeLayer(heatLayer);
+            setHeatLayer(null);
+          }
+        };
+
+        console.log(speciesData);
+      
+        return (
+          <div style={dropdownStyle}>
+            {selectedOption ? (<>
+                <p style={selectedOptionStyle}>{selectedOption}</p>
+                <div style={backButtonStyle} onClick={handleBackToList}>
+                  Natrag na listu
+                </div></>) : (<>
+                {speciesData && (
                   <div>
-                    <p style={{ margin: '0', fontWeight: 'bold' }}>Vehicles:</p>
-                    {vehicles.map((vehicle) => (
-                      <div key={vehicle.vehicleId} style={optionStyle} onClick={() => handleOptionClick2(vehicle.vehicleName)}>
-                        {vehicle.vehicleName}
+                    <p style={{ margin: '0', fontWeight: 'bold' }}>Jedinke:</p>
+                    {speciesData.map((species) => (
+                      <div key={species} style={optionStyle} onClick={() => handleOptionClick2(species)}>
+                        {species}
                       </div>))}
                   </div>)}</>)}
           </div>
@@ -284,10 +348,10 @@ const Map = () => {
         <div>
             <div id="map" style={{ height: '150vh', width: '150vh' }} />;
             <p style={pStyle}>Prikaži na karti: </p>
-            <button onClick={handleTrackers} style={buttonStyle}>Tragače</button>
-            <button onClick={handleAnimals} style={button2Style}>Životinje</button>
-            {showDropdown && <Dropdown />}
-            <button onClick={handleInfo} style={b2Style}>Info</button>
+            <button onClick={handleAnimals} style={buttonStyle}>Po vrsti</button>
+            <button onClick={handleSpecies} style={button2Style}>Po jedinci</button>
+            {showDropdown1 && <Dropdown1 />}
+            {showDropdown2 && <Dropdown2 />}
         </div>
     );
 };

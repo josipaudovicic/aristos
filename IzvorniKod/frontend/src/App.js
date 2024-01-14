@@ -30,12 +30,12 @@ import Individual from "./istrazivac/Individual";
 import InfoAnimals from "./istrazivac/InfoAnimals";
 import Map from "./istrazivac/Map";
 import Info from "./istrazivac/Info";
-import Animals from "./istrazivac/Animals";
 import NewAction from "./istrazivac/NewAction";
 import IzradaZahtjeva from "./istrazivac/IzradaZahtjeva";
 import NoviZadatak from "./istrazivac/NoviZadatak";
 import UrediZadatak from "./istrazivac/UrediZadatak";
 import PopisZadataka from "./istrazivac/PopisZadataka";
+import AnimalMap from "./istrazivac/AnimalMap"
 
 import Tracker from "./tragac/Tracker";
 import SpeciesT from "./tragac/SpeciesT";
@@ -68,7 +68,6 @@ function App() {
         <Route path="/user/:username/edit" element={<EditKorisnik />} />
         <Route path="/explorer/action/:actionName" element={<Map />} />
         <Route path="/explorer/action/:actionName/info" element={<Info />} />
-        <Route path="/explorer/map" element={<Animals />} />
         <Route path="/explorer/action/newAction" element={<NewAction />} />
         <Route path="/tracker" element={<Tracker />} />
         <Route path="/tracker/animals" element={<SpeciesT />} />
@@ -78,6 +77,7 @@ function App() {
         <Route path="/explorer/action/info/requests" element={<IzradaZahtjeva />} />
         <Route path="/explorer/action/info/tasks/newTask" element={<NoviZadatak />} />
         <Route path="/explorer/action/info/tasks/editTask" element={<UrediZadatak />} />
+        <Route path="/explorer/map" element={<AnimalMap />} />
       </Routes>
     </BrowserRouter>
   );

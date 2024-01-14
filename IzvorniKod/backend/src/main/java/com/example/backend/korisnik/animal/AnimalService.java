@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class AnimalService {
@@ -22,6 +23,14 @@ public class AnimalService {
     }
 
     public List<String> findSpecies(String animal) {
+        if (Objects.equals(animal, "no animal")) {
+            List<Animal> allAnimals = animalRepository.findAll();
+            List<String> animalNames = new java.util.ArrayList<>();
+            for (Animal a : allAnimals) {
+                animalNames.add(a.getAnimalName() + ", id: " +  a.getAnimalId());
+            }
+            return animalNames;
+        }
         List<Animal> animals = animalRepository.findByAnimalName(animal);
         List<String> animalNames = new java.util.ArrayList<>();
         for (Animal a : animals) {
