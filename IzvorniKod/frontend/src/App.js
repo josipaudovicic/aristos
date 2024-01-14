@@ -20,6 +20,13 @@ import TwoButtonRedirectComponent from "./administrator/TwoButtonRedirectCompone
 
 import StationManager from "./voditelj/StationManager";
 import OdabirAkcija from "./voditelj/OdabirAkcija";
+import PregledSvihTragaca from "./voditelj/PregledSvihTragaca";
+import PregledSvojihTragaca from "./voditelj/PregledSvojihTragaca";
+import EditNacinaTransporta from "./voditelj/EditNacinaTransporta";
+import NeaktivneAkcije from "./voditelj/NeaktivneAkcije";
+import PregledZahtjeva from "./voditelj/PregledZahtjeva";
+import PregledAktivnihAkcija from "./voditelj/AktivneAkcije";
+
 
 //TODO: importati sve ostale stranice iz voditelja
 
@@ -41,6 +48,7 @@ import Tracker from "./tragac/Tracker";
 import SpeciesT from "./tragac/SpeciesT";
 import IndividualT from "./tragac/IndividualT";
 import InfoAnimalsT from "./tragac/InfoAnimalsT";
+import MapT from "./tragac/MapT";
 
 function App() {
   return (
@@ -57,6 +65,12 @@ function App() {
         <Route path="/admin" element={<TwoButtonRedirectComponent />} />
         <Route path="/manager" element={<StationManager />} />
         <Route path="/manager/actions" element={<OdabirAkcija />} />
+        <Route path="/manager/actions/neaktivne" element={<NeaktivneAkcije />} />
+        <Route path="/manager/actions/aktivne" element={<PregledAktivnihAkcija />} />
+        <Route path="/manager/trackers" element={<PregledSvihTragaca />} />
+        <Route path="/manager/trackers/:id`" element={<EditNacinaTransporta />} />
+        <Route path="/manager/mytrackers" element={<PregledSvojihTragaca />} />
+        <Route path="/manager/requests" element={<PregledZahtjeva />} />
         <Route path="/register/confirm/" element={<Confirmation />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
@@ -73,6 +87,7 @@ function App() {
         <Route path="/tracker/animals" element={<SpeciesT />} />
         <Route path="/tracker/animals/species" element={<IndividualT />} />
         <Route path="/tracker/animals/species/:id" element={<InfoAnimalsT />} />
+        <Route path="/tracker/animals/action" element={<MapT />} />
         <Route path="/explorer/action/info/tasks" element={<PopisZadataka />} />
         <Route path="/explorer/action/info/requests" element={<IzradaZahtjeva />} />
         <Route path="/explorer/action/info/tasks/newTask" element={<NoviZadatak />} />
