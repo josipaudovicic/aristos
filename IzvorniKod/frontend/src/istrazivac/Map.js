@@ -10,6 +10,8 @@ const Map = () => {
     const actionName = location.state?.action.actionName || '';
     const username = location.state?.username || '';
     const [trackers, setTrackers] = useState();
+    const [map, setMap] = useState(null);
+    const [heatLayer, setHeatLayer] = useState(null);
     const [vehicles, setVehicles] = useState();
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
@@ -29,6 +31,8 @@ const Map = () => {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
                 maxZoom: 15,
               }).addTo(map);
+
+              setMap(map);
             }
           } catch (error) {
             console.error('Error initializing map:', error);
@@ -125,28 +129,23 @@ const Map = () => {
 
                 const mapContainer = document.getElementById('map');
     
-                if (mapContainer && !mapContainer._leaflet_id) {
-                    const map = L.map(mapContainer, {
-                        center: [45.1, 16.3],
-                        zoom: 7,                  
-                    });
-            
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-                        maxZoom: 15,
-                    }).addTo(map);
-
+                if (mapContainer) {
                     const markers = data.map((marker) => ({
                         latitude: marker.latitude,
                         longitude: marker.longitude,
                         vehicleId: marker.vehicleId,
                     }));
             
-                    const heatmapData = markers.map((marker) => [marker.latitude, marker.longitude, marker.vehicleId * 5]);
+                    const heatmapData = markers.map((marker) => [marker.latitude, marker.longitude, 100]);
+                    if (map) {
+                      const newHeatLayer = L.heatLayer(heatmapData, {
+                          radius: markers.vehicleId * 20
+                      }).addTo(map);
 
-                    L.heatLayer(heatmapData, {
-                        radius: 25
-                    }).addTo(map);
+                      setHeatLayer(newHeatLayer);
+                    } else {
+                      alert('Map not initialized');
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -178,30 +177,24 @@ const Map = () => {
 
                 const mapContainer = document.getElementById('map');
     
-                if (mapContainer && !mapContainer._leaflet_id) {
-                    const map = L.map(mapContainer, {
-                        center: [45.1, 16.3],
-                        zoom: 7,
-                        
-                    });
-            
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-                        maxZoom: 15,
-                    }).addTo(map);
+                if (mapContainer) {
+                  const markers = data.map((marker) => ({
+                      latitude: marker.latitude,
+                      longitude: marker.longitude,
+                      vehicleId: marker.vehicleId,
+                  }));
+          
+                  const heatmapData = markers.map((marker) => [marker.latitude, marker.longitude, 100]);
+                    if (map) {
+                      const newHeatLayer = L.heatLayer(heatmapData, {
+                          radius: markers.vehicleId * 20
+                      }).addTo(map);
 
-                    const markers = data.map((marker) => ({
-                        latitude: marker.latitude,
-                        longitude: marker.longitude,
-                        vehicleId: marker.vehicleId,
-                    }));
-            
-                    const heatmapData = markers.map((marker) => [marker.latitude, marker.longitude, marker.vehicleId * 5]);
-
-                    L.heatLayer(heatmapData, {
-                        radius: 25
-                    }).addTo(map);
-                }
+                    setHeatLayer(newHeatLayer);
+                  } else {
+                    alert('Map not initialized');
+                  }
+              }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -253,6 +246,11 @@ const Map = () => {
       
         const handleBackToList = () => {
           setSelectedOption(null);
+
+          if (map && heatLayer) {
+            map.removeLayer(heatLayer);
+            setHeatLayer(null);
+          }
         };
       
         return (

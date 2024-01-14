@@ -2,6 +2,7 @@ package com.example.backend.korisnik.HelpingTables;
 
 import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.action.Actions;
+import com.example.backend.korisnik.vehicle.Vehicle;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,5 +27,10 @@ public class BelongsToActionService {
             kaoUser.add(b.getUser());
         }
         return kaoUser;
+    }
+
+    public Vehicle getVehicle(Actions action, Users user) {
+        BelongsToAction belongsToAction = belongsToActionRepository.findByActionAndUser(action, user);
+        return belongsToAction.getVehicle();
     }
 }

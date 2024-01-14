@@ -164,7 +164,7 @@ public class ExplorerService {
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
         for (SearcherPosition searcher : filtered) {
             Map<String, String> kaoSearcher = new java.util.HashMap<>();
-            Vehicle vehicle = taskService.getVehicleByActionAndUserName(action, searcher);
+            Vehicle vehicle = belongsToActionService.getVehicle(action, user);
             kaoSearcher.put("username", searcher.getUser().getUsername());
             kaoSearcher.put("latitude", searcher.getLatitude().toString());
             kaoSearcher.put("longitude", searcher.getLongitude().toString());
@@ -185,6 +185,7 @@ public class ExplorerService {
             kaoSearcher.put("username", searcher.getUser().getUsername());
             kaoSearcher.put("latitude", searcher.getLatitude().toString());
             kaoSearcher.put("longitude", searcher.getLongitude().toString());
+            kaoSearcher.put("vehicleId", vehicle.getVehicleId().toString());
             returning.add(kaoSearcher);
         }
 
