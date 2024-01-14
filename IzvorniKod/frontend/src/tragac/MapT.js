@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./styles.css";
 import L from 'leaflet';
 
 const MapT = () => {
+  const mapContainerRef = useRef(null);
   const navigate = useNavigate();
   const [action, setAction] = useState(null);
   const [username, setUsername] = useState('');
@@ -175,6 +175,10 @@ const MapT = () => {
 
   // Check if all tasks are checked
   const allTasksChecked = tasks.every((task) => checkedTasks.includes(task.taskId));
+
+  const handleCheckboxChange = () => {
+
+  };
 
   // Render component
   return (
