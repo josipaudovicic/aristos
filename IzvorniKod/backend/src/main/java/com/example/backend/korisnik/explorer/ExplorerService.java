@@ -24,6 +24,7 @@ import com.example.backend.korisnik.vehicle.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -269,5 +270,12 @@ public class ExplorerService {
         }
 
         return returning;
+    }
+
+    public void postAction(String actionName, String username, String stationId) {
+        Station station = stationService.getStationByName(stationId);
+        Users user = userService.getUserByUsername(username);
+        Actions action = new Actions(actionName, true, false, user, station, new Timestamp(System.currentTimeMillis()));
+        actionService.save(action);
     }
 }

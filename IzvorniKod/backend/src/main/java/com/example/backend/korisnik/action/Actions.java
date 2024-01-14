@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 @Entity
 public class Actions {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long actionId;
     private String actionName;
     private boolean actionActive;
@@ -23,6 +24,15 @@ public class Actions {
     private Timestamp endTime;
 
     public Actions() {
+    }
+
+    public Actions(String actionName, boolean actionActive, boolean started, Users user, Station station, Timestamp startTime) {
+        this.actionName = actionName;
+        this.actionActive = actionActive;
+        this.started = started;
+        this.user = user;
+        this.station = station;
+        this.startTime = startTime;
     }
 
     public Long getActionId() {

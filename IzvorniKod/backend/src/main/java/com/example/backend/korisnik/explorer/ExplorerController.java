@@ -20,6 +20,11 @@ public class ExplorerController {
         return explorerService.getActions(username);
     }
 
+    @PostMapping(path = "/actions/newAction")
+    public void postAction(@RequestBody Map<String, String> body) {
+        explorerService.postAction(body.get("actionName"), body.get("username"), body.get("stationId"));
+    }
+
     @GetMapping(path = "/action/{actionName}/tracker")
     public List<Map<String, String>> getMap(@PathVariable String actionName, @RequestHeader("username") String username) {
         return explorerService.getHeatMapOfTracker(actionName, username);

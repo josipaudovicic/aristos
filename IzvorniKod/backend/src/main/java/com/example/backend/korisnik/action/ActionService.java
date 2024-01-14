@@ -61,4 +61,8 @@ public class ActionService {
         }
         return time.after(action.getStartTime());
     }
+
+    public void save(Actions action) {
+        actionRepository.save(action);
+    }
 }

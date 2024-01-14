@@ -40,4 +40,8 @@ public class StationService {
         }
         return List.copyOf(usableStations);
     }
+
+    public Station getStationByName(String stationName) {
+        return stationRepository.findByStationName(stationName);
+    }
 }
