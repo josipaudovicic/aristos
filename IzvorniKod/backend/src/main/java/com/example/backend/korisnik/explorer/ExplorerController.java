@@ -70,6 +70,11 @@ public class ExplorerController {
         explorerService.postComment(id, body.get("comment"), body.get("username"));
     }
 
+    @DeleteMapping(path = "/animals/species/{id}/comment/delete")
+    public void deleteComment(@PathVariable Long id, @RequestBody Map<String, String> body) {
+        explorerService.deleteComment(id, body.get("comment"), body.get("username"), body.get("commentId"));
+    }
+
     @GetMapping(path = "/map/species")
     public List<Map<String, String>> getMapSpecies(@RequestHeader("animal") String animal) {
         return explorerService.getMapSpecies(animal);

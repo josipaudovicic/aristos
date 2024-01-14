@@ -119,9 +119,11 @@ public class ExplorerService {
                 kaoComment.put("username", comment.getUser().getUsername());
                 kaoComment.put("comment", comment.getSentComment());
                 kaoComment.put("action", comment.getAction().getActionName());
+                kaoComment.put("commentId", comment.getCommentId().toString());
             } else {
                 kaoComment.put("username", comment.getUser().getUsername());
                 kaoComment.put("comment", comment.getSentComment());
+                kaoComment.put("commentId", comment.getCommentId().toString());
             }
             returning.add(kaoComment);
         }
@@ -277,5 +279,10 @@ public class ExplorerService {
         Users user = userService.getUserByUsername(username);
         Actions action = new Actions(actionName, true, false, user, station, new Timestamp(System.currentTimeMillis()));
         actionService.save(action);
+    }
+
+    public void deleteComment(Long animalId, String comment, String username, String commentId) {
+        UserComment userComment = userCommentService.findByCommentId(Long.parseLong(commentId));
+        userCommentService.delete(userComment);
     }
 }

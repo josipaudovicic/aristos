@@ -11,7 +11,6 @@ function InfoAnimals() {
     const [commentsList, setCommentsList] = useState([]);
     var src = null;
 
-    console.log(comments);
     if (animal.animalName === "Sivi sokol") {
         src = '/animalImages/sivisokol.jpg';
     } else if (animal.animalName === "Smedi medvjed") {
@@ -83,17 +82,18 @@ function InfoAnimals() {
         })
       };
 
-      const handleDelete = (index) => {
+      const handleDelete = (index, comment) => {
         const updatedCommentsList = [...commentsList];
         updatedCommentsList.splice(index, 1);
         setCommentsList(updatedCommentsList);
+        console.log(comment);
+        console.log(id);
     
         fetch(`/explorer/animals/species/${id}/comment/delete`, {
            method: 'DELETE',
            headers: {
              'Content-Type': 'application/json',
-             comment: comment,
-           },
+           }, body: JSON.stringify({ action: comment.action, comment: comment.comment, commentId: comment.commentId, username: comment.username}),
          });
       };
     
@@ -130,7 +130,7 @@ function InfoAnimals() {
             {comments.map((dbComment, index) => (
               <li key={index} style={{ ...commentStyles.commentItem, display: 'flex', justifyContent: 'space-between' }}>
                 <p style={commentStyles.commentText}>{`${dbComment.username}: ${dbComment.comment}`}</p>
-                <button style={deleteButton} onClick={() => handleDelete(index)}>x</button>
+                <button style={deleteButton} onClick={() => handleDelete(index, dbComment)}>x</button>
               </li>
             ))}
           </ul>
@@ -143,7 +143,7 @@ function InfoAnimals() {
             {commentsList.map((comment, index) => (
               <li key={index} style={{ ...commentStyles.commentItem, display: 'flex', justifyContent: 'space-between' }}>
               <p style={commentStyles.commentText}>{comment}</p>
-                <button style={deleteButton} onClick={() => handleDelete(index)}>x</button>
+                <button style={deleteButton} onClick={() => handleDelete(index, comment)}>x</button>
               </li>
             ))}
           </ul>
