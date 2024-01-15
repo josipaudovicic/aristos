@@ -1,5 +1,6 @@
 package com.example.backend.korisnik.explorer;
 
+import com.example.backend.korisnik.HelpingTables.BelongsToAction;
 import com.example.backend.korisnik.HelpingTables.BelongsToActionService;
 import com.example.backend.korisnik.HelpingTables.TaskComment;
 import com.example.backend.korisnik.HelpingTables.TaskCommentService;
@@ -65,14 +66,16 @@ public class ExplorerService {
 
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
         for (Actions action : allActions) {
-            Map<String, String> kaoAction = new java.util.HashMap<>();
-            kaoAction.put("id", action.getActionId().toString());
-            kaoAction.put("actionName", action.getActionName());
-            kaoAction.put("actionActive", String.valueOf(action.isActive()));
-            kaoAction.put("started", String.valueOf(action.isStarted()));
-            kaoAction.put("station", action.getStation().getStationName());
-            kaoAction.put("username", action.getUser().getUsername());
-            returning.add(kaoAction);
+            if (action.isStarted()) {
+                Map<String, String> kaoAction = new java.util.HashMap<>();
+                kaoAction.put("id", action.getActionId().toString());
+                kaoAction.put("actionName", action.getActionName());
+                kaoAction.put("actionActive", String.valueOf(action.isActive()));
+                kaoAction.put("started", String.valueOf(action.isStarted()));
+                kaoAction.put("station", action.getStation().getStationName());
+                kaoAction.put("username", action.getUser().getUsername());
+                returning.add(kaoAction);
+            }
         }
 
         return returning;
@@ -277,12 +280,45 @@ public class ExplorerService {
     public void postAction(String actionName, String username, String stationId) {
         Station station = stationService.getStationByName(stationId);
         Users user = userService.getUserByUsername(username);
-        Actions action = new Actions(actionName, true, false, user, station, new Timestamp(System.currentTimeMillis()));
+        Actions action = new Actions(actionName, true, false, user, station, new Timestamp(System.currentTimeMillis()), null);
         actionService.save(action);
     }
 
     public void deleteComment(Long animalId, String comment, String username, String commentId) {
         UserComment userComment = userCommentService.findByCommentId(Long.parseLong(commentId));
         userCommentService.delete(userComment);
+    }
+
+    public Map<String, List<String>> getUsersAndAnimals(String actionName) {
+        List<BelongsToAction> belongsToActions = belongsToActionService.getAllUsers(actionName);
+        List<Animal> animal = animalService.getAllAnimals();
+        Map<String, List<String>> returning = new java.util.HashMap<>();
+        List<String> users = new java.util.ArrayList<>(List.of());
+        List<String> animals = new java.util.ArrayList<>(List.of());
+        for (BelongsToAction belongsToAction : belongsToActions) {
+            users.add(belongsToAction.getUser().getUsername());
+        }
+        for (Animal animal1 : animal) {
+            animals.add(animal1.getAnimalName() + ", id: " + animal1.getAnimalId().toString());
+        }
+        returning.put("users", users);
+        returning.put("animals", animals);
+        
+        return returning;
+    }
+
+
+    public void postTask(String actionName, String taskText, String username, String animalName) {
+        Actions action = actionService.getActionByName(actionName);
+        Users user = userService.getUserByUsername(username);
+        Animal animal = animalService.getAnimalByName(animalName);
+        Vehicle vehicle = belongsToActionService.getVehicle(action, user);
+        Task task = new Task(taskText, false, action, user, animal, vehicle);
+        taskService.save(task);
+    }
+
+    public void deleteTask(String taskId) {
+        Task task = taskService.getTaskById(Long.parseLong(taskId));
+        taskService.delete(task);
     }
 }

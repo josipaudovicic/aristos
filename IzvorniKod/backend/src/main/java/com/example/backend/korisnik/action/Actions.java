@@ -17,7 +17,7 @@ public class Actions {
     @ManyToOne
     @JoinColumn(name = "userName")
     private Users user;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "stationId")
     private Station station;
     private Timestamp startTime;
@@ -33,6 +33,16 @@ public class Actions {
         this.user = user;
         this.station = station;
         this.startTime = startTime;
+    }
+
+    public Actions(String actionName, boolean actionActive, boolean started, Users user, Station station, Timestamp startTime, Timestamp endTime) {
+        this.actionName = actionName;
+        this.actionActive = actionActive;
+        this.started = started;
+        this.user = user;
+        this.station = station;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public Long getActionId() {

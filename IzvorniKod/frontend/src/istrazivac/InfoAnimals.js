@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { useLocation } from 'react-router-dom';
 
 function InfoAnimals() {
@@ -6,10 +6,24 @@ function InfoAnimals() {
     const animal = location.state?.animal;
     const username = location.state?.username;
     const id = location.state?.id;
-    const comments = location.state?.comments;
+    const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
     const [commentsList, setCommentsList] = useState([]);
     var src = null;
+
+    useEffect(() => {
+      fetch(`/explorer/animals/species/${id}/comments`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setComments(data);
+        })
+        .catch((error) => console.error('Error fetching user data:', error));
+    }, []);
 
     if (animal.animalName === "Sivi sokol") {
         src = '/animalImages/sivisokol.jpg';
@@ -69,7 +83,7 @@ function InfoAnimals() {
         if (comment) {
             console.log(username);
             const newComment = `${username}: ${comment}`; 
-            setCommentsList([...commentsList, newComment]);
+            setComments([...comments, newComment]);
             setComment('');
           }
         
@@ -83,9 +97,9 @@ function InfoAnimals() {
       };
 
       const handleDelete = (index, comment) => {
-        const updatedCommentsList = [...commentsList];
+        const updatedCommentsList = [...comments];
         updatedCommentsList.splice(index, 1);
-        setCommentsList(updatedCommentsList);
+        setComments(updatedCommentsList);
         console.log(comment);
         console.log(id);
     
@@ -129,7 +143,7 @@ function InfoAnimals() {
           <ul style={commentStyles.commentList}>
             {comments.map((dbComment, index) => (
               <li key={index} style={{ ...commentStyles.commentItem, display: 'flex', justifyContent: 'space-between' }}>
-                <p style={commentStyles.commentText}>{`${dbComment.username}: ${dbComment.comment}`}</p>
+                <p style={commentStyles.commentText}>{typeof dbComment === 'object' && dbComment !== null ? `${dbComment.username}: ${dbComment.comment}` : dbComment}</p>
                 <button style={deleteButton} onClick={() => handleDelete(index, dbComment)}>x</button>
               </li>
             ))}

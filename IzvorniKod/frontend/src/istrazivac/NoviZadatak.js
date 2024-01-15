@@ -1,91 +1,169 @@
 import React, { useState, useEffect }  from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function NoviZadatak(){
-
     const navigate = useNavigate();
-    const [description, setDescription] = useState([]);
-    const [selectedAction, setSelectedAction] = useState('');
-    const [actions, setActions] = useState([]);
+    const location = useLocation();
+    const actionName = location.state?.actionName;
+    const [username, setUsername] = useState([]);
+    const [animals, setAnimals] = useState([]);
+    const [task, setTask] = useState({
+        taskText: '',
+        animalName: '',
+        username: '',
+    });
 
-    useEffect(() => { 
-        const fetchActions = async () => { //dohvaca akcije od istrazivaca za dropdown
-            try {
-              const response = await fetch('api/explorer/actions');
-              if (response.ok) {
-                const data = await response.json();
-                console.log(data);
-                setActions(data);
-              } else {
-                console.error('Failed to fetch actions');
-              }
-            } catch (error) {
-              console.error('Error:', error);
-            }
-          };
-          fetchActions();
-          }, []);
+    useEffect(() => {
+      fetch('/explorer/action/info/tasks/newTask', {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              actionName: actionName,
+          },
+      })
+      .then((response) => response.json())
+      .then((data) => {setUsername(data.users);
+                      setAnimals(data.animals);
+                      console.log(data);
+                  })
+      .catch((error) => console.error('Error fetching user data for editing:', error));  
+    }, []);
 
-          const handleSubmit = async () => {
-            
-    
-            try {
-                const response = await fetch(`/api/explorer/Tasks`, {
-                  method: 'PUT',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                });
-          
-                if (response.ok) {
-                  alert('Zadatak je napravljen');
-                  navigate('/explorer/allTasks');
-                } else {
-                  console.error('Failed');
-                }
-              } catch (error) {
-                console.error('Error', error.message);
-              }
-          }; 
-    
-          const handleSelectChange = (event) => {
-            setSelectedAction(event.target.value);
-          };
-    
-          const handleChange=(event) => {
-            setDescription(event.target.value)
-          }
-    
-        const regularButtonStyle = {
-            padding: '18px 18px',
-            fontSize: 20,
-            cursor: 'pointer',
-          };
-        
-    return (
-        <div>
-            <h2>Novi zadatak</h2>
-            <form>
-              <label>
-                opis zadatka:
-                <input type="text" value={description} onChange={handleChange}></input>
-              </label>
-    
-              <label>
-                akcija:
-                <select id="dropdown" value={selectedAction} onChange={handleSelectChange}>
-                    <option value="">izaberi...</option>
-                    {actions.map(action => (
-                        <option key={action.id} value={action.id}>
-                            {action.name}
-                        </option>
-                    ))}
-                </select>
-              </label>
-            </form>
-    
-            <button onClick={() => handleSubmit()} style={regularButtonStyle}>Spremi</button>
+
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setTask((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleDropdownChange = (e) => {
+    const { value } = e.target;
+    setTask((prevData) => ({ ...prevData, username: value }));
+  };
+
+  const handleDropdownChange2 = (e) => {
+    const { value } = e.target;
+    setTask((prevData) => ({ ...prevData, animalName: value }));
+  };
+  
+  const handleCancelClick = () => {
+      navigate(`/explorer/action/info/tasks`, { state: {actionName: actionName}});
+  };
+
+  
+    const handleSaveChanges = async () => {
+      try {
+
+        if (
+          !task.taskText ||
+          !task.username || 
+          !task.animalName
+      ) {
+          alert('Popunite sva polja');
+          return;
+      }
+
+        const response = await fetch(`/explorer/action/info/tasks/newTask`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            actionName: actionName
+          },
+          body: JSON.stringify(task),
+        });
+  
+        if (response.ok) {
+          console.log('Task changes saved successfully');
+          navigate(`/explorer/action/info/tasks`, { state: {data: task, actionName: actionName}});
+        } else {
+          console.error('Failed to save task changes');
+        }
+      } catch (error) {
+        console.error('Error saving task changes:', error);
+      }
+    };
+  
+  const labelStyle = {
+      display: 'block',
+      marginBottom: '4px',
+      fontWeight: 'bold',
+    };
+
+  
+    const dropStyle = {
+      marginBottom: '8px',
+      padding: '8px',
+      marginLeft: '15px',
+      borderRadius: '6px',
+    };
+
+    const inputStyle = {
+      marginBottom: '8px',
+      padding: '8px',
+    };
+  
+    const buttonContainerStyle = {
+      display: 'flex',
+      justifyContent: 'space-between', 
+      marginTop: '12px',
+    };
+  
+    const buttonStyle = {
+      flex: '1', 
+      marginLeft: '8px',
+      padding: '8px 16px',
+      fontSize: '16px',
+      marginTop: '12px',
+    };
+  
+    const containerStyle = {
+      textAlign: 'left',
+    };
+  
+    const centerStyle = {
+      textAlign: 'center', 
+    };
+
+  return (
+      <div className="container" style={containerStyle}>
+        <div style={centerStyle}>
+          <h2>Unesi podatke za novi zadatak:</h2>
         </div>
-        );
+        <div>
+          <label style={labelStyle}>Opis zadatka: </label>
+          <input type="text" name="taskText" value={task.taskText} onChange={handleChange} style={inputStyle} />
+        </div>
+        <div>
+          <label style={labelStyle}> Ime tragača na zadatku:   
+          <select id="dropdown" value={task.username} onChange={handleDropdownChange} style={dropStyle}>
+              <option value=""></option>
+              {username.map((tracker) => (
+            <option key={tracker} value={tracker}>
+              {tracker}
+            </option>
+          ))}
+          </select>
+        </label>
+        </div>
+        <div>
+          <label style={labelStyle}> Životinja:   
+          <select id="dropdown" value={animals.animalName} onChange={handleDropdownChange2} style={dropStyle}>
+              <option value=""></option>
+              {animals.map((animal) => (
+            <option key={animal} value={animal}>
+              {animal}
+            </option>
+          ))}
+          </select>
+        </label>
+        </div>
+        <div style={buttonContainerStyle}>
+          <button style={buttonStyle} onClick={handleSaveChanges}>Stvori zadatak</button>
+          <button style={buttonStyle} onClick={handleCancelClick}>Odustani</button>
+        </div>
+      </div>
+    );
+      
+        
+    
 }
 export default NoviZadatak;

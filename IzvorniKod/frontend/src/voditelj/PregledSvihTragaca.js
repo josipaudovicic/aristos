@@ -6,27 +6,28 @@ const transportModesList = ['pješke', 'dronom', 'automobilom', 'cross motorom',
 function PregledSvihTragaca() {
   const location = useLocation();
   const navigate = useNavigate();
-  const trackers = location.state.data; 
+  const trackers = location.state.data;
+
   const [selectedTrackers, setSelectedTrackers] = useState([]);
   const [selectedTransportModes, setSelectedTransportModes] = useState({});
 
-  const handleTrackerCheckboxChange = (trackerId) => {
+  const handleTrackerCheckboxChange = (trackerUsername) => {
     setSelectedTrackers((prevTrackers) => {
-      if (prevTrackers.includes(trackerId)) {
-        return prevTrackers.filter((id) => id !== trackerId);
+      if (prevTrackers.includes(trackerUsername)) {
+        return prevTrackers.filter((username) => username !== trackerUsername);
       } else {
-        return [...prevTrackers, trackerId];
+        return [...prevTrackers, trackerUsername];
       }
     });
   };
 
-  const handleTransportModeCheckboxChange = (trackerId, mode) => {
+  const handleTransportModeCheckboxChange = (trackerUsername, mode) => {
     setSelectedTransportModes((prevModes) => {
-      const trackerModes = prevModes[trackerId] || [];
+      const trackerModes = prevModes[trackerUsername] || [];
       if (trackerModes.includes(mode)) {
-        return { ...prevModes, [trackerId]: trackerModes.filter((m) => m !== mode) };
+        return { ...prevModes, [trackerUsername]: trackerModes.filter((m) => m !== mode) };
       } else {
-        return { ...prevModes, [trackerId]: [...trackerModes, mode] };
+        return { ...prevModes, [trackerUsername]: [...trackerModes, mode] };
       }
     });
   };
@@ -49,22 +50,22 @@ function PregledSvihTragaca() {
 
       }
 
-      for (const selectedTrackerId of selectedTrackers) {
+      for (const selectedTrackerUsername of selectedTrackers) {
         try {
-          const selectedTracker = trackers.find((tracker) => tracker.id === selectedTrackerId);
+          const selectedTracker = trackers.find((tracker) => tracker.username === selectedTrackerUsername);
   
-          const response = await fetch(`/api/tracker/${selectedTracker.id}`, {
+          const response = await fetch(`/api/tracker/${selectedTracker.username}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ transportModes: selectedTransportModes[selectedTracker.id] || [] }),
+            body: JSON.stringify({ transportModes: selectedTransportModes[selectedTracker.username] || [] }),
           });
   
           if (response.ok) {
-            console.log(`Tracker ${selectedTracker.id} transport modes updated successfully.`);
+            console.log(`Tracker ${selectedTracker.username} transport modes updated successfully.`);
           } else {
-            console.error(`Failed to update transport modes for Tracker ${selectedTracker.id}.`);
+            console.error(`Failed to update transport modes for Tracker ${selectedTracker.username}.`);
 
           }
         } catch (errorWithinLoop) {
@@ -87,19 +88,19 @@ function PregledSvihTragaca() {
       <form>
         {/* Tracker selection */}
         {trackers.map((tracker) => (
-          <div key={tracker.id}>
+          <div key={tracker.username}>
             <label>
-              <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}, <strong>ID:</strong> {tracker.id}
+              <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}
               <input
                 type="checkbox"
-                checked={selectedTrackers.includes(tracker.id)}
-                onChange={() => handleTrackerCheckboxChange(tracker.id)}
+                checked={selectedTrackers.includes(tracker.username)}
+                onChange={() => handleTrackerCheckboxChange(tracker.username)}
               />
             </label>
             <br />
 
             {/* Transport mode selection for each tracker */}
-            {selectedTrackers.includes(tracker.id) && (
+            {selectedTrackers.includes(tracker.username) && (
               <div>
                 <label>Select Transport Modes:</label>
                 {transportModesList.map((mode) => (
@@ -108,8 +109,8 @@ function PregledSvihTragaca() {
                       {mode}
                       <input
                         type="checkbox"
-                        checked={(selectedTransportModes[tracker.id] || []).includes(mode)}
-                        onChange={() => handleTransportModeCheckboxChange(tracker.id, mode)}
+                        checked={(selectedTransportModes[tracker.username] || []).includes(mode)}
+                        onChange={() => handleTransportModeCheckboxChange(tracker.username, mode)}
                       />
                     </label>
                     <br />
@@ -127,5 +128,4 @@ function PregledSvihTragaca() {
     </div>
   );
 }
-
 export default PregledSvihTragaca;

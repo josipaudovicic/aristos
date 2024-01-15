@@ -95,4 +95,18 @@ public class ExplorerController {
         return explorerService.getAllTaskComments();
     }
 
+    @GetMapping(path = "/action/info/tasks/newTask")
+    public Map<String, List<String>> getUsersAndAnimals(@RequestHeader("actionName") String actionName) {
+        return explorerService.getUsersAndAnimals(actionName);
+    }
+
+
+    @PostMapping(path = "/action/info/tasks/newTask")
+    public void postTask(@RequestHeader("actionName") String actionName, @RequestBody Map<String, String> body) {
+        explorerService.postTask(actionName, body.get("taskText"), body.get("username"), body.get("animalName"));
+    }
+    @DeleteMapping(path = "/action/info/tasks/delete")
+    public void deleteTask(@RequestBody Map<String, String> body) {
+        explorerService.deleteTask(body.get("taskId"));
+    }
 }
