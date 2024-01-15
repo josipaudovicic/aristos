@@ -7,14 +7,14 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class AnimalPositionId implements Serializable {
-    private Animal animal;
     private Timestamp timeStamp;
+    private Long animal;
 
-    public Animal getAnimal() {
+    public Long getAnimal() {
         return animal;
     }
 
-    public void setAnimal(Animal animal) {
+    public void setAnimal(Long animal) {
         this.animal = animal;
     }
 

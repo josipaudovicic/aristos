@@ -1,21 +1,65 @@
 package com.example.backend.korisnik.animal;
 
 import com.example.backend.korisnik.positions.AnimalPosition;
+import com.example.backend.korisnik.positions.AnimalPositionRepository;
 import com.example.backend.korisnik.positions.AnimalPositionService;
+import jakarta.annotation.PostConstruct;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.sql.Timestamp;
+import java.util.*;
 
 @Service
 public class AnimalService {
     private final AnimalRepository animalRepository;
     private final AnimalPositionService animalPositionService;
+    private final AnimalPositionRepository animalPositionRepository;
 
-    public AnimalService(AnimalRepository animalRepository, AnimalPositionService animalPositionService) {
+    public AnimalService(AnimalRepository animalRepository, AnimalPositionService animalPositionService, AnimalPositionRepository animalPositionRepository) {
         this.animalRepository = animalRepository;
         this.animalPositionService = animalPositionService;
+        this.animalPositionRepository = animalPositionRepository;
+    }
+
+    @PostConstruct
+    public void init() {
+        scheduledAddPositions();
+    }
+
+    @Scheduled(fixedDelay = 3000000)
+    public void scheduledAddPositions() {
+        addPositions();
+    }
+
+    public void addPositions() {
+        Random random = new Random();
+        List<Long> allAnimalIds = findAllAnimalIds();
+        long bound = 0;
+
+        for (Long id : allAnimalIds) {
+            if (id > bound) {
+                bound = id;
+            }
+        }
+
+        for (long id = 1; id < bound + 1; id++) {
+            Timestamp ts = new Timestamp(new Date().getTime());
+            List<AnimalPosition> position = getSingleAnimalPositions(id);
+            double newLatitude = position.get(random.nextInt(position.size())).getLatitude() + random.nextInt(10) * random.nextDouble(-1, 1);
+            double newLongitude = position.get(random.nextInt(position.size())).getLongitude() + random.nextInt(10) * random.nextDouble(-1, 1);
+
+            AnimalPosition newPosition = new AnimalPosition();
+            newPosition.setTimeStamp(ts);
+            newPosition.setLatitude(newLatitude);
+            newPosition.setLongitude(newLongitude);
+            newPosition.setAnimal(returnById(id));
+            animalPositionRepository.save(newPosition);
+        }
+    }
+
+    public List<Long> findAllAnimalIds() {
+        return animalRepository.findAllAnimalIds();
     }
 
     public List<String> findAllDistinctAnimalNames() {
