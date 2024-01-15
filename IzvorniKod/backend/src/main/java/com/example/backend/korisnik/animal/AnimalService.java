@@ -21,7 +21,7 @@ public class AnimalService {
         this.animalPositionRepository = animalPositionRepository;
     }
 
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 600000)
     public void scheduledAddPositions() {
         addPositions();
     }
