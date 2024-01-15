@@ -108,4 +108,8 @@ public class AnimalService {
         Animal animal = animalRepository.findById(id).orElseThrow(() -> new IllegalStateException("Animal with id " + id + " does not exist!"));
         return animalPositionService.findByAnimal(animal);
     }
+
+    public List<Animal> getAllAnimals() {
+        return animalRepository.findAll();
+    }
 }

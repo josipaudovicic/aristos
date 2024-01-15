@@ -95,4 +95,14 @@ public class ExplorerController {
         return explorerService.getAllTaskComments();
     }
 
+    @GetMapping(path = "/action/info/tasks/newTask")
+    public Map<String, List<String>> getUsersAndAnimals(@RequestHeader("actionName") String actionName) {
+        return explorerService.getUsersAndAnimals(actionName);
+    }
+
+
+    @PostMapping(path = "/action/info/tasks/newTask")
+    public void postTask(@RequestBody Map<String, String> body) {
+        explorerService.postTask(body.get("actionName"), body.get("username"), body.get("animalId"), body.get("taskName"));
+    }
 }

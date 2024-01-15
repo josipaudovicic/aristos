@@ -1,5 +1,6 @@
 package com.example.backend.korisnik.explorer;
 
+import com.example.backend.korisnik.HelpingTables.BelongsToAction;
 import com.example.backend.korisnik.HelpingTables.BelongsToActionService;
 import com.example.backend.korisnik.HelpingTables.TaskComment;
 import com.example.backend.korisnik.HelpingTables.TaskCommentService;
@@ -286,5 +287,26 @@ public class ExplorerService {
     public void deleteComment(Long animalId, String comment, String username, String commentId) {
         UserComment userComment = userCommentService.findByCommentId(Long.parseLong(commentId));
         userCommentService.delete(userComment);
+    }
+
+    public Map<String, List<String>> getUsersAndAnimals(String actionName) {
+        List<BelongsToAction> belongsToActions = belongsToActionService.getAllUsers(actionName);
+        List<Animal> animal = animalService.getAllAnimals();
+        Map<String, List<String>> returning = new java.util.HashMap<>();
+        List<String> users = new java.util.ArrayList<>(List.of());
+        List<String> animals = new java.util.ArrayList<>(List.of());
+        for (BelongsToAction belongsToAction : belongsToActions) {
+            users.add(belongsToAction.getUser().getUsername());
+        }
+        for (Animal animal1 : animal) {
+            animals.add(animal1.getAnimalName());
+        }
+        returning.put("users", users);
+        returning.put("animals", animals);
+        
+        return returning;
+    }
+
+    public void postTask(String actionName, String username, String animalId, String taskName) {
     }
 }
