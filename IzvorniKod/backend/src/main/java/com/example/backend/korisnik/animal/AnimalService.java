@@ -41,17 +41,19 @@ public class AnimalService {
             }
 
             for (long id = 1; id < bound + 1; id++) {
-                Timestamp ts = new Timestamp(new Date().getTime());
-                List<AnimalPosition> position = getSingleAnimalPositions(id);
-                double newLatitude = position.get(random.nextInt(position.size())).getLatitude() + random.nextDouble(-0.1, 0.1);
-                double newLongitude = position.get(random.nextInt(position.size())).getLongitude() + random.nextDouble(-0.1, 0.1);
+                if (allAnimalIds.contains(id)) {
+                    Timestamp ts = new Timestamp(new Date().getTime());
+                    List<AnimalPosition> position = getSingleAnimalPositions(id);
+                    double newLatitude = position.get(position.size() - 1).getLatitude() + random.nextDouble(-0.1, 0.1);
+                    double newLongitude = position.get(position.size() - 1).getLongitude() + random.nextDouble(-0.1, 0.1);
 
-                AnimalPosition newPosition = new AnimalPosition();
-                newPosition.setTimeStamp(ts);
-                newPosition.setLatitude(newLatitude);
-                newPosition.setLongitude(newLongitude);
-                newPosition.setAnimal(returnById(id));
-                animalPositionRepository.save(newPosition);
+                    AnimalPosition newPosition = new AnimalPosition();
+                    newPosition.setTimeStamp(ts);
+                    newPosition.setLatitude(newLatitude);
+                    newPosition.setLongitude(newLongitude);
+                    newPosition.setAnimal(returnById(id));
+                    animalPositionRepository.save(newPosition);
+                }
             }
         }
     }
@@ -111,5 +113,10 @@ public class AnimalService {
 
     public List<Animal> getAllAnimals() {
         return animalRepository.findAll();
+    }
+
+    public Animal getAnimalByName(String animalName) {
+        Long id = animalName.split(", id: ")[1].equals("null") ? null : Long.parseLong(animalName.split(", id: ")[1]);
+        return animalRepository.findById(id).orElseThrow(() -> new IllegalStateException("Animal with id " + id + " does not exist!"));
     }
 }

@@ -9,10 +9,7 @@ public class TaskComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskCommentId;
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "task_id"),
-            @JoinColumn(name = "user_name")
-    })
+    @JoinColumn(name = "task_id")
     private Task task;
     private String comment;
 

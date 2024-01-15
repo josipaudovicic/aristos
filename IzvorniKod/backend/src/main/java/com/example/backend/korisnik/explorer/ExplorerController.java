@@ -102,7 +102,11 @@ public class ExplorerController {
 
 
     @PostMapping(path = "/action/info/tasks/newTask")
-    public void postTask(@RequestBody Map<String, String> body) {
-        explorerService.postTask(body.get("actionName"), body.get("username"), body.get("animalId"), body.get("taskName"));
+    public void postTask(@RequestHeader("actionName") String actionName, @RequestBody Map<String, String> body) {
+        explorerService.postTask(actionName, body.get("taskText"), body.get("username"), body.get("animalName"));
+    }
+    @DeleteMapping(path = "/action/info/tasks/delete")
+    public void deleteTask(@RequestBody Map<String, String> body) {
+        explorerService.deleteTask(body.get("taskId"));
     }
 }
