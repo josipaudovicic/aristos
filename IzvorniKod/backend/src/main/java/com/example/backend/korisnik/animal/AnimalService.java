@@ -3,7 +3,6 @@ package com.example.backend.korisnik.animal;
 import com.example.backend.korisnik.positions.AnimalPosition;
 import com.example.backend.korisnik.positions.AnimalPositionRepository;
 import com.example.backend.korisnik.positions.AnimalPositionService;
-import jakarta.annotation.PostConstruct;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +21,7 @@ public class AnimalService {
         this.animalPositionRepository = animalPositionRepository;
     }
 
-    @PostConstruct
-    public void init() {
-        scheduledAddPositions();
-    }
-
-    @Scheduled(fixedDelay = 3000000)
+    @Scheduled(fixedDelay = 60000)
     public void scheduledAddPositions() {
         addPositions();
     }
@@ -46,8 +40,8 @@ public class AnimalService {
         for (long id = 1; id < bound + 1; id++) {
             Timestamp ts = new Timestamp(new Date().getTime());
             List<AnimalPosition> position = getSingleAnimalPositions(id);
-            double newLatitude = position.get(random.nextInt(position.size())).getLatitude() + random.nextInt(10) * random.nextDouble(-1, 1);
-            double newLongitude = position.get(random.nextInt(position.size())).getLongitude() + random.nextInt(10) * random.nextDouble(-1, 1);
+            double newLatitude = position.get(random.nextInt(position.size())).getLatitude() + random.nextDouble(-0.1, 0.1);
+            double newLongitude = position.get(random.nextInt(position.size())).getLongitude() + random.nextDouble(-0.1, 0.1);
 
             AnimalPosition newPosition = new AnimalPosition();
             newPosition.setTimeStamp(ts);
