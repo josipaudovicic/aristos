@@ -299,7 +299,7 @@ public class ExplorerService {
             users.add(belongsToAction.getUser().getUsername());
         }
         for (Animal animal1 : animal) {
-            animals.add(animal1.getAnimalName());
+            animals.add(animal1.getAnimalName() + ", id: " + animal1.getAnimalId().toString());
         }
         returning.put("users", users);
         returning.put("animals", animals);
