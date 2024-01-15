@@ -128,7 +128,7 @@ function PopisZadataka() {
             <p style={pStyle}><b>životinja:</b> {task.animalName} </p>
             <p style={pStyle}><b>tragač:</b> {task.username} </p>
             <p style={pStyle}><b>vozilo:</b> {task.vehicleName} </p>
-            <p style={pStyle}><b>završeno:</b> {task.done ? '✔️' : '❌'} </p>
+            <p style={pStyle}><b>završeno:</b> {task.done === "true" ? '✔️' : '❌'} </p>
             <button style={buttonStyle} onClick={() => handleDelete(task)}>Obriši</button>
             <button style={button2Style} onClick={() => handleComment(task)}>Dodaj komentar</button>
           </li>

@@ -7,11 +7,10 @@ import com.example.backend.korisnik.vehicle.Vehicle;
 import jakarta.persistence.*;
 
 @Entity
-@IdClass(TaskId.class)
 public class Task {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
-    @Id
     @ManyToOne
     @JoinColumn(name = "user_name")
     private Users user;
@@ -26,6 +25,18 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
+
+    public Task() {
+    }
+
+    public Task(String taskText, boolean b, Actions action, Users user, Animal animal, Vehicle vehicle) {
+        this.taskText = taskText;
+        this.done = b;
+        this.action = action;
+        this.user = user;
+        this.animal = animal;
+        this.vehicle = vehicle;
+    }
 
     public Long getTaskId() {
         return taskId;

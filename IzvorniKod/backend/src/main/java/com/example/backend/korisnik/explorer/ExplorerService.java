@@ -307,6 +307,18 @@ public class ExplorerService {
         return returning;
     }
 
-    public void postTask(String actionName, String username, String animalId, String taskName) {
+
+    public void postTask(String actionName, String taskText, String username, String animalName) {
+        Actions action = actionService.getActionByName(actionName);
+        Users user = userService.getUserByUsername(username);
+        Animal animal = animalService.getAnimalByName(animalName);
+        Vehicle vehicle = belongsToActionService.getVehicle(action, user);
+        Task task = new Task(taskText, false, action, user, animal, vehicle);
+        taskService.save(task);
+    }
+
+    public void deleteTask(String taskId) {
+        Task task = taskService.getTaskById(Long.parseLong(taskId));
+        taskService.delete(task);
     }
 }

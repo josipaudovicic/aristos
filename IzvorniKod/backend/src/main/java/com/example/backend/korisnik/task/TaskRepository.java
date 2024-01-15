@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface TaskRepository extends JpaRepository<Task, TaskId> {
+public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByActionAndUser(Actions action, Users user);
     List<Task> findByAction(Actions action);
     List<Task> findByActionAndVehicle(Actions action, Vehicle vehicle);

@@ -112,4 +112,9 @@ public class AnimalService {
     public List<Animal> getAllAnimals() {
         return animalRepository.findAll();
     }
+
+    public Animal getAnimalByName(String animalName) {
+        Long id = animalName.split(", id: ")[1].equals("null") ? null : Long.parseLong(animalName.split(", id: ")[1]);
+        return animalRepository.findById(id).orElseThrow(() -> new IllegalStateException("Animal with id " + id + " does not exist!"));
+    }
 }

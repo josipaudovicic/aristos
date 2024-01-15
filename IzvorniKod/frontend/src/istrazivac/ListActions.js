@@ -1,12 +1,21 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const ListActions = () => {
     const location = useLocation()
-    const actions = location.state?.actions || [];
+    const [actions, setActions] = useState(location.state?.actions);
     const username = location.state?.username;
-    console.log(actions);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetch(`/explorer/actions` , {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          username: username,
+        },  
+        }).then((response) => (response.json())).then((data) => (setActions(data))).catch((error) => console.error("Something went wrong" + error))
+    })
 
     const handleClick = async (action) => { 
         try {

@@ -66,6 +66,7 @@ function NoviZadatak(){
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            actionName: actionName
           },
           body: JSON.stringify(task),
         });

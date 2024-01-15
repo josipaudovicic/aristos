@@ -45,4 +45,16 @@ public class TaskService {
     public List<Task> getTasks(Actions action) {
         return taskRepository.findByAction(action);
     }
+
+    public void save(Task task) {
+        taskRepository.save(task);
+    }
+
+    public Task getTaskById(long l) {
+        return taskRepository.findById(l).orElseThrow( () -> new RuntimeException("Task with id " + l + " does not exist!") );
+    }
+
+    public void delete(Task task) {
+        taskRepository.delete(task);
+    }
 }
