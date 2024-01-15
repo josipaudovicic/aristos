@@ -67,7 +67,7 @@ const ListActions = () => {
                     onMouseOver={handleMouseOver}
                     onMouseOut={handleMouseOut}
                 >
-                <strong>akcija:</strong> {action.username}
+                <strong>{action.actionName}:</strong> {action.username}
                 </li>
                 ))}
                 </ul>

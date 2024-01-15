@@ -65,14 +65,16 @@ public class ExplorerService {
 
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
         for (Actions action : allActions) {
-            Map<String, String> kaoAction = new java.util.HashMap<>();
-            kaoAction.put("id", action.getActionId().toString());
-            kaoAction.put("actionName", action.getActionName());
-            kaoAction.put("actionActive", String.valueOf(action.isActive()));
-            kaoAction.put("started", String.valueOf(action.isStarted()));
-            kaoAction.put("station", action.getStation().getStationName());
-            kaoAction.put("username", action.getUser().getUsername());
-            returning.add(kaoAction);
+            if (action.isStarted()) {
+                Map<String, String> kaoAction = new java.util.HashMap<>();
+                kaoAction.put("id", action.getActionId().toString());
+                kaoAction.put("actionName", action.getActionName());
+                kaoAction.put("actionActive", String.valueOf(action.isActive()));
+                kaoAction.put("started", String.valueOf(action.isStarted()));
+                kaoAction.put("station", action.getStation().getStationName());
+                kaoAction.put("username", action.getUser().getUsername());
+                returning.add(kaoAction);
+            }
         }
 
         return returning;
@@ -277,7 +279,7 @@ public class ExplorerService {
     public void postAction(String actionName, String username, String stationId) {
         Station station = stationService.getStationByName(stationId);
         Users user = userService.getUserByUsername(username);
-        Actions action = new Actions(actionName, true, false, user, station, new Timestamp(System.currentTimeMillis()));
+        Actions action = new Actions(actionName, true, false, user, station, new Timestamp(System.currentTimeMillis()), null);
         actionService.save(action);
     }
 

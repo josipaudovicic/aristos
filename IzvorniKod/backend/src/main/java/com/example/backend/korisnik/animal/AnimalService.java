@@ -27,28 +27,32 @@ public class AnimalService {
     }
 
     public void addPositions() {
-        Random random = new Random();
-        List<Long> allAnimalIds = findAllAnimalIds();
-        long bound = 0;
+        List<AnimalPosition> allAnimals = animalPositionRepository.findAll();
+        System.out.println(allAnimals.size());
+        if (allAnimals.size() <= 200) {
+            Random random = new Random();
+            List<Long> allAnimalIds = findAllAnimalIds();
+            long bound = 0;
 
-        for (Long id : allAnimalIds) {
-            if (id > bound) {
-                bound = id;
+            for (Long id : allAnimalIds) {
+                if (id > bound) {
+                    bound = id;
+                }
             }
-        }
 
-        for (long id = 1; id < bound + 1; id++) {
-            Timestamp ts = new Timestamp(new Date().getTime());
-            List<AnimalPosition> position = getSingleAnimalPositions(id);
-            double newLatitude = position.get(random.nextInt(position.size())).getLatitude() + random.nextDouble(-0.1, 0.1);
-            double newLongitude = position.get(random.nextInt(position.size())).getLongitude() + random.nextDouble(-0.1, 0.1);
+            for (long id = 1; id < bound + 1; id++) {
+                Timestamp ts = new Timestamp(new Date().getTime());
+                List<AnimalPosition> position = getSingleAnimalPositions(id);
+                double newLatitude = position.get(random.nextInt(position.size())).getLatitude() + random.nextDouble(-0.1, 0.1);
+                double newLongitude = position.get(random.nextInt(position.size())).getLongitude() + random.nextDouble(-0.1, 0.1);
 
-            AnimalPosition newPosition = new AnimalPosition();
-            newPosition.setTimeStamp(ts);
-            newPosition.setLatitude(newLatitude);
-            newPosition.setLongitude(newLongitude);
-            newPosition.setAnimal(returnById(id));
-            animalPositionRepository.save(newPosition);
+                AnimalPosition newPosition = new AnimalPosition();
+                newPosition.setTimeStamp(ts);
+                newPosition.setLatitude(newLatitude);
+                newPosition.setLongitude(newLongitude);
+                newPosition.setAnimal(returnById(id));
+                animalPositionRepository.save(newPosition);
+            }
         }
     }
 
