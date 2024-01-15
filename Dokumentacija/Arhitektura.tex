@@ -391,11 +391,21 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 		
 		\section{Dijagram stanja}
 			
-			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
-			
+			Dijagram stanja opisuje dinamičko ponašanje sustava uslijed raznih mogućih
+		događaja. Uspješnom prijavom prikazana je početna stranica korisnika u ulozi tragača. 
+		Na početnoj stranici tragač bira jednu od tri opcije:
+		\begin{packed_item}
+		\item opciju \textit{Moj profil} dostupnu svakom korisniku, koja ga vodi na stranicu sa osobnim podacima, gdje ih može uređivati
+		\item opciju \textit{O životinjama} koja ga vodi na stranicu na kojoj su prikazane sve vrste životinja u aplikaciji, a klikom na pojedinu vrstu dobiva popis jedinki te vrste i dalje klikom na pojedinu jedinku dobiva opširnije informacije specifično o toj jedinki
+		\item opciju \textit{Moja akcija} koja ga vodi na stranicu s prikazom karte i dodatnim opcijama za pregled zadataka, ostalih tragača i praćenih životinja; nakon klika na praćene životinje ili ostale tragače, tragaču se prikazuje lista istih, a klikom na pojedinca te liste(tragača ili životinju) na karti mu se prikazuje trenutna pozicija odabranog
+		\end{packed_item}
+
+		\begin{figure}[H]
+			\includegraphics[scale=1]{slike/dijagram stanja - tragač.png}
+			\centering
+			\caption{dijagram stanja - tragač}
+			\label{fig:dijagram stanja - tragač}
+		\end{figure}
 			
 			\eject 
 		
