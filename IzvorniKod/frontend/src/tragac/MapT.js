@@ -162,6 +162,20 @@ const MapT = () => {
     });
   };
 
+  const handleCheckboxChange = (taskId) => {
+    setCheckedTasks((prevCheckedTasks) => {
+      if (prevCheckedTasks.includes(taskId)) {
+        // Uncheck the task if it was checked
+        return prevCheckedTasks.filter((id) => id !== taskId);
+      } else {
+        // Check the task if it was unchecked
+        return [...prevCheckedTasks, taskId];
+      }
+    });
+  };
+    // Check if all tasks are checked
+    const allTasksChecked = tasks.every((task) => checkedTasks.includes(task.taskId));
+
 
   const handleSearcherButtonClick = (searcherUsername) => {
     setSelectedSearchers((prevSelectedSearchers) => {
@@ -172,13 +186,30 @@ const MapT = () => {
       }
     });
   };
+  const handleCompleteAction = async () => {
+    try {
+      // Assuming you have an endpoint to remove the searcher from the action
+      const response = await fetch(`/action/${action.actionId}/removeFromAction`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+        }),
+      });
 
-  // Check if all tasks are checked
-  const allTasksChecked = tasks.every((task) => checkedTasks.includes(task.taskId));
-
-  const handleCheckboxChange = () => {
-
+      if (response.ok) {
+        console.log('Searcher removed from action successfully.');
+      } else {
+        console.error('Error removing searcher:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error removing searcher:', error);
+  
+    }
   };
+
 
   // Render component
   return (
@@ -228,7 +259,12 @@ const MapT = () => {
           </div>
         ))}
         {/* Display message when all tasks are checked */}
-        {allTasksChecked && <p>Svi zadatci završeni. Može se završiti akcija.</p>}
+        {/* Enable a button when all tasks are checked */}
+        {allTasksChecked ? (
+          <button onClick={handleCompleteAction}>Završi akciju</button>
+        ) : (
+          <p>Završite sve zadatke da biste završili akciju.</p>
+        )}
       </div>
     </div>
   );
