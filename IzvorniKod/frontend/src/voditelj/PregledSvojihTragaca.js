@@ -9,7 +9,7 @@ function PregledSvojihTragaca() {
   const navigate = useNavigate();
 
   const handleClick = (tracker) => {
-    navigate(`manager/trackers/${tracker.id}`, { state: { tracker: tracker } });
+    navigate(`manager/trackers/${tracker.username}`, { state: { tracker: tracker } });
   };
 
   return (
@@ -17,8 +17,8 @@ function PregledSvojihTragaca() {
       <h2>Lista svojih tragača:</h2>
       <ul>
         {trackers.map((tracker) => (
-          <li key={tracker.id} style={{ cursor: 'pointer' }}>
-            <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}, <strong>ID:</strong> {tracker.id}, <strong>Uloga:</strong> {tracker.role}
+          <li key={tracker.username} style={{ cursor: 'pointer' }}>
+            <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}, <strong>Uloga:</strong> {tracker.role}
 
             <button onClick={() => handleClick(tracker)}>Uredi</button>
           </li>
