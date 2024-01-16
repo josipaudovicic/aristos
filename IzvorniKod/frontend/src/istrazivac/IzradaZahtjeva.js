@@ -1,85 +1,90 @@
 import React, { useState, useEffect }  from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function IzradaZahtjeva(){
     const navigate = useNavigate();
-    const [actions, setActions] = useState([]);
-    const [description, setDescription] = useState([]);
-    const [selectedAction, setSelectedAction] = useState('');    
+    const location = useLocation();
+    const actionName = location.state?.actionName;
+    const username = location.state?.username;
+    const data = location.state?.data;
+    const [vehicles, setVehicles] = useState([]);
+    const [selectedVehicles, setSelectedVehicles] = useState([]);
 
-    useEffect(() => {
-    const fetchActions = async () => { //dohvaca akcije od istrazivaca za dropdown
-        try {
-          const response = await fetch('api/explorer/actions');
-          if (response.ok) {
-            const data = await response.json();
-            console.log(data);
-            setActions(data);
-          } else {
-            console.error('Failed to fetch actions');
-          }
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      };
-      fetchActions();
-      }, []);
-    
-    
-      const handleSubmit = async() => {
-        alert('Zahtjev je poslan');
-
-        try {
-            const response = await fetch(`/api/manager/requests`, {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            });
-      
-            if (response.ok) {
-              navigate('/explorer/info');
-            } else {
-              console.error('Failed');
+  useEffect(() => {
+    const fetchVehicles = () => { 
+          fetch('/explorer/action/info/requests', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
             }
-          } catch (error) {
-            console.error('Error', error.message);
-          }
+          })
+          .then((response) => response.json())
+          .then((data) => setVehicles(data))
+          .catch((error) => console.error('Error fetching vehicle data:', error));
+      };
+      fetchVehicles();
+  }, []);
+    
+  const handleCheckboxChange = (vehicleId) => {
+    setSelectedVehicles((prevSelected) => {
+        if (prevSelected.includes(vehicleId)) {
+            return prevSelected.filter((id) => id !== vehicleId);
+        } else {
+            return [...prevSelected, vehicleId];
+        }
+    });
+};
+    
+      const handleSubmit = () => {
+        console.log(selectedVehicles);
+          alert('Zahtjev je poslan');
+
+          fetch('/explorer/action/info/requests/post', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              actionName: actionName,
+            },
+            body: JSON.stringify({ selectedVehicles }),
+          });
+
+          navigate(`/explorer/action/${actionName}/info`, {state: { actionName: actionName, username: username, data: data}})
       }; 
       
-      const handleSelectChange = (event) => {
-        setSelectedAction(event.target.value);
-      };
-
-      const handleChange=(event) => {
-        setDescription(event.target.value)
-      }
 
     const regularButtonStyle = {
-        padding: '18px 18px',
-        fontSize: 20,
+        padding: '8px 18px',
         cursor: 'pointer',
       };
 
-    return (
-    <div>
-        <h2>Izrada Zahtjeva</h2>
-        <form>
-          <label>
-            opis tragača:
-            <input type="text" value={description} onChange={handleChange}></input>
-          </label>
+      const label = {
+        textAlign: 'left',
+      };
 
-          <label>
-            akcija:
-            <select id="dropdown" value={selectedAction} onChange={handleSelectChange}>
-                <option value="">izaberi...</option>
-                {actions.map(action => (
-                    <option key={action.id} value={action.id}>
-                        {action.name}
-                    </option>
-                ))}
-            </select>
+      const p = {
+        textAlign: 'left',
+        marginLeft: '-250px',
+        marginTop: '-10px',
+        fontWeight: 'bold',
+      };
+
+    return (
+    <div className='container'>
+        <h2>Zahtjev za tragačima</h2>
+        <form>
+          <p style={p}>Odaberite vozila:</p>
+          <label style={label}>
+            {vehicles.map((vehicle) => (
+              <div key={vehicle.vehicleId}>
+                <input
+                  type="checkbox"
+                  id={vehicle.vehicleId}
+                  onChange={() => handleCheckboxChange(vehicle.vehicleId)}
+                  checked={selectedVehicles.includes(vehicle.vehicleId)}
+                  />
+                  <label htmlFor={vehicle.vehicleId}>{vehicle.vehicleName}</label>
+              </div>
+              ))}
           </label>
         </form>
 

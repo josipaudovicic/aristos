@@ -68,26 +68,29 @@ const ListActions = () => {
 
     return(
         <div>
-            <div className='container' style={{ textAlign: 'center', marginTop: '20px' }}>
-                <h2>Lista akcija:</h2>
-                <ul style={{ listStyleType: 'none', padding: '0' }}>
-                {actions.map((action) => (
-                <li
-                    key={action.username}
-                    onClick={() => handleClick(action)}
-                    style={listItemStyle}
-                    onMouseOver={handleMouseOver}
-                    onMouseOut={handleMouseOut}
-                >
+        <div className='container' style={{ textAlign: 'center', marginTop: '20px' }}>
+          <h2>Lista akcija:</h2>
+          <ul style={{ listStyleType: 'none', padding: '0' }}>
+            {actions.map((action) => (
+              <li
+                key={action.username}
+                onClick={() => handleClick(action)}
+                style={{
+                  ...listItemStyle,
+                  color: action.actionActive === "true" ? 'black' : 'red',
+                }}
+                onMouseOver={handleMouseOver}
+                onMouseOut={handleMouseOut}
+              >
                 <strong>akcija:</strong> {action.actionName}
-                </li>
-                ))}
-                </ul>
-                <div>
-                    <button onClick={handleAction} style={bStyle} title="Stvori novu akciju">+</button>
-                </div>
-            </div>
+              </li>
+            ))}
+          </ul>
+          <div>
+            <button onClick={handleAction} style={bStyle} title="Stvori novu akciju">+</button>
+          </div>
         </div>
+      </div>
     );
 }
 

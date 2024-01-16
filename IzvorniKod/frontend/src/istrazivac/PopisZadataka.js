@@ -73,10 +73,6 @@ function PopisZadataka() {
   })
   };
 
-  const handleEdit = (task) => {
-    navigate('/explorer/action/info/tasks/editTask', {state: { task: task }});
-  };
-
   const handleViewComments = (task) => {
     //console.log(task);
     fetch(`/explorer/action/info/tasks/comments`, {
@@ -114,15 +110,6 @@ function PopisZadataka() {
     cursor: "pointer",
     textAlign: "left",
     marginLeft: "3px",
-  };
-  
-
-  const bStyle = {
-    marginLeft: '393px',
-    padding: '8px 16px',
-    fontSize: '16px',
-    marginTop: '-65px',
-    cursor: 'pointer',
   };
 
 
