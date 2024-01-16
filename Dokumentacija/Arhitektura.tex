@@ -401,7 +401,7 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 		\end{packed_item}
 
 		\begin{figure}[H]
-			\includegraphics[scale=1]{slike/dijagram stanja - tragač.png}
+			\includegraphics[scale=0.5]{slike/dijagram stanja - tragač.png}
 			\centering
 			\caption{dijagram stanja - tragač}
 			\label{fig:dijagram stanja - tragač}
@@ -410,11 +410,21 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 			\eject 
 		
 		\section{Dijagram aktivnosti}
-			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
-			
+
+		Dijagramom aktivnosti modelirano je stvaranje nove akcije korisnika u ulozi istraživača.
+		Do postupka stvaranja nove akcije dolazi se sa stranice prikaza popisa akcija klikom na 
+		\textit{Stvori novu akciju}. Na formularu za novu akciju se prilikom klika na \textit{Stvori novu akciju},
+		prije spremanja podataka nove akcije u bazu, provjerava jesu li uneseni svi potrebni podatci i jesu li uneseni podatci ispravni.
+		Nakon uspješnog stvaranja nove akcije, korisniku se prikazuje osvježen popis akcija, a ukoliko korisnik odustane od stvaranja nove akcije klikom na 
+		\textit{Odustani} prikaz se vraća na popis akcija.
+
+		\begin{figure}[H]
+			\includegraphics[scale=0.5]{slike/dijagram aktivnosti - stvaranje nove akcije.png}
+			\centering
+			\caption{dijagram aktivnosti - stvaranje nove akcije}
+			\label{fig:dijagram aktivnosti - stvaranje nove akcije}
+		\end{figure}
+
 			\eject
 		\section{Dijagram komponenti}
 		
