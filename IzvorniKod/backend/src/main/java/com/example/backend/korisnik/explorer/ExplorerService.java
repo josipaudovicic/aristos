@@ -145,7 +145,7 @@ public class ExplorerService {
     public Map<String, List<Map<String, String>>> getTrackersAndVehicles(String actionName) {
         Actions action = actionService.getActionByName(actionName);
         List<Users> trackers = belongsToActionService.getTrackers(action);
-        List<Vehicle> vehicles = taskService.getVehiclesByAction(action);
+        List<Vehicle> vehicles = belongsToActionService.getVehicles(action);
         List<Map<String, String>> asUser = new java.util.ArrayList<>(List.of());
         for (Users tracker : trackers) {
             Map<String, String> kaoTracker = new java.util.HashMap<>();

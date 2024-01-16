@@ -41,4 +41,13 @@ public class BelongsToActionService {
         Actions action = actionService.getActionByName(actionName);
         return belongsToActionRepository.findByAction(action);
     }
+
+    public List<Vehicle> getVehicles(Actions action) {
+        List<BelongsToAction> users = belongsToActionRepository.findByAction(action);
+        List<Vehicle> vehicles = new ArrayList<>();
+        for (BelongsToAction b : users){
+            vehicles.add(b.getVehicle());
+        }
+        return vehicles;
+    }
 }
