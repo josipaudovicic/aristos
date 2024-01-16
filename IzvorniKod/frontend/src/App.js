@@ -26,6 +26,8 @@ import EditNacinaTransporta from "./voditelj/EditNacinaTransporta";
 import NeaktivneAkcije from "./voditelj/NeaktivneAkcije";
 import PregledZahtjeva from "./voditelj/PregledZahtjeva";
 import PregledAktivnihAkcija from "./voditelj/AktivneAkcije";
+import TragaciNaZahtjev from "./voditelj/TragaciNaZahtjev";
+import TragaciNaAkciju from "./voditelj/TragaciNaAkciju";
 
 
 //TODO: importati sve ostale stranice iz voditelja
@@ -67,9 +69,10 @@ function App() {
         <Route path="/manager/actions/inactiveActions" element={<NeaktivneAkcije />} />
         <Route path="/manager/actions/activeActions" element={<PregledAktivnihAkcija />} />
         <Route path="/manager/trackers" element={<PregledSvihTragaca />} />
-        <Route path="/manager/trackers/:id" element={<EditNacinaTransporta />} />
+        <Route path="/manager/mytrackers/:id" element={<EditNacinaTransporta />} />
         <Route path="/manager/mytrackers" element={<PregledSvojihTragaca />} />
         <Route path="/manager/requests" element={<PregledZahtjeva />} />
+        <Route path="/manager/activeActions/mytrackers" element={<TragaciNaAkciju />} />
         <Route path="/register/confirm/" element={<Confirmation />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
@@ -91,6 +94,7 @@ function App() {
         <Route path="/explorer/action/info/requests" element={<IzradaZahtjeva />} />
         <Route path="/explorer/action/info/tasks/newTask" element={<NoviZadatak />} />
         <Route path="/explorer/map" element={<AnimalMap />} />
+        <Route path="/manager/requests/trackers" element={<TragaciNaZahtjev />} />
       </Routes>
     </BrowserRouter>
   );

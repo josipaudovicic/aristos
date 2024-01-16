@@ -4,48 +4,51 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const transportModesList = ['pješke', 'dronom', 'automobilom', 'cross motorom', 'brodom', 'helikopterom'];
 
 function EditNacinaTransporta() {
+  console.log("Uredujemo nacine transporta pojedinog tragaca");
   const location = useLocation();
-  const { tracker } = location.state;
+  const trackerUsername = location.state.tracker.username;
   const navigate = useNavigate();
 
-  // Initial state for transport modes
-  const [transportModes, setTransportModes] = useState(tracker.transportModes);
+  const [selectedTransportModes, setSelectedTransportModes] = useState({});
+
 
   // Handler for checkbox changes
-  const handleCheckboxChange = (mode) => {
-    setTransportModes((prevModes) => {
-      if (prevModes.includes(mode)) {
-        return prevModes.filter((m) => m !== mode);
+  const handleTransportModeCheckboxChange = (trackerUsername, mode) => {
+    setSelectedTransportModes((prevModes) => {
+      const trackerModes = prevModes[trackerUsername] || [];
+      if (trackerModes.includes(mode)) {
+        return { ...prevModes, [trackerUsername]: trackerModes.filter((m) => m !== mode) };
       } else {
-        return [...prevModes, mode];
+        return { ...prevModes, [trackerUsername]: [...trackerModes, mode] };
       }
     });
   };
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch(`/manager/tracker/${tracker.username}`, {
+      const response = await fetch(`/manager/mytrackers/${trackerUsername}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ transportModes: transportModes }),
+        body: JSON.stringify({ transportModes: selectedTransportModes[trackerUsername] }),
       });
 
       if (response.ok) {
         console.log('Tracker transport modes updated successfully.');
-        navigate('/manager/trackers');
+        navigate('/manager', {state : location.state});
       } else {
         console.error('Failed to update tracker transport modes.');
       }
     } catch (error) {
       console.error('Error updating tracker transport modes:', error.message);
     }
+    navigate("/manager", {state : {username: location.state.username}});
   };
 
   return (
     <div>
-      <h2>Edit načina Transporta</h2>
+      <h2>Edit načina transporta tragača {trackerUsername}</h2>
       <form>
         {transportModesList.map((mode) => (
           <div key={mode}>
@@ -53,8 +56,8 @@ function EditNacinaTransporta() {
              {mode}
               <input
                 type="checkbox"
-                checked={transportModes.includes(mode)}
-                onChange={() => handleCheckboxChange(mode)}
+                checked={(selectedTransportModes[trackerUsername] || []).includes(mode)}
+                onChange={() => handleTransportModeCheckboxChange(trackerUsername, mode)}
               />
             </label>
             <br />

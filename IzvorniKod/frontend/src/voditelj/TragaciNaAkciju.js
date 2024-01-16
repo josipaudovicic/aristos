@@ -1,6 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 function TragaciNaAkciju() {
     const [trackers, setTrackers] = useState([]);
@@ -42,9 +42,9 @@ function TragaciNaAkciju() {
         fetchTrackers();
       }, []); 
 
-  const handleAdd = async (trackerID) => {
+  const handleAdd = async (trackerUsername) => {
     try {
-      const response = await fetch(`/manager/myAvailableTrackers/${trackerID}`, {
+      const response = await fetch(`/manager/myAvailableTrackers/${trackerUsername}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ function TragaciNaAkciju() {
       });
 
       if (response.ok) {
-        setTrackers((prevTrackers) => prevTrackers.filter((tracker) => tracker.id !== trackerID));
+        setTrackers((prevTrackers) => prevTrackers.filter((tracker) => tracker.username !== trackerUsername));
       } else {
         console.error('Failed to add tracker on action');
       }
@@ -81,9 +81,9 @@ function TragaciNaAkciju() {
       <h2>Lista tragača:</h2> 
       <ul>
         {trackers.map((tracker) => (
-          <li key={tracker.id} style={{ cursor: 'pointer' }}>
+          <li key={tracker.username} style={{ cursor: 'pointer' }}>
             <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}
-            <button style={buttonStyle} onClick={() => handleAdd(tracker.id)}>Dodaj</button>
+            <button style={buttonStyle} onClick={() => handleAdd(tracker.username)}>Dodaj</button>
           </li>
         ))}
       </ul>

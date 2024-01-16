@@ -9,7 +9,8 @@ function PregledSvojihTragaca() {
   const navigate = useNavigate();
 
   const handleClick = (tracker) => {
-    navigate(`/manager/trackers/${tracker.username}`, { state: { tracker: tracker } });
+    console.log("Uredujemo tragaca ", tracker);
+    navigate(`/manager/mytrackers/${tracker.username}`, { state: { tracker: tracker , username: location.state.username} });
   };
 
   return (
