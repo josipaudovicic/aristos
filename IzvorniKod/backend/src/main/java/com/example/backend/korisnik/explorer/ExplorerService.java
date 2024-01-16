@@ -66,16 +66,14 @@ public class ExplorerService {
 
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
         for (Actions action : allActions) {
-            if (action.isStarted()) {
-                Map<String, String> kaoAction = new java.util.HashMap<>();
-                kaoAction.put("id", action.getActionId().toString());
-                kaoAction.put("actionName", action.getActionName());
-                kaoAction.put("actionActive", String.valueOf(action.isActive()));
-                kaoAction.put("started", String.valueOf(action.isStarted()));
-                kaoAction.put("station", action.getStation().getStationName());
-                kaoAction.put("username", action.getUser().getUsername());
-                returning.add(kaoAction);
-            }
+            Map<String, String> kaoAction = new java.util.HashMap<>();
+            kaoAction.put("id", action.getActionId().toString());
+            kaoAction.put("actionName", action.getActionName());
+            kaoAction.put("actionActive", String.valueOf(action.isActive()));
+            kaoAction.put("started", String.valueOf(action.isStarted()));
+            kaoAction.put("station", action.getStation().getStationName());
+            kaoAction.put("username", action.getUser().getUsername());
+            returning.add(kaoAction);
         }
 
         return returning;

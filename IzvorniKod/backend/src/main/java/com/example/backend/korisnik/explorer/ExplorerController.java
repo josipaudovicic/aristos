@@ -110,4 +110,6 @@ public class ExplorerController {
         System.out.println(body.get("taskId"));
         explorerService.deleteTask(body.get("taskId"));
     }
+
+
 }
