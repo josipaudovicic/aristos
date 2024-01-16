@@ -271,6 +271,7 @@ public class ExplorerService {
             Map<String, String> kaoComment = new java.util.HashMap<>();
             kaoComment.put("taskId", comment.getTask().getTaskId().toString());
             kaoComment.put("comment", comment.getComment());
+            kaoComment.put("username", comment.getUser().getUsername());
             returning.add(kaoComment);
         }
 
