@@ -48,7 +48,7 @@ function StationManager() {
       }
 
       const data = await response.json();
-      navigate(`/${path}`, { state: { data: data } }); // Mozda da se zove data, a ne users jer mogu slati i akcije umjesto korisnika
+      navigate(`/${path}`, { state: { data: data, username: username } }); // Mozda da se zove data, a ne users jer mogu slati i akcije umjesto korisnika
     } catch (error) {
       console.error(`Error fetching data:`, error.message);
     }

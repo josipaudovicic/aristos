@@ -7,6 +7,9 @@ function PregledSvihTragaca() {
   const location = useLocation();
   const navigate = useNavigate();
   const trackers = location.state.data;
+  const managerUsername = location.state.username;
+  console.log("manager username:", managerUsername);
+
 
   const [selectedTrackers, setSelectedTrackers] = useState([]);
   const [selectedTransportModes, setSelectedTransportModes] = useState({});
@@ -35,14 +38,14 @@ function PregledSvihTragaca() {
 
   const handleSubmit = async () => {
     try {
-      const addTrackersResponse = await fetch(`/station/addTrackers`, {
+      const addTrackersResponse = await fetch(`/manager/${location.state.username}/station/addTrackers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ selectedTrackers }),
       });
-  
+      console.log(location.state.username);
       if (addTrackersResponse.ok) {
         console.log('Selected trackers added to station successfully.');
       } else {
@@ -54,7 +57,7 @@ function PregledSvihTragaca() {
         try {
           const selectedTracker = trackers.find((tracker) => tracker.username === selectedTrackerUsername);
   
-          const response = await fetch(`/api/tracker/${selectedTracker.username}`, {
+          const response = await fetch(`/manager/tracker/${selectedTracker.username}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
