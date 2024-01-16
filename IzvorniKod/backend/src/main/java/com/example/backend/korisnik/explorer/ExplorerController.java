@@ -120,4 +120,10 @@ public class ExplorerController {
     public void endAction(@RequestBody Map<String, String> body) {
         explorerService.endAction(body.get("actionName"));
     }
+
+    @GetMapping(path = "/action/info/requests")
+    public List<Map<String, String>> getVehicles() {
+        return explorerService.getVehicles();
+    }
+
 }

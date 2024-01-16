@@ -334,4 +334,18 @@ public class ExplorerService {
         action.setEndTime(new Timestamp(System.currentTimeMillis()));
         actionService.save(action);
     }
+
+    public List<Map<String, String>> getVehicles() {
+        List<Vehicle> vehicles = vehicleService.getAllVehicles();
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (Vehicle vehicle : vehicles) {
+            Map<String, String> kaoVehicle = new java.util.HashMap<>();
+            kaoVehicle.put("vehicleId", vehicle.getVehicleId().toString());
+            kaoVehicle.put("vehicleName", vehicle.getVehicleName());
+            returning.add(kaoVehicle);
+        }
+
+        return returning;
+
+    }
 }
