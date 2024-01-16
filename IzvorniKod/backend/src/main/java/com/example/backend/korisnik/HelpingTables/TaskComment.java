@@ -1,5 +1,6 @@
 package com.example.backend.korisnik.HelpingTables;
 
+import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.task.Task;
 import jakarta.persistence.*;
 
@@ -12,13 +13,17 @@ public class TaskComment {
     @JoinColumn(name = "task_id")
     private Task task;
     private String comment;
+    @ManyToOne
+    @JoinColumn(name = "user_name")
+    private Users user;
 
     public TaskComment() {
     }
 
-    public TaskComment(Task task, String comment) {
+    public TaskComment(Task task, String comment, Users user) {
         this.task = task;
         this.comment = comment;
+        this.user = user;
     }
 
     public Long getTaskCommentId() {
@@ -43,5 +48,13 @@ public class TaskComment {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
     }
 }

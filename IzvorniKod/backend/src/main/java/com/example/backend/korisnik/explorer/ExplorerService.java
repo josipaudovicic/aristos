@@ -66,16 +66,14 @@ public class ExplorerService {
 
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
         for (Actions action : allActions) {
-            if (action.isStarted()) {
-                Map<String, String> kaoAction = new java.util.HashMap<>();
-                kaoAction.put("id", action.getActionId().toString());
-                kaoAction.put("actionName", action.getActionName());
-                kaoAction.put("actionActive", String.valueOf(action.isActive()));
-                kaoAction.put("started", String.valueOf(action.isStarted()));
-                kaoAction.put("station", action.getStation().getStationName());
-                kaoAction.put("username", action.getUser().getUsername());
-                returning.add(kaoAction);
-            }
+            Map<String, String> kaoAction = new java.util.HashMap<>();
+            kaoAction.put("id", action.getActionId().toString());
+            kaoAction.put("actionName", action.getActionName());
+            kaoAction.put("actionActive", String.valueOf(action.isActive()));
+            kaoAction.put("started", String.valueOf(action.isStarted()));
+            kaoAction.put("station", action.getStation().getStationName());
+            kaoAction.put("username", action.getUser().getUsername());
+            returning.add(kaoAction);
         }
 
         return returning;
@@ -271,6 +269,7 @@ public class ExplorerService {
             Map<String, String> kaoComment = new java.util.HashMap<>();
             kaoComment.put("taskId", comment.getTask().getTaskId().toString());
             kaoComment.put("comment", comment.getComment());
+            kaoComment.put("username", comment.getUser().getUsername());
             returning.add(kaoComment);
         }
 
@@ -320,5 +319,12 @@ public class ExplorerService {
     public void deleteTask(String taskId) {
         Task task = taskService.getTaskById(Long.parseLong(taskId));
         taskService.delete(task);
+    }
+
+    public void saveComment(String taskId, String comment, String username) {
+        Users user = userService.getUserByUsername(username);
+        Task task = taskService.getTaskById(Long.parseLong(taskId));
+        TaskComment taskComment = new TaskComment(task, comment, user);
+        taskCommentService.save(taskComment);
     }
 }
