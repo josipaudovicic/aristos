@@ -111,5 +111,8 @@ public class ExplorerController {
         explorerService.deleteTask(body.get("taskId"));
     }
 
-
+    @PostMapping(path = "/action/info/tasks/saveComment")
+    public void saveComment(@RequestBody Map<String, String> body) {
+        explorerService.saveComment(body.get("taskId"), body.get("comment"), body.get("username"));
+    }
 }

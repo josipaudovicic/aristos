@@ -320,4 +320,11 @@ public class ExplorerService {
         Task task = taskService.getTaskById(Long.parseLong(taskId));
         taskService.delete(task);
     }
+
+    public void saveComment(String taskId, String comment, String username) {
+        Users user = userService.getUserByUsername(username);
+        Task task = taskService.getTaskById(Long.parseLong(taskId));
+        TaskComment taskComment = new TaskComment(task, comment, user);
+        taskCommentService.save(taskComment);
+    }
 }
