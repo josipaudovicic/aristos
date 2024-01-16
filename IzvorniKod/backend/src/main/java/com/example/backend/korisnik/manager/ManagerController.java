@@ -20,6 +20,11 @@ public class ManagerController {
         this.managerService = managerService;
     }
 
+    @GetMapping(path = "/station")
+    public Map<String, String> getStation(@RequestHeader("username") String username) {
+        return managerService.getStation(username);
+    }
+
     @GetMapping(path = "/trackers")
     public List<Map<String, String>> getTrackers(@RequestHeader("username") String username){
         return managerService.getTrackers();

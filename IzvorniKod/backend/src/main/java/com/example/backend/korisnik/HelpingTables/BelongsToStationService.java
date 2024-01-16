@@ -20,4 +20,8 @@ public class BelongsToStationService {
         BelongsToStation manager = belongsToStationRepository.findByUserName(managerUsername);
         return belongsToStationRepository.findAllByStationId(manager.getStationId());
     }
+
+    public BelongsToStation getPair(String username) {
+        return belongsToStationRepository.findByUserName(username);
+    }
 }

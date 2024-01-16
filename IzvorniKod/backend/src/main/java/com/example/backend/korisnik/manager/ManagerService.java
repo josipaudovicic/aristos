@@ -6,6 +6,8 @@ import com.example.backend.korisnik.UserService;
 import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.action.Actions;
 import com.example.backend.korisnik.action.ActionService;
+import com.example.backend.korisnik.station.Station;
+import com.example.backend.korisnik.station.StationService;
 import com.example.backend.korisnik.vehicle.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,18 +21,19 @@ public class ManagerService {
     private final BelongsToStationRepository belongsToStationRepository;
     private final BelongsToStationService belongsToStationService;
     private final QualifiedForRepository qualifiedForRepository;
-
+    private final StationService stationService;
     private final VehicleRepository vehicleRepository;
     private final ActionService actionService;
 
 
     @Autowired
-    public ManagerService(UserRepository userRepository, UserService userService, BelongsToStationRepository belongsToStationRepository, BelongsToStationService belongsToStationService, QualifiedForRepository qualifiedForRepository, VehicleRepository vehicleRepository, ActionService actionService) {
+    public ManagerService(UserRepository userRepository, UserService userService, BelongsToStationRepository belongsToStationRepository, BelongsToStationService belongsToStationService, QualifiedForRepository qualifiedForRepository, StationService stationService, VehicleRepository vehicleRepository, ActionService actionService) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.belongsToStationRepository = belongsToStationRepository;
         this.belongsToStationService = belongsToStationService;
         this.qualifiedForRepository = qualifiedForRepository;
+        this.stationService = stationService;
         this.vehicleRepository = vehicleRepository;
         this.actionService = actionService;
     }
@@ -166,4 +169,11 @@ public class ManagerService {
         return true;
     }
 
+    public Map<String, String> getStation(String username) {
+        BelongsToStation manager = belongsToStationService.getPair(username);
+        Station station = stationService.getStationById(manager.getStationId());
+        Map<String, String> stationMap = new HashMap<>();
+        stationMap.put("station", station.getStationName());
+        return stationMap;
+    }
 }

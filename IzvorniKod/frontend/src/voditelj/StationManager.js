@@ -1,11 +1,25 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function StationManager() {
   const navigate = useNavigate();
   const location = useLocation();
   const username = location.state.username;
+  const [station, setStation] = useState('');
   console.log(username);
+
+  useEffect(() => {
+    fetch(`/manager/station`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'username': username
+      },
+    }).then((response) => response.json())
+      .then((data) => {
+        setStation(data.station);
+      }).catch((error) => { console.error('Error:', error); });
+  });
 
   const redirectToPage = async (path) => {
     try {
@@ -81,6 +95,7 @@ function StationManager() {
 
   return (
     <div style={buttonContainerStyle}>
+      <h1 style={{ marginTop: '100px' }}>Voditelj stanice {station}</h1>
       <button onClick={() => redirectToPage('profile')} style={profileButtonStyle}>Moj profil</button>
       <button onClick={() => redirectToPage('manager/trackers')} style={regularButtonStyle}>Pregled svih tragača</button>
       <button onClick={() => redirectToPage('manager/mytrackers')} style={regularButtonStyle}>Pregled svojih tragača</button>
