@@ -1,66 +1,46 @@
 import React, { useState, useEffect }  from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-function PregledZahtjeva(){
-    //dolazi mu zahtjev od istrazivaca
-    //prikazuje se ime akcije i opis trazenog tragaca
-    //klikom na zahtjev odlazi na listu svojih tragaca u postaji 
-    //tamo dodaje tragace i tako obraduje zahtjev
-
+function PregledZahtjeva() {
+    const navigate = useNavigate();
     const location = useLocation();
+    const username = location.state?.username;
     const [requests, setRequests] = useState([]);
     
-    console.log("Viewing list of requests for actions");
     useEffect(() => {
-
-    const fetchRequests = async () => {
-      try {
-        const response = await fetch(`/manager/requests`, {
+      const fetchRequests = () => {
+        fetch(`/manager/requests`, {
           method: 'GET', 
           headers: {
             'Content-Type': 'application/json', 
-            'username': location.state.username
+            username: username,
           },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data);
-          setRequests(data);
-        } else {
-          console.error('Failed to fetch requests');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
+        }) 
+        .then((response) => response.json())
+        .then((data) => {setRequests(data);})
+        .catch((error) => console.error('Error fetching requests data:', error));
     };
 
     fetchRequests();
-    }, []);
+  }, []);
 
-    //TODO: UVIJEK KORISTITI useLocation za prijenos podataka izmedu stranica
-
-    const navigate = useNavigate();
-    const redirectToPage = async (path) => {
-        try {
-            let response;
-            if (path === 'manager/mytrackers') {
-                response = await fetch(`manager/mytrackers`);
-            }
-            const data = await response.json();
-            navigate(`/${path}`, { state: { requests: data } });
-        }catch (error) {
-            console.error(`Error fetching data:`, error.message);
-          }
-        };
+    const handleClick = (request) => {
+      navigate(`/manager/requests/trackers`, {state: { vehicles: request.slice(1, request.length - 1) }});
+    };
       
 
     return (
         <div>
             <h2>Zahtjevi</h2>
             <ul>
-                {requests.map((request) => (
-                    <li key={request.actionName} onClick={() => redirectToPage('manager/mytrackers')} style={{ cursor: 'pointer' }}>
-                        <strong>{request.actionName}</strong> - {request.description}
+                {requests.map((request, index) => (
+                    <li key={index} onClick={(request) => handleClick} style={{ cursor: 'pointer' }}>
+                        <strong>{request[0]}</strong>
+                        {request.slice(1, request.length - 1).map((vehicle, index) => (
+                            <li key={index}>
+                            <strong>{vehicle}</strong>
+                            </li>
+                        ))}
                     </li>
                 ))}
             </ul>

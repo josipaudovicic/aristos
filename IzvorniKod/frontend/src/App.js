@@ -26,6 +26,7 @@ import EditNacinaTransporta from "./voditelj/EditNacinaTransporta";
 import NeaktivneAkcije from "./voditelj/NeaktivneAkcije";
 import PregledZahtjeva from "./voditelj/PregledZahtjeva";
 import PregledAktivnihAkcija from "./voditelj/AktivneAkcije";
+import TragaciNaZahtjev from "./voditelj/TragaciNaZahtjev";
 
 
 //TODO: importati sve ostale stranice iz voditelja
@@ -91,6 +92,7 @@ function App() {
         <Route path="/explorer/action/info/requests" element={<IzradaZahtjeva />} />
         <Route path="/explorer/action/info/tasks/newTask" element={<NoviZadatak />} />
         <Route path="/explorer/map" element={<AnimalMap />} />
+        <Route path="/manager/requests/trackers" element={<TragaciNaZahtjev />} />
       </Routes>
     </BrowserRouter>
   );

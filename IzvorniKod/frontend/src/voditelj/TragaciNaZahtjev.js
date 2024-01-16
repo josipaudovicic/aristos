@@ -1,84 +1,53 @@
-
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
 function TragaciNaZahtjev() {
-    const [trackers, setTrackers] = useState([]);
-    
     const navigate = useNavigate();
     const location = useLocation();
-    const username = location.state.username;
-    const requestId = location.state.requests;
+    const vehicles = location.state?.vehicles;
+    const [trackers, setTrackers] = useState([]);
+    const [selectedTrackers, setSelectedTrackers] = useState([]);
 
-    const redirectToPage = async (path) => {
-      try {
-        if (path === 'manager/actions') {
-          navigate('/manager/actions', {state : {username: username}});
-        }
-      } catch (error) {
-        console.error(`Error fetching data:`, error.message);
-      }
-  
-    }
 
     useEffect(() => {
-        // Fetch users with confirmed attribute set to NULL
-        const fetchTrackers = async () => {
-          try {
-            const response = await fetch('/manager/myAvailableTrackers');
-            if (response.ok) {
-              const data = await response.json();
-              console.log(data);
-              setTrackers(data);
-            } else {
-              console.error('Failed to fetch trackers');
-            }
-          } catch (error) {
-            console.error('Error:', error);
-          }
+        const fetchTrackers = () => {
+          fetch('/manager/requests/trackers', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json', 
+                vehicles: vehicles,
+            },
+          })
+          .then((response) => response.json())
+          .then((data) => {setTrackers(data);})
+          .catch((error) => console.error('Error fetching trackers data:', error));
         };
     
-        fetchTrackers();
+      fetchTrackers();
       }, []); 
 
-  const handleAdd = async (trackerID) => {
-    try {
-      const response = await fetch(`/manager/myAvailableTrackers/${trackerID}`, {
-        method: 'PUT',
+
+  const handleSubmit = () => {
+    fetch('/manager/requests/submit', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ selectedTrackers }),
       });
 
-      if (response.ok) {
-        setTrackers((prevTrackers) => prevTrackers.filter((tracker) => tracker.id !== trackerID));
-      } else {
-        console.error('Failed to add tracker on action');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    navigate(`/manager/requests`, {state: { vehicles: vehicles}})
   };
 
-  const handleSubmit = () => {
-    alert('Zahtjev je obrađen');
-
-    //delete zahtjeva??
-    //trebam dohvatit sa prijasnje stranice tocno koji je request (sa useLocation)
-    //i onda ovdje obrisat tocno taj request
-
-    try {
-      fetch(`/manager/requests/${requestId}`, {
-        method: 'DELETE',
-      });
-    } catch (error) {
-      console.error('Error deleting request:', error);
-    }
-
-    redirectToPage('manager/actions')
-  };
+  const handleCheckboxChange = (trackerId) => {
+    setSelectedTrackers((prevSelected) => {
+        if (prevSelected.includes(trackerId)) {
+            return prevSelected.filter((id) => id !== trackerId);
+        } else {
+            return [...prevSelected, trackerId];
+        }
+    });
+};
 
   const buttonStyle = {
     flex: '1', 
@@ -88,18 +57,36 @@ function TragaciNaZahtjev() {
     marginTop: '12px',
   };
 
+  const label = {
+    display: 'block',
+    marginBottom: '10px', 
+  };
+
+  const checkboxStyle = {
+    marginRight: '5px', 
+  };
+
   return (
     <div>
       <h2>Lista tragača:</h2> 
-      <ul>
-        {trackers.map((tracker) => (
-          <li key={tracker.id} style={{ cursor: 'pointer' }}>
-            <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}
-            <button style={buttonStyle} onClick={() => handleAdd(tracker.id)}>Dodaj</button>
-          </li>
-        ))}
-      </ul>
-      <button style={buttonStyle} onClick={() => handleSubmit()}>Spremi promjene</button>
+      <form>
+          <label style={label}>
+            {trackers.map((tracker) => (
+              <label key={tracker} style={label}>
+                {tracker.trackerName} 
+              <input
+                type="checkbox"
+                id={tracker.trackerId}
+                onChange={() => handleCheckboxChange(tracker.trackerId)}
+                checked={selectedTrackers.includes(tracker.trackerId)}
+                style={checkboxStyle}
+              />
+            </label>
+              ))}
+          </label>
+        </form>
+
+      <button style={buttonStyle} onClick={() => handleSubmit()}>Dodaj</button>
     </div>
   );
 }
