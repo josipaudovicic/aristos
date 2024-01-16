@@ -5,24 +5,25 @@ function TragaciNaZahtjev() {
     const navigate = useNavigate();
     const location = useLocation();
     const vehicles = location.state?.vehicles;
+    const actionId = location.state?.actionId;
+    const username = location.state?.username;
     const [trackers, setTrackers] = useState([]);
     const [selectedTrackers, setSelectedTrackers] = useState([]);
-
 
     useEffect(() => {
         const fetchTrackers = () => {
           fetch('/manager/requests/trackers', {
             method: 'GET',
             headers: {
-              'Content-Type': 'application/json', 
-                vehicles: vehicles,
+              'Content-Type': 'application/json',
+               'actionId': actionId
             },
           })
           .then((response) => response.json())
           .then((data) => {setTrackers(data);})
           .catch((error) => console.error('Error fetching trackers data:', error));
         };
-    
+        
       fetchTrackers();
       }, []); 
 

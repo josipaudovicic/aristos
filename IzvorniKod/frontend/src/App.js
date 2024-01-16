@@ -72,6 +72,7 @@ function App() {
         <Route path="/manager/mytrackers/:id" element={<EditNacinaTransporta />} />
         <Route path="/manager/mytrackers" element={<PregledSvojihTragaca />} />
         <Route path="/manager/requests" element={<PregledZahtjeva />} />
+        <Route path="/manager/requests/trackers" element={<TragaciNaZahtjev />} />
         <Route path="/manager/activeActions/mytrackers" element={<TragaciNaAkciju />} />
         <Route path="/register/confirm/" element={<Confirmation />} />
         <Route path="/profile" element={<Profile />} />
@@ -94,7 +95,6 @@ function App() {
         <Route path="/explorer/action/info/requests" element={<IzradaZahtjeva />} />
         <Route path="/explorer/action/info/tasks/newTask" element={<NoviZadatak />} />
         <Route path="/explorer/map" element={<AnimalMap />} />
-        <Route path="/manager/requests/trackers" element={<TragaciNaZahtjev />} />
       </Routes>
     </BrowserRouter>
   );
