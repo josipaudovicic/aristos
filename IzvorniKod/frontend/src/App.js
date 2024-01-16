@@ -40,7 +40,6 @@ import Info from "./istrazivac/Info";
 import NewAction from "./istrazivac/NewAction";
 import IzradaZahtjeva from "./istrazivac/IzradaZahtjeva";
 import NoviZadatak from "./istrazivac/NoviZadatak";
-import UrediZadatak from "./istrazivac/UrediZadatak";
 import PopisZadataka from "./istrazivac/PopisZadataka";
 import AnimalMap from "./istrazivac/AnimalMap"
 
@@ -91,7 +90,6 @@ function App() {
         <Route path="/explorer/action/info/tasks" element={<PopisZadataka />} />
         <Route path="/explorer/action/info/requests" element={<IzradaZahtjeva />} />
         <Route path="/explorer/action/info/tasks/newTask" element={<NoviZadatak />} />
-        <Route path="/explorer/action/info/tasks/editTask" element={<UrediZadatak />} />
         <Route path="/explorer/map" element={<AnimalMap />} />
       </Routes>
     </BrowserRouter>
