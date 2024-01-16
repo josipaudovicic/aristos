@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const transportModesList = ['pješke', 'dronom', 'automobilom', 'cross motorom', 'brodom', 'helikopterom'];
 
 function PregledSvihTragaca() {
   const location = useLocation();
+  const navigate = useNavigate();
   const trackers = location.state.data;
   const managerUsername = location.state.username;
   console.log("manager username:", managerUsername);
@@ -49,7 +50,6 @@ function PregledSvihTragaca() {
         console.log('Selected trackers added to station successfully.');
       } else {
         console.error('Failed to add selected trackers to station.');
-
       }
 
       for (const selectedTrackerUsername of selectedTrackers) {
@@ -75,12 +75,10 @@ function PregledSvihTragaca() {
 
         }
       }
-
-  
     } catch (error) {
       console.error('Error during submission:', error.message);
-
     }
+    navigate("/manager", {state : {username : managerUsername}});
   };
   
   

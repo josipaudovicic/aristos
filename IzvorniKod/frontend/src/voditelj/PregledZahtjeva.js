@@ -40,7 +40,8 @@ function PregledZahtjeva(){
     //TODO: UVIJEK KORISTITI useLocation za prijenos podataka izmedu stranica
 
     const navigate = useNavigate();
-    const redirectToPage = async (path) => {
+    const redirectToPage = async (path, requestId) => {
+        location.state.requestId = requestId;
         try {
             let response;
             if (path === 'manager/requests/mytrackers') {
@@ -59,8 +60,8 @@ function PregledZahtjeva(){
             <h2>Zahtjevi</h2>
             <ul>
                 {requests.map((request) => (
-                    <li key={request.actionName} onClick={() => redirectToPage('manager/requests/mytrackers')} style={{ cursor: 'pointer' }}>
-                        <strong>{request.actionName}</strong> - {request.description}
+                    <li key={request.name} onClick={() => redirectToPage('manager/requests/mytrackers', request.id)} style={{ cursor: 'pointer' }}>
+                        <strong>{request.name}</strong> - {request.username}
                     </li>
                 ))}
             </ul>
