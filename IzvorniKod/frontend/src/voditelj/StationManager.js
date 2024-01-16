@@ -44,6 +44,7 @@ function StationManager() {
       } else if (path === 'manager/actions') {
         navigate('/manager/actions', {state : {username: username}});
       } else if (path === 'manager/requests') {
+        console.log("Username that wants to know requests for actions", username);
         response = await fetch(`/manager/requests`, {
           method: 'GET', 
           headers: {
@@ -55,7 +56,7 @@ function StationManager() {
         navigate(`/profile`, { state: { username: username } });
       }
       
-      if (path != 'manager/actions') {
+      if (path !== 'manager/actions' && path !== 'profile') {
         const data = await response.json();
         console.log("data ", data);
         console.log("path ", path);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function PregledZahtjeva(){
     //dolazi mu zahtjev od istrazivaca
@@ -7,15 +7,21 @@ function PregledZahtjeva(){
     //klikom na zahtjev odlazi na listu svojih tragaca u postaji 
     //tamo dodaje tragace i tako obraduje zahtjev
 
-
+    const location = useLocation();
     const [requests, setRequests] = useState([]);
     
-
+    console.log("Viewing list of requests for actions");
     useEffect(() => {
 
     const fetchRequests = async () => {
       try {
-        const response = await fetch('');
+        const response = await fetch(`/manager/requests`, {
+          method: 'GET', 
+          headers: {
+            'Content-Type': 'application/json', 
+            'username': location.state.username
+          },
+        });
         if (response.ok) {
           const data = await response.json();
           console.log(data);

@@ -68,7 +68,7 @@ function App() {
         <Route path="/manager/actions/inactiveActions" element={<NeaktivneAkcije />} />
         <Route path="/manager/actions/activeActions" element={<PregledAktivnihAkcija />} />
         <Route path="/manager/trackers" element={<PregledSvihTragaca />} />
-        <Route path="/manager/trackers/:id`" element={<EditNacinaTransporta />} />
+        <Route path="/manager/trackers/:id" element={<EditNacinaTransporta />} />
         <Route path="/manager/mytrackers" element={<PregledSvojihTragaca />} />
         <Route path="/manager/requests" element={<PregledZahtjeva />} />
         <Route path="/register/confirm/" element={<Confirmation />} />
