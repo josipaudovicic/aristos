@@ -44,11 +44,11 @@ function PregledZahtjeva(){
         location.state.requestId = requestId;
         try {
             let response;
-            if (path === 'manager/requests/mytrackers') {
-                response = await fetch(`manager/requests/mytrackers`);
+            if (path === 'manager/mytrackers') {
+                response = await fetch(`manager/mytrackers`);
             }
             const data = await response.json();
-            navigate(`/${path}`, { state: { users: data } });
+            navigate(`/${path}`, { state: { requests: data } });
         }catch (error) {
             console.error(`Error fetching data:`, error.message);
           }

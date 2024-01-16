@@ -9,6 +9,7 @@ const Map = () => {
     const navigate = useNavigate();
     const actionName = location.state?.action.actionName || '';
     const username = location.state?.username || '';
+    const actions = location.state?.actions;
     const [trackers, setTrackers] = useState();
     const [map, setMap] = useState(null);
     const [heatLayer, setHeatLayer] = useState(null);
@@ -47,7 +48,7 @@ const Map = () => {
     }
 
     const handleInfo = () => {
-        navigate(`/explorer/action/${actionName}/info`, {state : {actionName: actionName, username: username}});
+        navigate(`/explorer/action/${actionName}/info`, {state : {actionName: actionName, username: username, actions: actions}});
     }
 
     const handleTrackers = () => {
@@ -287,7 +288,8 @@ const Map = () => {
             <button onClick={handleTrackers} style={buttonStyle}>Tragače</button>
             <button onClick={handleAnimals} style={button2Style}>Životinje</button>
             {showDropdown && <Dropdown />}
-            <button onClick={handleInfo} style={b2Style}>Info</button>
+            {location.state?.action.actionActive === "true" && (
+            <button onClick={handleInfo} style={b2Style}>Info</button>)}
         </div>
     );
 };

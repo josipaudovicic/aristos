@@ -73,7 +73,7 @@ function NewAction() {
     
           if (response.ok) {
             console.log('Action changes saved successfully');
-            navigate(`/explorer/actions`, { state: {data: actionData, actions: actions }});
+            navigate(`/explorer/actions`, { state: {data: actionData, actions: actions, username: username }});
           } else {
             console.error('Failed to save action changes');
           }

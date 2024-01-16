@@ -7,37 +7,32 @@ function PopisZadataka() {
     const actionName = location.state?.actionName;
     const username = location.state?.username;
     const [tasks, setTasks] = useState([]);
+    const [prevTaskId, setPrevTaskId] = useState(0)
     const [comments, setComments] = useState([]);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [commentText, setCommentText] = useState('');
 
 
-  useEffect(() => { 
-    const fetchTasks = () => {
-    try {
-      fetch('/explorer/action/info/tasks', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          actionName: actionName,
-        },
-    }).then((response1) => response1.json())
-      .then((data) => {setTasks(data);
-          fetch('/explorer/action/info/tasks/comments', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-      }).then((response2) => response2.json())
-        .then((data2) => setComments(data2))
-        .catch((error) => console.error('Error fetching data:', error));
-    })
-      .catch((error) => console.error('Error fetching data:', error));
-
-    } catch (error) {
-      console.error('Error:', error);
-    }};
+    useEffect(() => {
+      const fetchTasks = async () => {
+        try {
+          const response1 = await fetch('/explorer/action/info/tasks', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              actionName: actionName,
+            },
+          });
+          const data = await response1.json();
+          setTasks(data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
     
-    fetchTasks();
-  }, []); 
+      fetchTasks();
+    }, []);
+    
 
 
   const handleNewTask = () => {
@@ -62,38 +57,61 @@ function PopisZadataka() {
       }
   }
 
-  const handleComment = () => {
-    
-  }
+  const handleComment = (task) => {
+    if (commentText) {
+      const newComment = `${username}: ${commentText}`; 
+      setComments([...comments, newComment]);
+      setCommentText('');
+    }
+  
+  fetch(`/explorer/action/info/tasks/saveComment`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username: username, comment: commentText, taskId: comments[0].taskId}),
+  })
+  };
 
-  const handleEdit = (task) => {
-    navigate('/explorer/action/info/tasks/editTask', {state: { task: task }});
+  const handleViewComments = (task) => {
+    //console.log(task);
+    fetch(`/explorer/action/info/tasks/comments`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        taskId: task.taskId,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+          setComments(data);
+          console.log(task.taskId)
+          if (task.taskId === prevTaskId || prevTaskId === 0 || !showDropdown){
+            setShowDropdown((prevShowDropdown) => !prevShowDropdown);
+          }
+          setPrevTaskId(task.taskId)
+        })
+      .catch((error) => console.error('Error fetching user data:', error));
   };
 
   const buttonStyle = {
     marginLeft: '393px',
     padding: '8px 16px',
     fontSize: '16px',
-    marginTop: '-72px',
+    marginTop: '3px',
     cursor: 'pointer',
   };
 
-  const bStyle = {
-    marginLeft: '393px',
-    padding: '8px 16px',
-    fontSize: '16px',
-    marginTop: '2px',
-    cursor: 'pointer',
+  const buttonstyle = {
+    border: "none",
+    background: "none",
+    color: "black",
+    padding: "0",
+    cursor: "pointer",
+    textAlign: "left",
+    marginLeft: "3px",
   };
 
-  const button2Style = {
-    marginLeft: '5px',
-    marginRight: '350px',
-    padding: '8px 16px',
-    fontSize: '16px',
-    marginTop: '6px',
-    cursor: 'pointer',
-  };
 
  const buttonStyle2 = {
     padding: '8px 16px',
@@ -132,6 +150,61 @@ function PopisZadataka() {
     textAlign: 'center',
   };
 
+  const Dropdown = React.memo(({ task, comments }) => {
+    console.log(comments[0].taskId)
+    const dropdownStyle = {
+      position: 'absolute',
+      top: '165px',
+      left: '20px',
+      backgroundColor: '#fff',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      borderRadius: '4px',
+      padding: '8px',
+      zIndex: '1000',
+      border: '1px solid #ddd',
+      minWidth: '280px',
+    };
+  
+    const optionStyle = {
+      cursor: 'pointer',
+      padding: '8px',
+      borderBottom: '1px solid #eee',
+      transition: 'background-color 0.3s',
+      Width: '180px',
+    };
+
+    const commentInputStyle = {
+      marginTop: '8px',
+      width: '95%',
+    };
+
+    const button = {
+      fontSize: '13px',
+      padding: '8px 10px',
+      marginBottom:'10px',
+      marginLeft:'7px',
+    };
+
+    return (
+      <div style={dropdownStyle}>
+        <p style={{ margin: '0', fontWeight: 'bold' }}>komentari:</p>
+        {comments.map((comment) => (
+        <div key={comment.comment} style={optionStyle}>
+          {typeof comment === 'object' && comment !== null ? `${comment.username}: ${comment.comment}` : comment}
+        </div>))}
+        <input
+          type="text"
+          placeholder="Unesite komentar..."
+          value={commentText}
+          onChange={(e) => setCommentText(e.target.value)}
+          style={commentInputStyle}
+        />
+        <button style={{ ...button, display: commentText ? 'inline-block' : 'none' }} disabled={!commentText} onClick={() => handleComment(task)}>Dodaj komentar</button>
+      </div>
+    );
+  });
+  
+
   return (
     <div style={container}>
       <h2 style={h2style}>Lista zadataka:</h2> 
@@ -142,10 +215,10 @@ function PopisZadataka() {
             <p style={pStyle}><b>životinja:</b> {task.animalName} </p>
             <p style={pStyle}><b>tragač:</b> {task.username} </p>
             <p style={pStyle}><b>vozilo:</b> {task.vehicleName} </p>
-            <p style={pStyle}><b>završeno:</b> {task.done == "true" ? '✔️' : '❌'} </p>
-            <button style={bStyle} onClick={() => handleDelete(task, index)}>Obriši</button>
-            <button style={buttonStyle} onClick={() => handleEdit(task)}>Uredi</button>
-            <button style={button2Style} onClick={() => handleComment(task)}>Dodaj komentar</button>
+            <p style={pStyle}><b>završeno:</b> {task.done === "true" ? '✔️' : '❌'} </p>
+            <button style={buttonstyle} onClick={() => handleViewComments(task)}><b><u>komentari</u></b></button>
+            {showDropdown && <Dropdown task={task} comments={comments} />}
+            <button style={buttonStyle} onClick={() => handleDelete(task, index)}>Obriši</button>
           </li>
         ))}
       </ul>

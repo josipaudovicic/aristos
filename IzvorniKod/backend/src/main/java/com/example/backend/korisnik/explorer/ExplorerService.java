@@ -320,4 +320,32 @@ public class ExplorerService {
         Task task = taskService.getTaskById(Long.parseLong(taskId));
         taskService.delete(task);
     }
+
+    public void saveComment(String taskId, String comment, String username) {
+        Users user = userService.getUserByUsername(username);
+        Task task = taskService.getTaskById(Long.parseLong(taskId));
+        TaskComment taskComment = new TaskComment(task, comment, user);
+        taskCommentService.save(taskComment);
+    }
+
+    public void endAction(String actionName) {
+        Actions action = actionService.getActionByName(actionName);
+        action.setActive(false);
+        action.setEndTime(new Timestamp(System.currentTimeMillis()));
+        actionService.save(action);
+    }
+
+    public List<Map<String, String>> getVehicles() {
+        List<Vehicle> vehicles = vehicleService.getAllVehicles();
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (Vehicle vehicle : vehicles) {
+            Map<String, String> kaoVehicle = new java.util.HashMap<>();
+            kaoVehicle.put("vehicleId", vehicle.getVehicleId().toString());
+            kaoVehicle.put("vehicleName", vehicle.getVehicleName());
+            returning.add(kaoVehicle);
+        }
+
+        return returning;
+
+    }
 }

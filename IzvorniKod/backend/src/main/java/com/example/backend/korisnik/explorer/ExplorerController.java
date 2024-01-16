@@ -111,5 +111,19 @@ public class ExplorerController {
         explorerService.deleteTask(body.get("taskId"));
     }
 
+    @PostMapping(path = "/action/info/tasks/saveComment")
+    public void saveComment(@RequestBody Map<String, String> body) {
+        explorerService.saveComment(body.get("taskId"), body.get("comment"), body.get("username"));
+    }
+
+    @PutMapping(path = "/action/info/end")
+    public void endAction(@RequestBody Map<String, String> body) {
+        explorerService.endAction(body.get("actionName"));
+    }
+
+    @GetMapping(path = "/action/info/requests")
+    public List<Map<String, String>> getVehicles() {
+        return explorerService.getVehicles();
+    }
 
 }
