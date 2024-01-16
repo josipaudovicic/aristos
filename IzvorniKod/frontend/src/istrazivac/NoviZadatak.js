@@ -1,169 +1,108 @@
-import React, { useState, useEffect }  from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
-function NoviZadatak(){
-    const navigate = useNavigate();
-    const location = useLocation();
-    const actionName = location.state?.actionName;
-    const [username, setUsername] = useState([]);
-    const [animals, setAnimals] = useState([]);
-    const [task, setTask] = useState({
-        taskText: '',
-        animalName: '',
-        username: '',
-    });
+const markerIcon = new L.Icon({
+  iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
 
-    useEffect(() => {
-      fetch('/explorer/action/info/tasks/newTask', {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-              actionName: actionName,
-          },
-      })
-      .then((response) => response.json())
-      .then((data) => {setUsername(data.users);
-                      setAnimals(data.animals);
-                      console.log(data);
-                  })
-      .catch((error) => console.error('Error fetching user data for editing:', error));  
-    }, []);
+const NoviZadatak = () => {
+  const [map, setMap] = useState(null);
+  const [task, setTask] = useState({
+    taskText: '',
+    username: '',
+    animalName: '',
+    startLocation: null,
+    endLocation: null,
+  });
 
-
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setTask((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleDropdownChange = (e) => {
-    const { value } = e.target;
-    setTask((prevData) => ({ ...prevData, username: value }));
-  };
-
-  const handleDropdownChange2 = (e) => {
-    const { value } = e.target;
-    setTask((prevData) => ({ ...prevData, animalName: value }));
-  };
-  
-  const handleCancelClick = () => {
-      navigate(`/explorer/action/info/tasks`, { state: {actionName: actionName}});
-  };
-
-  
-    const handleSaveChanges = async () => {
+  useEffect(() => {
+    const initializeMap = () => {
       try {
+        const mapContainer = document.getElementById('map');
 
-        if (
-          !task.taskText ||
-          !task.username || 
-          !task.animalName
-      ) {
-          alert('Popunite sva polja');
-          return;
-      }
+        if (mapContainer && !mapContainer._leaflet_id) {
+          const newMap = L.map(mapContainer, {
+            center: [45.1, 16.3],
+            zoom: 7,
+          });
 
-        const response = await fetch(`/explorer/action/info/tasks/newTask`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            actionName: actionName
-          },
-          body: JSON.stringify(task),
-        });
-  
-        if (response.ok) {
-          console.log('Task changes saved successfully');
-          navigate(`/explorer/action/info/tasks`, { state: {data: task, actionName: actionName}});
-        } else {
-          console.error('Failed to save task changes');
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+            maxZoom: 15,
+          }).addTo(newMap);
+
+          newMap.on('click', handleMapClick);
+          
         }
       } catch (error) {
-        console.error('Error saving task changes:', error);
+        console.error('Error initializing map:', error);
       }
     };
-  
-  const labelStyle = {
-      display: 'block',
-      marginBottom: '4px',
-      fontWeight: 'bold',
-    };
 
-  
-    const dropStyle = {
-      marginBottom: '8px',
-      padding: '8px',
-      marginLeft: '15px',
-      borderRadius: '6px',
-    };
+    initializeMap();
+  }, []);
 
-    const inputStyle = {
-      marginBottom: '8px',
-      padding: '8px',
-    };
-  
-    const buttonContainerStyle = {
-      display: 'flex',
-      justifyContent: 'space-between', 
-      marginTop: '12px',
-    };
-  
-    const buttonStyle = {
-      flex: '1', 
-      marginLeft: '8px',
-      padding: '8px 16px',
-      fontSize: '16px',
-      marginTop: '12px',
-    };
-  
-    const containerStyle = {
-      textAlign: 'left',
-    };
-  
-    const centerStyle = {
-      textAlign: 'center', 
-    };
+  const handleMapClick = (e) => {
+    console.log('Map clicked:', e.latlng);
+    if (e.latlng){
+    const { lat, lng } = e.latlng;
+    console.log(lat, lng);
+    const location = [lat, lng];
+    console.log(location);
+
+    if (!task.startLocation) {
+      setTask((prevData) => ({ ...prevData, startLocation: location }));
+    } else if (!task.endLocation) {
+      setTask((prevData) => ({ ...prevData, endLocation: location }));
+    } else {
+      // Both start and end locations are set, reset them
+      setTask({
+        ...task,
+        startLocation: location,
+        endLocation: null,
+      });
+    }
+    }
+  };
 
   return (
-      <div className="container" style={containerStyle}>
-        <div style={centerStyle}>
-          <h2>Unesi podatke za novi zadatak:</h2>
-        </div>
-        <div>
-          <label style={labelStyle}>Opis zadatka: </label>
-          <input type="text" name="taskText" value={task.taskText} onChange={handleChange} style={inputStyle} />
-        </div>
-        <div>
-          <label style={labelStyle}> Ime tragača na zadatku:   
-          <select id="dropdown" value={task.username} onChange={handleDropdownChange} style={dropStyle}>
-              <option value=""></option>
-              {username.map((tracker) => (
-            <option key={tracker} value={tracker}>
-              {tracker}
-            </option>
-          ))}
-          </select>
-        </label>
-        </div>
-        <div>
-          <label style={labelStyle}> Životinja:   
-          <select id="dropdown" value={animals.animalName} onChange={handleDropdownChange2} style={dropStyle}>
-              <option value=""></option>
-              {animals.map((animal) => (
-            <option key={animal} value={animal}>
-              {animal}
-            </option>
-          ))}
-          </select>
-        </label>
-        </div>
-        <div style={buttonContainerStyle}>
-          <button style={buttonStyle} onClick={handleSaveChanges}>Stvori zadatak</button>
-          <button style={buttonStyle} onClick={handleCancelClick}>Odustani</button>
-        </div>
+    <div className="container">
+      <h2>Unesi podatke za novi zadatak:</h2>
+      <div>
+        <label>Opis zadatka:</label>
+        <input type="text" name="taskText" value={task.taskText} onChange={(e) => setTask({ ...task, taskText: e.target.value })} />
       </div>
-    );
-      
-        
-    
-}
+      <div>
+        <label>Ime tragača na zadatku:</label>
+        <input type="text" name="username" value={task.username} onChange={(e) => setTask({ ...task, username: e.target.value })} />
+      </div>
+      <div>
+        <label>Životinja:</label>
+        <input type="text" name="animalName" value={task.animalName} onChange={(e) => setTask({ ...task, animalName: e.target.value })} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '16px' }}>
+        <div id="map" style={{ height: '300px', width: '100%', marginBottom: '16px' }} onClick={handleMapClick} />
+        {task.startLocation && (
+          <div>
+            <h4>Start Location:</h4>
+            <p>{`Latitude: ${task.startLocation[0]}, Longitude: ${task.startLocation[1]}`}</p>
+          </div>
+        )}
+        {task.endLocation && (
+          <div>
+            <h4>End Location:</h4>
+            <p>{`Latitude: ${task.endLocation[0]}, Longitude: ${task.endLocation[1]}`}</p>
+          </div>
+        )}
+      </div>
+      <button onClick={() => console.log(task)}>Log Task</button>
+    </div>
+  );
+};  
+
 export default NoviZadatak;

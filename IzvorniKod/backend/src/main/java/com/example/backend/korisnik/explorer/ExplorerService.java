@@ -1,9 +1,6 @@
 package com.example.backend.korisnik.explorer;
 
-import com.example.backend.korisnik.HelpingTables.BelongsToAction;
-import com.example.backend.korisnik.HelpingTables.BelongsToActionService;
-import com.example.backend.korisnik.HelpingTables.TaskComment;
-import com.example.backend.korisnik.HelpingTables.TaskCommentService;
+import com.example.backend.korisnik.HelpingTables.*;
 import com.example.backend.korisnik.UserService;
 import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.action.ActionService;
@@ -44,9 +41,10 @@ public class ExplorerService {
     private final VehicleService vehicleService;
     private final StationService stationService;
     private final TaskCommentService taskCommentService;
+    private final VehiclesForActionsService vehiclesForActionsService;
 
     @Autowired
-    public ExplorerService(ActionService actionService, AnimalService animalService, SearcherPositionService searchersService, TaskService taskService, UserCommentService userCommentService, UserService userService, BelongsToActionService belongsToActionService, SearcherPositionService searcherPositionService, VehicleRepository vehicleRepository, VehicleService vehicleService, StationService stationService, TaskCommentService taskCommentService) {
+    public ExplorerService(ActionService actionService, AnimalService animalService, SearcherPositionService searchersService, TaskService taskService, UserCommentService userCommentService, UserService userService, BelongsToActionService belongsToActionService, SearcherPositionService searcherPositionService, VehicleRepository vehicleRepository, VehicleService vehicleService, StationService stationService, TaskCommentService taskCommentService, VehiclesForActionsService vehiclesForActionsService) {
         this.actionService = actionService;
         this.animalService = animalService;
         this.searchersService = searchersService;
@@ -59,6 +57,7 @@ public class ExplorerService {
         this.vehicleService = vehicleService;
         this.stationService = stationService;
         this.taskCommentService = taskCommentService;
+        this.vehiclesForActionsService = vehiclesForActionsService;
     }
 
     public List<Map<String, String>> getActions(String username) {
@@ -279,7 +278,7 @@ public class ExplorerService {
     public void postAction(String actionName, String username, String stationId) {
         Station station = stationService.getStationByName(stationId);
         Users user = userService.getUserByUsername(username);
-        Actions action = new Actions(actionName, true, false, user, station, new Timestamp(System.currentTimeMillis()), null);
+        Actions action = new Actions(actionName, true, true, user, station, new Timestamp(System.currentTimeMillis()), null);
         actionService.save(action);
     }
 
@@ -347,5 +346,14 @@ public class ExplorerService {
 
         return returning;
 
+    }
+
+    public void postRequest(List<String> body, String actionName) {
+        Actions action = actionService.getActionByName(actionName);
+        for (String vehicleId : body) {
+            Vehicle vehicle = vehicleService.findVehicleById(Long.parseLong(vehicleId));
+            VehiclesForActions vehiclesForAction = new VehiclesForActions(action, vehicle);
+            vehiclesForActionsService.save(vehiclesForAction);
+        }
     }
 }

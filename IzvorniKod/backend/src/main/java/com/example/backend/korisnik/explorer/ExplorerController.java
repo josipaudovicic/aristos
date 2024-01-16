@@ -126,4 +126,9 @@ public class ExplorerController {
         return explorerService.getVehicles();
     }
 
+    @PostMapping(path = "/action/info/requests/post")
+    public void postRequest(@RequestBody Map<String, List<String>> body, @RequestHeader("actionName") String actionName) {
+        explorerService.postRequest(body.get("selectedVehicles"), actionName);
+    }
+
 }
