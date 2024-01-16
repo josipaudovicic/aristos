@@ -29,7 +29,7 @@ public class AnimalService {
     public void addPositions() {
         List<AnimalPosition> allAnimals = animalPositionRepository.findAll();
         System.out.println(allAnimals.size());
-        if (allAnimals.size() <= 200) {
+        if (allAnimals.size() < 200) {
             Random random = new Random();
             List<Long> allAnimalIds = findAllAnimalIds();
             long bound = 0;
