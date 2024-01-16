@@ -107,6 +107,7 @@ public class ExplorerController {
     }
     @DeleteMapping(path = "/action/info/tasks/delete")
     public void deleteTask(@RequestBody Map<String, String> body) {
+        System.out.println(body.get("taskId"));
         explorerService.deleteTask(body.get("taskId"));
     }
 }
