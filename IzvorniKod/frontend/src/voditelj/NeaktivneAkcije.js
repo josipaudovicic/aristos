@@ -1,8 +1,12 @@
 // NeaktivneAkcije.js
 
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
-function NeaktivneAkcije({ location }) {
+
+
+function NeaktivneAkcije() {
+  const location = useLocation();
   const { state } = location;
   const actions = state ? state.users : [];
 
@@ -12,10 +16,11 @@ function NeaktivneAkcije({ location }) {
       {actions.length > 0 ? (
         <ul>
           {actions.map((action) => (
-            <li key={action.actionId}>
-              <strong>ID Akcije:</strong> {action.actionId},{' '}
-              <strong>Ime akcije:</strong> {action.actionName},{' '}
-              <strong>Započeta:</strong> {action.started ? 'Yes' : 'No'}
+            <li key={action.id}>
+              <strong>ID Akcije:</strong> {action.id}, {'    '}
+              <strong>Ime akcije:</strong> {action.name}, {'    '}
+              <strong>Započeta:</strong> {action.started ? 'Yes,    ' : 'No,    '}
+              <strong>Istraživač:</strong> {action.username}
             </li>
           ))}
         </ul>

@@ -24,7 +24,7 @@ function EditNacinaTransporta() {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch(`/api/tracker/${tracker.username}`, {
+      const response = await fetch(`/manager/tracker/${tracker.username}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

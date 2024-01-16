@@ -9,7 +9,7 @@ function PregledSvojihTragaca() {
   const navigate = useNavigate();
 
   const handleClick = (tracker) => {
-    navigate(`manager/trackers/${tracker.username}`, { state: { tracker: tracker } });
+    navigate(`/manager/trackers/${tracker.username}`, { state: { tracker: tracker } });
   };
 
   return (

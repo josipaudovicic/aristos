@@ -1,22 +1,39 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function OdabirAkcija() {
   
   //TODO: UVIJEK KORISTITI useLocation za prijenos podataka izmedu stranica
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const redirectToPage = async (path) => {
       try {
       let response;
-      if (path === "neaktivne") {
-        response = await fetch(`/manager/inactiveActions`);
+      console.log("Username prije odabira tipa akcije: ", location.state.username);
+      if (path === "inactiveActions") {
+        response = await fetch(`/manager/inactiveActions`, { 
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json', 
+          'username': location.state.username
+        },
+      });
       } else {
-        response = await fetch(`/manager/activeActions`);
+        response = await fetch(`/manager/activeActions`, { 
+          method: 'GET', 
+          headers: {
+            'Content-Type': 'application/json', 
+            'username': location.state.username
+          },
+      });
       }
       const data = await response.json();
-      navigate(`/${path}`, {state: {users: data}}); // Mozda da se zove data, a ne users jer mogu slati i akcije umjesto korisnika
+      console.log("odabrane akcije: ", path);
+      console.log("fetchane akcije: ", data);
+      console.log("Username after choosing the type of actions: ", location.state.username);
+      navigate(`/manager/actions/${path}`, {state: {users: data, username: location.state.username}}); // Mozda da se zove data, a ne users jer mogu slati i akcije umjesto korisnika
 
     } catch (error) {
       console.error(`Error fetching actions:`, error.message);
@@ -32,7 +49,7 @@ function OdabirAkcija() {
           padding: '10px 20px',
           margin: '10px',
         }}
-        onClick={() => redirectToPage('aktivne')} // ispred ovoga staviti /manager i mozda promjeniti na engleski
+        onClick={() => redirectToPage('activeActions')} // ispred ovoga staviti /manager i mozda promjeniti na engleski
       >
         aktivne akcije
       </button>
@@ -42,7 +59,7 @@ function OdabirAkcija() {
           padding: '10px 20px',
           margin: '10px',
         }}
-        onClick={() => redirectToPage('neaktivne')} // ispred ovoga staviti /manager i mozda promjeniti na engleski
+        onClick={() => redirectToPage('inactiveActions')} // ispred ovoga staviti /manager i mozda promjeniti na engleski
       >
         neaktivne akcije
       </button>
