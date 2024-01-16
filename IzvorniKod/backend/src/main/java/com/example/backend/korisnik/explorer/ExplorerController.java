@@ -91,8 +91,8 @@ public class ExplorerController {
     }
 
     @GetMapping(path = "/action/info/tasks/comments")
-    public List<Map<String, String>> getTaskComments() {
-        return explorerService.getAllTaskComments();
+    public List<Map<String, String>> getTaskComments(@RequestHeader("taskId") String taskId) {
+        return explorerService.getAllTaskComments(taskId);
     }
 
     @GetMapping(path = "/action/info/tasks/newTask")

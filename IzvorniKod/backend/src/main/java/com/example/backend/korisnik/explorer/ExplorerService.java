@@ -264,8 +264,8 @@ public class ExplorerService {
         return returning;
     }
 
-    public List<Map<String, String>> getAllTaskComments() {
-        List<TaskComment> comments = taskCommentService.getAllComments();
+    public List<Map<String, String>> getAllTaskComments(String taskId) {
+        List<TaskComment> comments = taskCommentService.getCommentsWithTaskId(Long.parseLong(taskId));
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
         for (TaskComment comment : comments) {
             Map<String, String> kaoComment = new java.util.HashMap<>();
