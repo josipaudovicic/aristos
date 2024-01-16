@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 function PregledAktivnihAkcija(){
@@ -7,16 +7,22 @@ function PregledAktivnihAkcija(){
     //klikom na akciju odlazi na mogucnost dodavanja tragača na akciju bez zahtjeva od istrazivaca
 
     const [actions, setActions] = useState([]);
-
+    const location = useLocation();
+    console.log("data on this location ", location.state);
 
     useEffect(() => {
-
     const fetchActions = async () => {
       try {
-        const response = await fetch('');
+        const response = await fetch(`/manager/activeActions`, { 
+          method: 'GET', 
+          headers: {
+            'Content-Type': 'application/json', 
+            'username': location.state.username
+          },
+        });
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
+          console.log("fetchane akcije 2. put: ", data);
           setActions(data);
         } else {
           console.error('Failed to fetch actions');

@@ -42,13 +42,7 @@ function StationManager() {
           },
         });
       } else if (path === 'manager/actions') {
-        response = await fetch(`/manager/actions`, {
-          method: 'GET', 
-          headers: {
-            'Content-Type': 'application/json', 
-            'username': username
-          },
-        });
+        navigate('/manager/actions', {state : {username: username}});
       } else if (path === 'manager/requests') {
         response = await fetch(`/manager/requests`, {
           method: 'GET', 
@@ -60,12 +54,16 @@ function StationManager() {
       } else if (path === 'profile') {
         navigate(`/profile`, { state: { username: username } });
       }
-
-      const data = await response.json();
-      navigate(`/${path}`, { state: { data: data, username: username } });
-    } catch (error) {
-      console.error(`Error fetching data:`, error.message);
-    }
+      
+      if (path != 'manager/actions') {
+        const data = await response.json();
+        console.log("data ", data);
+        console.log("path ", path);
+        navigate(`/${path}`, { state: { data: data, username: username } });
+      }
+      } catch (error) {
+        console.error(`Error fetching data:`, error.message);
+      }
   };
 
   const profileButtonStyle = {

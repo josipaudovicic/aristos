@@ -65,8 +65,8 @@ function App() {
         <Route path="/admin" element={<TwoButtonRedirectComponent />} />
         <Route path="/manager" element={<StationManager />} />
         <Route path="/manager/actions" element={<OdabirAkcija />} />
-        <Route path="/manager/actions/neaktivne" element={<NeaktivneAkcije />} />
-        <Route path="/manager/actions/aktivne" element={<PregledAktivnihAkcija />} />
+        <Route path="/manager/actions/inactiveActions" element={<NeaktivneAkcije />} />
+        <Route path="/manager/actions/activeActions" element={<PregledAktivnihAkcija />} />
         <Route path="/manager/trackers" element={<PregledSvihTragaca />} />
         <Route path="/manager/trackers/:id`" element={<EditNacinaTransporta />} />
         <Route path="/manager/mytrackers" element={<PregledSvojihTragaca />} />
