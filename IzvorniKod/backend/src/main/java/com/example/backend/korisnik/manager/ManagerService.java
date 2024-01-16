@@ -1,14 +1,11 @@
 package com.example.backend.korisnik.manager;
 
-import com.example.backend.korisnik.HelpingTables.BelongsToStation;
-import com.example.backend.korisnik.HelpingTables.BelongsToStationRepository;
-import com.example.backend.korisnik.HelpingTables.QualifiedFor;
-import com.example.backend.korisnik.HelpingTables.QualifiedForRepository;
+import com.example.backend.korisnik.HelpingTables.*;
 import com.example.backend.korisnik.UserRepository;
+import com.example.backend.korisnik.UserService;
 import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.action.Actions;
 import com.example.backend.korisnik.action.ActionService;
-import com.example.backend.korisnik.vehicle.Vehicle;
 import com.example.backend.korisnik.vehicle.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +15,9 @@ import java.util.*;
 @Service
 public class ManagerService {
     private final UserRepository userRepository;
+    private final UserService userService;
     private final BelongsToStationRepository belongsToStationRepository;
+    private final BelongsToStationService belongsToStationService;
     private final QualifiedForRepository qualifiedForRepository;
 
     private final VehicleRepository vehicleRepository;
@@ -26,9 +25,11 @@ public class ManagerService {
 
 
     @Autowired
-    public ManagerService(UserRepository userRepository, BelongsToStationRepository belongsToStationRepository, QualifiedForRepository qualifiedForRepository, VehicleRepository vehicleRepository, ActionService actionService) {
+    public ManagerService(UserRepository userRepository, UserService userService, BelongsToStationRepository belongsToStationRepository, BelongsToStationService belongsToStationService, QualifiedForRepository qualifiedForRepository, VehicleRepository vehicleRepository, ActionService actionService) {
         this.userRepository = userRepository;
+        this.userService = userService;
         this.belongsToStationRepository = belongsToStationRepository;
+        this.belongsToStationService = belongsToStationService;
         this.qualifiedForRepository = qualifiedForRepository;
         this.vehicleRepository = vehicleRepository;
         this.actionService = actionService;
@@ -55,9 +56,13 @@ public class ManagerService {
     }
 
     public List<Map<String, String>> getMyTrackers(String managerUsername) {
-        List<Users> allUsers = userRepository.findAll();
-        List<Users> listOfMyTrackers = allUsers.stream().filter(user-> (user.getRole().getRoleName().equals("Tragač") &&
-                Objects.equals(belongsToStationRepository.getStationIdByUserName(managerUsername), belongsToStationRepository.getStationIdByUserName(user.getUsername())))).toList();
+        List<BelongsToStation> allPairs = belongsToStationService.getAllPairs(managerUsername);
+        List<Users> listOfMyTrackers = new ArrayList<>();
+        for (BelongsToStation pair : allPairs) {
+            if (userService.getRole(pair.getUserName()).equals("Tragač") && !Objects.equals(pair.getUserName(), managerUsername)) {
+                listOfMyTrackers.add(userService.getUserByUsername(pair.getUserName()));
+            }
+        }
 
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
         for (Users user : listOfMyTrackers){

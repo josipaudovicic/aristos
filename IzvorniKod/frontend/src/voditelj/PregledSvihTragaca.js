@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const transportModesList = ['pješke', 'dronom', 'automobilom', 'cross motorom', 'brodom', 'helikopterom'];
 
 function PregledSvihTragaca() {
   const location = useLocation();
-  const navigate = useNavigate();
   const trackers = location.state.data;
   const managerUsername = location.state.username;
   console.log("manager username:", managerUsername);
