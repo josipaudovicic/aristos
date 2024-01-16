@@ -1,8 +1,6 @@
 package com.example.backend.korisnik;
 
-import com.example.backend.korisnik.HelpingTables.BelongsToStation;
-import com.example.backend.korisnik.HelpingTables.BelongsToStationId;
-import com.example.backend.korisnik.HelpingTables.BelongsToStationRepository;
+import com.example.backend.korisnik.HelpingTables.*;
 import com.example.backend.korisnik.station.Station;
 import com.example.backend.korisnik.station.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +14,14 @@ public class AdminServiceJpa {
     private final UserRepository userRepository;
     private final StationRepository stationRepository;
     private final BelongsToStationRepository belongsToStationRepository;
+
+    private final QualifiedForRepository qualifiedForRepository;
     @Autowired
-    public AdminServiceJpa(UserRepository user_repository, StationRepository station_repository, BelongsToStationRepository belongs_to_station_repository) {
+    public AdminServiceJpa(UserRepository user_repository, StationRepository station_repository, BelongsToStationRepository belongs_to_station_repository, QualifiedForRepository qualified_for_repository) {
         this.userRepository = user_repository;
         this.stationRepository = station_repository;
         this.belongsToStationRepository = belongs_to_station_repository;
+        this.qualifiedForRepository = qualified_for_repository;
     }
 
     public List<Users> findAllUsers() {
@@ -169,6 +170,13 @@ public class AdminServiceJpa {
             for (BelongsToStation pair : belongsToStationRepository.findAll()) {
                 if (pair.getUserName().equals(username)) {
                     belongsToStationRepository.delete(pair);
+                    break;
+                }
+            }
+
+            for (QualifiedFor pair : qualifiedForRepository.findAll()) {
+                if (pair.getUserName().equals(username)) {
+                    qualifiedForRepository.delete(pair);
                     break;
                 }
             }
