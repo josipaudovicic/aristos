@@ -54,11 +54,11 @@ function PregledAktivnihAkcija(){
 
     return (
         <div>
-            <h2>Zahtjevi</h2>
+            <h2>Aktivne akcije</h2>
             <ul>
                 {actions.map((action) => (
                     <li key={action.name} onClick={() => redirectToPage('manager/activeActions/mytrackers')} style={{ cursor: 'pointer' }}>
-                        <strong>{action.name}</strong> - lokacija:{action.location}
+                        <strong>{action.name}</strong>
                     </li>
                 ))}
             </ul>

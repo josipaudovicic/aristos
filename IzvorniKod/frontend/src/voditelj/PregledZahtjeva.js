@@ -43,11 +43,11 @@ function PregledZahtjeva(){
     const redirectToPage = async (path) => {
         try {
             let response;
-            if (path === 'manager/requests/mytrackers') {
-                response = await fetch(`manager/requests/mytrackers`);
+            if (path === 'manager/mytrackers') {
+                response = await fetch(`manager/mytrackers`);
             }
             const data = await response.json();
-            navigate(`/${path}`, { state: { users: data } });
+            navigate(`/${path}`, { state: { requests: data } });
         }catch (error) {
             console.error(`Error fetching data:`, error.message);
           }
@@ -59,7 +59,7 @@ function PregledZahtjeva(){
             <h2>Zahtjevi</h2>
             <ul>
                 {requests.map((request) => (
-                    <li key={request.actionName} onClick={() => redirectToPage('manager/requests/mytrackers')} style={{ cursor: 'pointer' }}>
+                    <li key={request.actionName} onClick={() => redirectToPage('manager/mytrackers')} style={{ cursor: 'pointer' }}>
                         <strong>{request.actionName}</strong> - {request.description}
                     </li>
                 ))}

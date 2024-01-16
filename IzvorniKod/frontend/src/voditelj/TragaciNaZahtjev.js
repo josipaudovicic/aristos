@@ -6,6 +6,22 @@ import React, { useState, useEffect } from 'react';
 
 function TragaciNaZahtjev() {
     const [trackers, setTrackers] = useState([]);
+    
+    const navigate = useNavigate();
+    const location = useLocation();
+    const username = location.state.username;
+    const requestId = location.state.requests;
+
+    const redirectToPage = async (path) => {
+      try {
+        if (path === 'manager/actions') {
+          navigate('/manager/actions', {state : {username: username}});
+        }
+      } catch (error) {
+        console.error(`Error fetching data:`, error.message);
+      }
+  
+    }
 
     useEffect(() => {
         // Fetch users with confirmed attribute set to NULL
@@ -48,9 +64,20 @@ function TragaciNaZahtjev() {
 
   const handleSubmit = () => {
     alert('Zahtjev je obrađen');
-    //redirect na neku stranicu ili implementacija return botuna?
 
     //delete zahtjeva??
+    //trebam dohvatit sa prijasnje stranice tocno koji je request (sa useLocation)
+    //i onda ovdje obrisat tocno taj request
+
+    try {
+      fetch(`/manager/requests/${requestId}`, {
+        method: 'DELETE',
+      });
+    } catch (error) {
+      console.error('Error deleting request:', error);
+    }
+
+    redirectToPage('manager/actions')
   };
 
   const buttonStyle = {
