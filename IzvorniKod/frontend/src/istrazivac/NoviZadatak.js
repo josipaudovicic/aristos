@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -12,12 +13,14 @@ const markerIcon = new L.Icon({
 
 const NoviZadatak = () => {
   const [map, setMap] = useState(null);
+  const [lat, setLat] = useState();
+  const [lng, setLng] = useState();
   const [task, setTask] = useState({
     taskText: '',
     username: '',
     animalName: '',
-    startLocation: null,
-    endLocation: null,
+    startLocation: '',
+    endLocation: '',
   });
 
   useEffect(() => {
@@ -37,7 +40,7 @@ const NoviZadatak = () => {
           }).addTo(newMap);
 
           newMap.on('click', handleMapClick);
-          
+          setMap(newMap);
         }
       } catch (error) {
         console.error('Error initializing map:', error);
@@ -45,28 +48,27 @@ const NoviZadatak = () => {
     };
 
     initializeMap();
-  }, []);
+  }, [lng, lat]);
 
   const handleMapClick = (e) => {
-    console.log('Map clicked:', e.latlng);
-    if (e.latlng){
-    const { lat, lng } = e.latlng;
-    console.log(lat, lng);
-    const location = [lat, lng];
+    const latitude = e.latlng.lat;
+    const longitude = e.latlng.lng;
+    const location = [parseFloat(latitude.toFixed(3)), parseFloat(longitude.toFixed(3))];
     console.log(location);
-
+    console.log(task)
+    setLat(latitude);
+    setLng(longitude);
     if (!task.startLocation) {
-      setTask((prevData) => ({ ...prevData, startLocation: location }));
+      setTask((prevData) => ({ ...prevData, startLocation: location, endLocation: null }));
+      console.log(task);
     } else if (!task.endLocation) {
       setTask((prevData) => ({ ...prevData, endLocation: location }));
     } else {
-      // Both start and end locations are set, reset them
       setTask({
         ...task,
         startLocation: location,
         endLocation: null,
       });
-    }
     }
   };
 
@@ -86,18 +88,18 @@ const NoviZadatak = () => {
         <input type="text" name="animalName" value={task.animalName} onChange={(e) => setTask({ ...task, animalName: e.target.value })} />
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '16px' }}>
-        <div id="map" style={{ height: '300px', width: '100%', marginBottom: '16px' }} onClick={handleMapClick} />
-        {task.startLocation && (
-          <div>
-            <h4>Start Location:</h4>
-            <p>{`Latitude: ${task.startLocation[0]}, Longitude: ${task.startLocation[1]}`}</p>
-          </div>
-        )}
-        {task.endLocation && (
-          <div>
-            <h4>End Location:</h4>
-            <p>{`Latitude: ${task.endLocation[0]}, Longitude: ${task.endLocation[1]}`}</p>
-          </div>
+      <div id="map" style={{ height: '300px', width: '100%' }}></div>
+      {task.startLocation && (
+        <div>
+          <h4>Start Location:</h4>
+          <p>{`Latitude: ${task.startLocation[0]}, Longitude: ${task.startLocation[1]}`}</p>
+        </div>
+      )}
+      {task.endLocation && (
+        <div>
+          <h4>End Location:</h4>
+          <p>{`Latitude: ${task.endLocation[0]}, Longitude: ${task.endLocation[1]}`}</p>
+        </div>
         )}
       </div>
       <button onClick={() => console.log(task)}>Log Task</button>
