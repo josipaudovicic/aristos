@@ -12,6 +12,12 @@ public class QualifiedFor {
     @Id
     Long vehicleId;
 
+
+    public QualifiedFor(){};
+    public QualifiedFor(String username, Long vehicleId) {
+        this.userName = username;
+        this.vehicleId = vehicleId;
+    }
     public String getUserName() {
         return userName;
     }
