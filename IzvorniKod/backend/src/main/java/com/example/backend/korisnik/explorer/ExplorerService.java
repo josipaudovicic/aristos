@@ -327,4 +327,11 @@ public class ExplorerService {
         TaskComment taskComment = new TaskComment(task, comment, user);
         taskCommentService.save(taskComment);
     }
+
+    public void endAction(String actionName) {
+        Actions action = actionService.getActionByName(actionName);
+        action.setActive(false);
+        action.setEndTime(new Timestamp(System.currentTimeMillis()));
+        actionService.save(action);
+    }
 }

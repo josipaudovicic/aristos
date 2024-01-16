@@ -115,4 +115,9 @@ public class ExplorerController {
     public void saveComment(@RequestBody Map<String, String> body) {
         explorerService.saveComment(body.get("taskId"), body.get("comment"), body.get("username"));
     }
+
+    @PutMapping(path = "/action/info/end")
+    public void endAction(@RequestBody Map<String, String> body) {
+        explorerService.endAction(body.get("actionName"));
+    }
 }
