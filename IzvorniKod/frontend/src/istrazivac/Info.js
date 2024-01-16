@@ -5,6 +5,7 @@ function InfoStranica() {
   const navigate = useNavigate();
   const location = useLocation();
   const actionName = location.state?.actionName;
+  const username = location.state?.username;
 
   const redirectToPage = async (path) => {
       try {
@@ -22,7 +23,8 @@ function InfoStranica() {
       }
 
       const data = await response.json();
-      navigate(`/${path}`, {state: {data: data, actionName: actionName}});
+      console.log(data);
+      navigate(`/${path}`, {state: {data: data, actionName: actionName, username: username}});
 
     } catch (error) {
       console.error(`Error fetching`, error.message);

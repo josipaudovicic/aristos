@@ -19,9 +19,12 @@ const ListActions = () => {
 
     const handleClick = async (action) => { 
         try {
-            console.log(action);
-            navigate(`/explorer/action/${action.actionName}`, { state: {action: action, actions: actions, username: action.username}});
-    
+            if(action.started === "false") {
+                alert("Čekajte da voditelj postaje potvrdi");
+            } else {
+                console.log(action);
+                navigate(`/explorer/action/${action.actionName}`, { state: {action: action, actions: actions, username: action.username}});
+            }
         } catch (error) {
             console.error('Error fetching action details:', error.message);
         }

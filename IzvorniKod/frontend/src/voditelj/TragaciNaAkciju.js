@@ -1,10 +1,27 @@
 
-import React from 'react';
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function TragaciNaZahtjev() {
+function TragaciNaAkciju() {
     const [trackers, setTrackers] = useState([]);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const username = location.state.username;
+  console.log(username);
+    
+  const redirectToPage = async (path) => {
+    try {
+      let response;
+      if (path === 'manager/actions') {
+        navigate('/manager/actions', {state : {username: username}});
+      }
+    } catch (error) {
+      console.error(`Error fetching data:`, error.message);
+    }
+
+  }
+    
     useEffect(() => {
         // Fetch users with confirmed attribute set to NULL
         const fetchTrackers = async () => {
@@ -46,7 +63,9 @@ function TragaciNaZahtjev() {
 
   const handleSubmit = () => {
     alert('Spremljene promjene');
-    //redirect na neku stranicu ili implementacija return botuna?
+
+    redirectToPage('manager/actions')
+
   };
 
   const buttonStyle = {
@@ -73,4 +92,4 @@ function TragaciNaZahtjev() {
   );
 }
 
-export default TragaciNaZahtjev;
+export default TragaciNaAkciju;
