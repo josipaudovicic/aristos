@@ -25,7 +25,7 @@ function PregledZahtjeva() {
   }, []);
 
     const handleClick = (request) => {
-      navigate(`/manager/requests/trackers`, {state: { vehicles: request.slice(1, request.length - 1) }});
+      navigate(`/manager/requests/trackers`, {state: { vehicles: request.slice(2, request.length - 1) }});
     };
       
 
@@ -33,10 +33,10 @@ function PregledZahtjeva() {
         <div>
             <h2>Zahtjevi</h2>
             <ul>
-                {requests.map((request, index) => (
-                    <li key={index} onClick={(request) => handleClick} style={{ cursor: 'pointer' }}>
+                {requests.map((request) => (
+                    <li key={request[1]} onClick={(request) => handleClick} style={{ cursor: 'pointer' }}>
                         <strong>{request[0]}</strong>
-                        {request.slice(1, request.length - 1).map((vehicle, index) => (
+                        {request.slice(2, request.length - 1).map((vehicle, index) => (
                             <li key={index}>
                             <strong>{vehicle}</strong>
                             </li>
