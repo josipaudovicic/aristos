@@ -58,7 +58,12 @@ function IzradaZahtjeva(){
       };
 
       const label = {
-        textAlign: 'left',
+        display: 'block',
+        marginBottom: '10px', 
+      };
+
+      const checkboxStyle = {
+        marginRight: '5px', 
       };
 
       const p = {
@@ -75,15 +80,16 @@ function IzradaZahtjeva(){
           <p style={p}>Odaberite vozila:</p>
           <label style={label}>
             {vehicles.map((vehicle) => (
-              <div key={vehicle.vehicleId}>
-                <input
-                  type="checkbox"
-                  id={vehicle.vehicleId}
-                  onChange={() => handleCheckboxChange(vehicle.vehicleId)}
-                  checked={selectedVehicles.includes(vehicle.vehicleId)}
-                  />
-                  <label htmlFor={vehicle.vehicleId}>{vehicle.vehicleName}</label>
-              </div>
+              <label key={vehicle.vehicleId} style={label}>
+                {vehicle.vehicleName} 
+              <input
+                type="checkbox"
+                id={vehicle.vehicleId}
+                onChange={() => handleCheckboxChange(vehicle.vehicleId)}
+                checked={selectedVehicles.includes(vehicle.vehicleId)}
+                style={checkboxStyle}
+              />
+            </label>
               ))}
           </label>
         </form>
