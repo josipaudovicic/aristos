@@ -136,7 +136,6 @@ function PopisZadataka() {
   function Dropdown ({ task, comments }) {
     const [commentText, setCommentText] = useState('');
 
-    console.log(comments[0].taskId)
     const dropdownStyle = {
       position: 'absolute',
       top: '165px',
@@ -204,7 +203,7 @@ function PopisZadataka() {
           onChange={handleCommentText}
           style={commentInputStyle}
         />
-        <button style={{ ...button, display: commentText ? 'inline-block' : 'none' }} disabled={!comment} onClick={() => handleComment(task)}>Dodaj komentar</button>
+        <button style={{ ...button, display: commentText ? 'inline-block' : 'none' }} disabled={!commentText} onClick={() => handleComment(task)}>Dodaj komentar</button>
       </div>
     );
   }
