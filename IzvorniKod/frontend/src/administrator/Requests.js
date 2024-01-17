@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Requests() {
   const [users, setUsers] = useState([]);
   const [selectedStation, setSelectedStation] = useState('');
   const [stationData, setStationData] = useState([]); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -60,6 +62,7 @@ function Requests() {
 
           if (response.ok) {
             console.log('Manager confirmation sent to the backend successfully.');
+            navigate("/admin");
 
             setUsers((prevUsers) => prevUsers.filter((u) => u.username !== user.username));
           } else {
@@ -69,7 +72,7 @@ function Requests() {
           console.error('Error:', error);
         }
       } else {
-        console.error('Please choose a station for manager confirmation.');
+        window.alert('Please choose a station for manager confirmation.');
       }
     } else {
       // druge uloge

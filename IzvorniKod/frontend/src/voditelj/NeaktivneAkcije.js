@@ -19,7 +19,6 @@ function NeaktivneAkcije() {
             <li key={action.id}>
               <strong>ID Akcije:</strong> {action.id}, {'    '}
               <strong>Ime akcije:</strong> {action.name}, {'    '}
-              <strong>Započeta:</strong> {action.started ? 'Yes,    ' : 'No,    '}
               <strong>Istraživač:</strong> {action.username}
             </li>
           ))}
