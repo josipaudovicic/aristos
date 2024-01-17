@@ -15,12 +15,15 @@ public class AdminServiceJpa {
     private final StationRepository stationRepository;
     private final BelongsToStationRepository belongsToStationRepository;
 
+    private final RolesRepository rolesRepository;
+
     private final QualifiedForRepository qualifiedForRepository;
     @Autowired
-    public AdminServiceJpa(UserRepository user_repository, StationRepository station_repository, BelongsToStationRepository belongs_to_station_repository, QualifiedForRepository qualified_for_repository) {
+    public AdminServiceJpa(UserRepository user_repository, StationRepository station_repository, BelongsToStationRepository belongs_to_station_repository, RolesRepository roles_repository, QualifiedForRepository qualified_for_repository) {
         this.userRepository = user_repository;
         this.stationRepository = station_repository;
         this.belongsToStationRepository = belongs_to_station_repository;
+        this.rolesRepository = roles_repository;
         this.qualifiedForRepository = qualified_for_repository;
     }
 
@@ -201,10 +204,39 @@ public class AdminServiceJpa {
         newUser.setSurname(user.get("surname"));
         newUser.setPassword(user.get("password"));
         newUser.setEmail(user.get("email"));
+
+        String newRole = user.get("role");
+        String oldRole = userRepository.getReferenceById(username).getRole().getRoleName();
+        newUser.setRole(rolesRepository.findByRoleName(newRole).orElse(null));
+
         if (user.get("photo") != null) {
             newUser.setPhoto(user.get("photo"));
         }
         userRepository.save(newUser);
+
+        if (oldRole.equals(newRole) == false || newRole.equals("Voditelj postaje") == true) {
+            for (BelongsToStation pair: belongsToStationRepository.findAll()) {
+                if (pair.getUserName().equals(newUser.getUsername())) {
+                    belongsToStationRepository.delete(pair);
+                    break;
+                }
+            }
+        }
+
+        if (newRole.equals("Voditelj postaje")) {
+            System.out.println("Novi voditelj postaje/mijenja stanicu");
+            Long newStationId = null;
+
+            for (Station station: stationRepository.findAll()) {
+                if (station.getStationName().equals(user.get("station"))) {
+                    newStationId = station.getStationId();
+                    break;
+                }
+            }
+            BelongsToStation newEntry = new BelongsToStation(user.get("username"), newStationId);
+            belongsToStationRepository.save(newEntry);
+        }
+
         return true;
     }
 }

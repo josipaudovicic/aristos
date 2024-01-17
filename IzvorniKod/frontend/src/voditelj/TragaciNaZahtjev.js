@@ -25,7 +25,6 @@ function TragaciNaZahtjev() {
         };
         
       fetchTrackers();
-      console.log(trackers);
       }, []); 
 
 
@@ -35,10 +34,10 @@ function TragaciNaZahtjev() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ selectedTrackers }),
+        body: JSON.stringify({ selectedTrackers : selectedTrackers, actionId : [actionId] }),
       });
 
-    navigate(`/manager/requests`, {state: { vehicles: vehicles}})
+    navigate(`/manager`, {state: { username : username}})
   };
 
   const handleCheckboxChange = (trackerId) => {

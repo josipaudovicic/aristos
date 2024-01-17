@@ -7,20 +7,24 @@ const EditKorisnik = () => {
   const formerUser = location.state?.user;
   const formerUsername = location.state?.user.username;
   console.log(formerUsername)
+
+  
   const [userData, setUserData] = useState({
     username: '',
     name: '',
     surname: '',
     email: '',
     password: '',
-    status: '',
+    role: '',
     file: '',
   });
+  const [selectedStation, setSelectedStation] = useState('');
+  const [stationData, setStationData] = useState([]); 
 
   useEffect(() => {
     console.log(formerUsername);
     if (formerUsername !== undefined){
-        fetch('/profile', {
+      fetch('/profile', {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -30,11 +34,28 @@ const EditKorisnik = () => {
             .then((response) => response.json())
             .then((data) => {setUserData(data);
           console.log(data);})
-            .catch((error) => console.error('Error fetching user data for editing:', error));
+            .catch((error) => console.error('Error fetching users data for editing:', error));
+
+        const fetchStations = async () => {
+              try {
+                const response = await fetch('/admin/getAllStations');
+                if (response.ok) {
+                  const stationData = await response.json();
+                  console.log(stationData);
+                  setStationData(stationData); 
+                } else {
+                  console.error('Failed to fetch stations');
+                }
+              } catch (error) {
+                console.error('Error:', error);
+              }
+            };
+            fetchStations();
+            console.log(stationData);
     }
-    
+
   }, [formerUsername]);
-  console.log(userData);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,26 +68,53 @@ const EditKorisnik = () => {
   };
 
   const handleSaveChanges = async () => {
-    try {
-      const response = await fetch(`/admin/changeUserData/${userData.username}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          username: formerUsername,
-        },
-        body: JSON.stringify(userData),
-      });
+    if (userData.role === 'Voditelj postaje') {
+      if (selectedStation) {
+        userData.station = selectedStation;
+        console.log(`Confirmed for manager: ${userData.username}, Station: ${selectedStation}`);
+        try {
+          const response = await fetch(`/admin/changeUserData/${userData.username}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+          });
 
-      if (response.ok) {
-        console.log('Profile changes saved successfully');
-        navigate(`/user/${userData.username}`, { state: {username: userData.username }});
+          if (response.ok) {
+            console.log('User data changed sucessfully.');
+            navigate("/admin", { state: {username: userData.username }});
+          } else {
+            console.error('Failed to change user data.');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
       } else {
-        console.error('Failed to save profile changes');
+        window.alert('Please choose a station for manager.');
       }
-    } catch (error) {
-      console.error('Error saving profile changes:', error);
-    }
-  };
+    } else {
+        try {
+        const response = await fetch(`/admin/changeUserData/${userData.username}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            username: formerUsername,
+          },
+          body: JSON.stringify(userData),
+        });
+
+        if (response.ok) {
+          console.log('Profile changes saved successfully');
+          navigate(`/admin`, { state: {username: userData.username }});
+        } else {
+          console.error('Failed to save profile changes');
+        }
+      } catch (error) {
+        console.error('Error saving profile changes:', error);
+      }
+    };
+  }
 
   const labelStyle = {
     display: 'block',
@@ -125,8 +173,8 @@ const EditKorisnik = () => {
       <div>
         <label style={labelStyle}>Uloga: </label>
         <select
-          name="status"
-          value={userData.status}
+          name="role"
+          value={userData.role}
           onChange={handleChange}
           style={inputStyle}
         >
@@ -134,6 +182,22 @@ const EditKorisnik = () => {
           <option value="Istraživač">Istraživač</option>
           <option value="Voditelj postaje">Voditelj postaje</option>
         </select>
+        {/* Conditionally render dropdown for managers */}
+        {userData.role === 'Voditelj postaje' && (
+              <select
+                value={selectedStation}
+                onChange={(e) => setSelectedStation(e.target.value)}
+              >
+                <option value="" disabled>
+                  Izaberi stanicu
+                </option>
+                {stationData.map((station) => (
+                  <option key={station.station_id} value={station.station_name}>
+                    {station.station_name}
+                  </option>
+                ))}
+              </select>
+            )}
       </div>
       <div style={buttonContainerStyle}>
         <button style={buttonStyle} onClick={handleSaveChanges}>

@@ -24,7 +24,7 @@ function TragaciNaAkciju() {
     
     useEffect(() => {
         // Fetch users with confirmed attribute set to NULL
-        const fetchTrackers = async () => {
+        const fetchAvailableTrackers = async () => {
           try {
             const response = await fetch('/manager/myAvailableTrackers');
             if (response.ok) {
@@ -38,9 +38,25 @@ function TragaciNaAkciju() {
             console.error('Error:', error);
           }
         };
+
+        const fetchTrackersOnAction = async () => {
+          try {
+            const response = await fetch('/manager/trackersOnAction');
+            if (response.ok) {
+              const data = await response.json();
+              console.log(data);
+              setTrackers(data);
+            } else {
+              console.error('Failed to fetch trackers');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        };
     
-        fetchTrackers();
-      }, []); 
+        fetchAvailableTrackers();
+      }, []);
+
 
   const handleAdd = async (trackerUsername) => {
     try {

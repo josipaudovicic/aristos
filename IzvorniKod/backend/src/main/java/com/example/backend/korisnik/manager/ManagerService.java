@@ -23,6 +23,10 @@ public class ManagerService {
     private final BelongsToStationRepository belongsToStationRepository;
     private final BelongsToStationService belongsToStationService;
     private final QualifiedForRepository qualifiedForRepository;
+
+    private final ActionRepository actionRepository;
+
+    private final BelongsToActionRepository belongsToActionRepository;
     private final VehicleRepository vehicleRepository;
 
 
@@ -32,7 +36,7 @@ public class ManagerService {
 
 
     @Autowired
-    public ManagerService(UserRepository userRepository, UserService userService, BelongsToStationRepository belongsToStationRepository, BelongsToStationService belongsToStationService, QualifiedForRepository qualifiedForRepository, StationService stationService, VehicleRepository vehicleRepository, VehiclesForActionsRepository vehiclesForActionsRepository, ActionService actionService) {
+    public ManagerService(UserRepository userRepository, UserService userService, BelongsToStationRepository belongsToStationRepository, BelongsToStationService belongsToStationService, QualifiedForRepository qualifiedForRepository, StationService stationService, VehicleRepository vehicleRepository, VehiclesForActionsRepository vehiclesForActionsRepository, BelongsToActionRepository belongsToActionRepository, ActionRepository actionRepository, ActionService actionService) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.belongsToStationRepository = belongsToStationRepository;
@@ -41,6 +45,8 @@ public class ManagerService {
         this.stationService = stationService;
         this.vehicleRepository = vehicleRepository;
         this.vehiclesForActionsRepository = vehiclesForActionsRepository;
+        this.belongsToActionRepository = belongsToActionRepository;
+        this.actionRepository = actionRepository;
         this.actionService = actionService;
     }
 
@@ -121,7 +127,8 @@ public class ManagerService {
     }
 
     public List<List<String>> getRequests(String username){
-        List<Actions> nonStartedActions = actionService.getNonStarted(username);
+        String stationId = belongsToStationRepository.findByUserName(username).getStationId().toString();
+        List<Actions> allActionsOnStation = actionRepository.findAll().stream().filter(action -> (action.getStation().getStationId().toString().equals(stationId))).toList();
 
         Map<String, String> translateVehicles = new HashMap<>();
         translateVehicles.put("foot", "pješke");
@@ -132,31 +139,90 @@ public class ManagerService {
         translateVehicles.put("helicopter", "helikopterom");
 
         List<List<String>> returning = new java.util.ArrayList<>(List.of());
-        for (Actions action : nonStartedActions){
+        for (Actions action : allActionsOnStation){
+            System.out.println(action.getActionName());
             List<String> kaoAction = new ArrayList<>();
             kaoAction.add(action.getActionName());
             kaoAction.add(action.getActionId().toString());
 
             for (VehiclesForActions pair: vehiclesForActionsRepository.findAll()) {
-                String vehicleName = pair.getVehicle().getVehicleName();
-                kaoAction.add(translateVehicles.get(vehicleName));
+                System.out.println(pair.getAction().getActionId());
+                System.out.println(action.getActionName());
+                System.out.println("------------");
+                if (pair.getAction().getActionId().longValue() == action.getActionId().longValue()) {
+                    String vehicleName = pair.getVehicle().getVehicleName();
+                    kaoAction.add(translateVehicles.get(vehicleName));
+                }
             }
-            returning.add(kaoAction);
+
+            if (kaoAction.size() > 2) {
+                returning.add(kaoAction);
+            }
         }
 
         return returning;
     }
 
-    public List<String> getTrackersForRequest(String actionId) {
+    public List<Map<String, String>> getTrackersForRequest(String actionId) {
+        List<Map<String, String>> trackersForRequest = new ArrayList<>();
         System.out.println("Looking for searchers on station:");
         long stationId = actionService.getActionById(Long.parseLong(actionId)).getStation().getStationId().longValue();
 
         List<BelongsToStation> peopleOnStation = belongsToStationRepository.findAll().stream().filter(pair -> (pair.getStationId().longValue() == stationId)).toList();
         System.out.println(peopleOnStation.size());
-        peopleOnStation.forEach(pair -> System.out.println(pair.getUserName()));
-        return new ArrayList<String>();
+        //peopleOnStation.forEach(pair -> System.out.println(pair.getUserName()));
+        List<BelongsToStation> trackersOnStation = peopleOnStation.stream().filter(pair -> (userRepository.getReferenceById(pair.getUserName()).getRole().getRoleName().equals("Tragač") && trackerIsOnActiveAction(pair.getUserName()) == false && trackerIsQualifiedForAction(actionId, pair.getUserName()))).toList();
+        trackersOnStation.forEach(pair -> System.out.println(pair.getUserName()));
+        trackersOnStation.stream().filter(pair -> (trackerIsQualifiedForAction(actionId, pair.getUserName()) == true)).toList().forEach(pair -> {
+                                                                                                        Map<String, String> newSearcher = new HashMap<>();
+                                                                                                        newSearcher.put("username", userRepository.getReferenceById(pair.getUserName()).getUsername());
+                                                                                                        newSearcher.put("email", userRepository.getReferenceById(pair.getUserName()).getEmail());
+                                                                                                        newSearcher.put("name", userRepository.getReferenceById(pair.getUserName()).getName());
+                                                                                                        newSearcher.put("surname", userRepository.getReferenceById(pair.getUserName()).getSurname());
+                                                                                                        newSearcher.put("password", userRepository.getReferenceById(pair.getUserName()).getPassword());
+                                                                                                        newSearcher.put("role", userRepository.getReferenceById(pair.getUserName()).getRole().getRoleName());
+                                                                                                        newSearcher.put("file", userRepository.getReferenceById(pair.getUserName()).getPhoto());
+                                                                                                        trackersForRequest.add(newSearcher);
+                                                                                                        });
+        return trackersForRequest;
     }
 
+    public boolean trackerIsOnActiveAction(String username) {
+        List<String> actionIdHistory = new ArrayList<>();
+
+        for (BelongsToAction pair : belongsToActionRepository.findAll()) {
+            if (pair.getUser().getUsername().equals(username)) {
+                actionIdHistory.add(pair.getAction().getActionId().toString());
+            }
+        }
+
+        List<String> uniqueActions = actionIdHistory.stream().distinct().toList();
+        for (String actionId : uniqueActions) {
+            if (actionRepository.getReferenceById(Long.parseLong(actionId)).getActionActive() == true) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean trackerIsQualifiedForAction(String actionId, String trackerUsername) {
+        List<String> requestedVehicles = new ArrayList<>();
+        vehiclesForActionsRepository.findAll().stream().filter(pair -> (pair.getAction().getActionId().equals(Long.parseLong(actionId)))).toList().forEach(pair -> requestedVehicles.add(pair.getVehicle().getVehicleName()));
+
+        if (requestedVehicles.isEmpty() == true) {
+            return true;
+        } else {
+            List<String> trackerQualifiedFor = new ArrayList<>();
+            qualifiedForRepository.findAll().stream().filter(pair -> (pair.getUserName().equals(trackerUsername))).toList().forEach(pair -> trackerQualifiedFor.add(vehicleRepository.getReferenceById(pair.getVehicleId()).getVehicleName()));
+
+            for (String vehicle : trackerQualifiedFor) {
+                if (requestedVehicles.contains(vehicle)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public long getStationId(String username) {
         System.out.println("Searching for manager in repository");
         for (BelongsToStation pair : belongsToStationRepository.findAll()) {
