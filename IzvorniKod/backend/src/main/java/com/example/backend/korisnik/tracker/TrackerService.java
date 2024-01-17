@@ -3,6 +3,8 @@ package com.example.backend.korisnik.tracker;
 import com.example.backend.korisnik.HelpingTables.BelongsToAction;
 import com.example.backend.korisnik.HelpingTables.BelongsToActionService;
 import com.example.backend.korisnik.HelpingTables.BelongsToStation;
+import com.example.backend.korisnik.positions.AnimalPosition;
+import com.example.backend.korisnik.task.*;
 import com.example.backend.korisnik.UserService;
 import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.action.ActionService;
@@ -27,15 +29,17 @@ public class TrackerService {
     private final UserCommentService userCommentService;
     private final BelongsToActionService belongsToActionService;
     private final SearcherPositionService searcherPositionService;
+    private final TaskService taskService;
 
     @Autowired
-    public TrackerService(ActionService actionService, UserService userService, AnimalService animalService, UserCommentService userCommentService, BelongsToActionService belongsToActionService, SearcherPositionService searcherPositionService) {
+    public TrackerService(ActionService actionService, UserService userService, AnimalService animalService, UserCommentService userCommentService, BelongsToActionService belongsToActionService, SearcherPositionService searcherPositionService, TaskService taskService) {
         this.actionService = actionService;
         this.userService = userService;
         this.animalService = animalService;
         this.userCommentService = userCommentService;
         this.belongsToActionService = belongsToActionService;
         this.searcherPositionService = searcherPositionService;
+        this.taskService = taskService;
     }
 
     public List<String> getAnimals() {
@@ -110,6 +114,30 @@ public class TrackerService {
                 returning.add(kaoUser);
             }
         }
+        return returning;
+    }
+
+    public List<Map<String, String>> getTasks(String actionName, String username) {
+        Actions action = actionService.getActionByName(actionName);
+        Users user = userService.getUserByUsername(username);
+        List<Task> tasks = taskService.getTasksByActionAndUser(action, user);
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (Task t : tasks) {
+            Map<String, String> kaoTask = new java.util.HashMap<>();
+            Animal animal = t.getAnimal();
+            AnimalPosition animalPosition = animalService.findLatestPosition(animal);
+            kaoTask.put("animalName", animal.getAnimalName() + ", id: " + animal.getAnimalId().toString());
+            kaoTask.put("animalLongitude", animalPosition.getLongitude().toString());
+            kaoTask.put("animalLatitude", animalPosition.getLatitude().toString());
+            kaoTask.put("startLongitude", t.getStartLongitude().toString());
+            kaoTask.put("startLatitude", t.getStartLatitude().toString());
+            kaoTask.put("endLongitude", t.getEndLongitude().toString());
+            kaoTask.put("endLatitude", t.getEndLatitude().toString());
+            kaoTask.put("taskId", t.getTaskId().toString());
+            kaoTask.put("taskText", t.getTaskText());
+            returning.add(kaoTask);
+        }
+
         return returning;
     }
 }
