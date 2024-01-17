@@ -50,4 +50,9 @@ public class TrackerController {
     public List<Map<String, String>> getTrackers(@RequestHeader("actionName") String actionName, @RequestHeader("username") String username) {
         return trackerService.getTrackers(actionName, username);
     }
+
+    @GetMapping(path = "action/tasks")
+    public List<Map<String, String>> getTasks(@RequestHeader("actionName") String actionName, @RequestHeader("username") String username) {
+        return trackerService.getTasks(actionName, username);
+    }
 }

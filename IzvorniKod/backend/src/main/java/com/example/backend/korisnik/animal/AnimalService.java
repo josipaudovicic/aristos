@@ -117,4 +117,19 @@ public class AnimalService {
         Long id = animalName.split(", id: ")[1].equals("null") ? null : Long.parseLong(animalName.split(", id: ")[1]);
         return animalRepository.findById(id).orElseThrow(() -> new IllegalStateException("Animal with id " + id + " does not exist!"));
     }
+
+    public AnimalPosition findLatestPosition(Animal animal) {
+        List<AnimalPosition> positions = animalPositionService.findByAnimal(animal);
+        AnimalPosition latest = null;
+        for (AnimalPosition ap : positions) {
+            if (latest == null) {
+                latest = ap;
+            } else {
+                if (ap.getTimeStamp().after(latest.getTimeStamp())) {
+                    latest = ap;
+                }
+            }
+        }
+        return latest;
+    }
 }

@@ -57,4 +57,8 @@ public class TaskService {
     public void delete(Task task) {
         taskRepository.delete(task);
     }
+
+    public List<Task> getTasksByActionAndUser(Actions action, Users user) {
+        return taskRepository.findByActionAndUser(action, user);
+    }
 }
