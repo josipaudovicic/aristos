@@ -149,6 +149,23 @@ const NoviZadatak = () => {
     navigate(`/explorer/action/info/tasks`, { state: { actionName: actionName, username: username } });
   };
 
+  const dropdownStyle = {
+    borderRadius: '5px',
+    marginBottom: '10px',
+    marginLeft: '10px',
+    height: '25px',
+  };
+
+  const map = {
+    marginTop: '10px',
+    height: '300px', 
+    width: '100%',
+  };
+
+  const button = {
+    padding: '6px 12px',
+  };
+
   return (
     <div className="container">
       <h2>Unesi podatke za novi zadatak:</h2>
@@ -158,7 +175,7 @@ const NoviZadatak = () => {
       </div>
       <div>
         <label>Ime tragača na zadatku:
-          <select id="dropdown" value={task.username} onChange={(e) => setTask({ ...task, username: e.target.value })}>
+          <select style={dropdownStyle} id="dropdown" value={task.username} onChange={(e) => setTask({ ...task, username: e.target.value })}>
                 <option value=""></option>
                 {users.map((action) => (
               <option key={action} value={action}>
@@ -170,7 +187,7 @@ const NoviZadatak = () => {
       </div>
       <div>
         <label>Životinja:
-        <select id="dropdown" value={task.animalName} onChange={(e) => setTask({ ...task, animalName: e.target.value })}>
+        <select style={dropdownStyle} id="dropdown" value={task.animalName} onChange={(e) => setTask({ ...task, animalName: e.target.value })}>
                 <option value=""></option>
                 {animals.map((action) => (
               <option key={action} value={action}>
@@ -181,9 +198,9 @@ const NoviZadatak = () => {
         </label>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '16px' }}>
-      <div id="map" style={{ height: '300px', width: '100%' }}></div>
+      <div style={map} id="map"></div>
       </div>
-      <button onClick={handleSave}>Dodaj zadatak</button>
+      <button style={button} onClick={handleSave}>Dodaj zadatak</button>
     </div>
   );
 };  

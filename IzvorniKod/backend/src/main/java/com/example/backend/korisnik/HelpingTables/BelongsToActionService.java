@@ -33,8 +33,12 @@ public class BelongsToActionService {
     }
 
     public Vehicle getVehicle(Actions action, Users user) {
-        BelongsToAction belongsToAction = belongsToActionRepository.findByActionAndUser(action, user);
-        return belongsToAction.getVehicle();
+        if (action != null) {
+            BelongsToAction belongsToAction = belongsToActionRepository.findByActionAndUser(action, user);
+            return belongsToAction.getVehicle();
+        } else {
+            return null;
+        }
     }
 
     public List<BelongsToAction> getAllUsers(String actionName) {
@@ -49,5 +53,19 @@ public class BelongsToActionService {
             vehicles.add(b.getVehicle());
         }
         return vehicles;
+    }
+
+    public Actions findByUser(Users user) {
+        List<BelongsToAction> list = belongsToActionRepository.findByUser(user);
+        List<Actions> actions = new ArrayList<>();
+        for (BelongsToAction b : list){
+            actions.add(b.getAction());
+        }
+        for (Actions a : actions){
+            if (a.isActive()){
+                return a;
+            }
+        }
+        return null;
     }
 }

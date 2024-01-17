@@ -7,11 +7,10 @@ function PopisZadataka() {
     const actionName = location.state?.actionName;
     const username = location.state?.username;
     const [tasks, setTasks] = useState([]);
+    const [taskId, setTaskId] = useState(0);
     const [prevTaskId, setPrevTaskId] = useState(0)
     const [comments, setComments] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [commentText, setCommentText] = useState('');
-
 
     useEffect(() => {
       const fetchTasks = async () => {
@@ -36,7 +35,7 @@ function PopisZadataka() {
 
 
   const handleNewTask = () => {
-      navigate('/explorer/action/info/tasks/newTask', {state: { actionName: actionName, username: username}});
+      navigate('/explorer/action/info/tasks/newTask', {state: { actionName: actionName}});
   };
 
   const handleDelete = (task, index) =>{
@@ -57,21 +56,6 @@ function PopisZadataka() {
       }
   }
 
-  const handleComment = (task) => {
-    if (commentText) {
-      const newComment = `${username}: ${commentText}`; 
-      setComments([...comments, newComment]);
-      setCommentText('');
-    }
-  
-  fetch(`/explorer/action/info/tasks/saveComment`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ username: username, comment: commentText, taskId: comments[0].taskId}),
-  })
-  };
 
   const handleViewComments = (task) => {
     //console.log(task);
@@ -86,6 +70,7 @@ function PopisZadataka() {
       .then((data) => {
           setComments(data);
           console.log(task.taskId)
+          setTaskId(task.taskId);
           if (task.taskId === prevTaskId || prevTaskId === 0 || !showDropdown){
             setShowDropdown((prevShowDropdown) => !prevShowDropdown);
           }
@@ -111,7 +96,7 @@ function PopisZadataka() {
     textAlign: "left",
     marginLeft: "3px",
   };
-
+  
 
  const buttonStyle2 = {
     padding: '8px 16px',
@@ -150,8 +135,9 @@ function PopisZadataka() {
     textAlign: 'center',
   };
 
-  const Dropdown = React.memo(({ task, comments }) => {
-    //console.log(comments[0].taskId)
+  function Dropdown ({ task, comments }) {
+    const [commentText, setCommentText] = useState('');
+
     const dropdownStyle = {
       position: 'absolute',
       top: '165px',
@@ -185,6 +171,34 @@ function PopisZadataka() {
       marginLeft:'7px',
     };
 
+    const handleCommentText = (e) => {
+      setCommentText(e.target.value);
+    };
+
+    const handleComment = (task) => {
+      if (commentText) {
+        const newComment = `${username}: ${commentText}`; 
+        setComments([...comments, newComment]);
+        setCommentText('');
+      }
+
+    //let taskId = '';
+    /*if (typeof comments[0] === 'object' && comments[0] !== null){
+      taskId = comments[0].taskId;
+    } else {
+      taskId = '';
+    }*/
+    console.log(taskId);
+    
+    fetch(`/explorer/action/info/tasks/saveComment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username: username, comment: commentText, taskId: taskId}),
+    })
+    };
+    
     return (
       <div style={dropdownStyle}>
         <p style={{ margin: '0', fontWeight: 'bold' }}>komentari:</p>
@@ -196,13 +210,13 @@ function PopisZadataka() {
           type="text"
           placeholder="Unesite komentar..."
           value={commentText}
-          onChange={(e) => setCommentText(e.target.value)}
+          onChange={handleCommentText}
           style={commentInputStyle}
         />
         <button style={{ ...button, display: commentText ? 'inline-block' : 'none' }} disabled={!commentText} onClick={() => handleComment(task)}>Dodaj komentar</button>
       </div>
     );
-  });
+  }
   
 
   return (

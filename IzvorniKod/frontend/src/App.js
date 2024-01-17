@@ -90,7 +90,7 @@ function App() {
         <Route path="/tracker/animals" element={<SpeciesT />} />
         <Route path="/tracker/animals/species" element={<IndividualT />} />
         <Route path="/tracker/animals/species/:id" element={<InfoAnimalsT />} />
-        <Route path="/tracker/animals/action" element={<MapT />} />
+        <Route path="/tracker/action" element={<MapT />} />
         <Route path="/explorer/action/info/tasks" element={<PopisZadataka />} />
         <Route path="/explorer/action/info/requests" element={<IzradaZahtjeva />} />
         <Route path="/explorer/action/info/tasks/newTask" element={<NoviZadatak />} />
