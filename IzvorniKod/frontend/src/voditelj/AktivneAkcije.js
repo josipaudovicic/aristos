@@ -38,17 +38,8 @@ function PregledAktivnihAkcija(){
     //TODO: UVIJEK KORISTITI useLocation za prijenos podataka izmedu stranica
 
     const navigate = useNavigate();
-    const redirectToPage = async (path) => {
-        try {
-            let response;
-            if (path === 'manager/activeActions/mytrackers') {
-                response = await fetch(`manager/activeActions/mytrackers`);
-            }
-            const data = await response.json();
-            navigate(`/${path}`, { state: { users: data } });
-        }catch (error) {
-            console.error(`Error fetching data:`, error.message);
-          }
+    const redirectToPage = async (path, actionId) => {
+            navigate(`/${path}`, { state: { actionId: actionId, username: location.state.username} });
         };
       
 
@@ -57,7 +48,7 @@ function PregledAktivnihAkcija(){
             <h2>Aktivne akcije</h2>
             <ul>
                 {actions.map((action) => (
-                    <li key={action.name} onClick={() => redirectToPage('manager/activeActions/mytrackers')} style={{ cursor: 'pointer' }}>
+                    <li key={action.name} onClick={() => redirectToPage('manager/activeActions/mytrackers', action.id)} style={{ cursor: 'pointer' }}>
                         <strong>{action.name}</strong>
                     </li>
                 ))}
