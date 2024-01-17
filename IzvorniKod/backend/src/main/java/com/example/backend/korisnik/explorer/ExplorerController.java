@@ -116,6 +116,11 @@ public class ExplorerController {
         explorerService.saveComment(body.get("taskId"), body.get("comment"), body.get("username"));
     }
 
+    @GetMapping(path = "/action/info/tasks/animalPositions")
+    public Map<String, Double> getAnimalPositions(@RequestHeader("animalId") String animalId) {
+        return explorerService.getAnimalPositions(animalId);
+    }
+
     @PutMapping(path = "/action/info/end")
     public void endAction(@RequestBody Map<String, String> body) {
         explorerService.endAction(body.get("actionName"));

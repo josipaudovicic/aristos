@@ -13,6 +13,8 @@ const NoviZadatak = () => {
   const username = location.state?.username || '';
   const [users, setUsers] = useState([]);
   const [animals, setAnimals] = useState([]);
+  const [animalLocations, setAnimalLocations] = useState([]);
+  const [mapa, setMapa] = useState(null);
   const [done, setDone] = useState(false);
   const [task, setTask] = useState({
     taskText: '',
@@ -26,6 +28,15 @@ const NoviZadatak = () => {
 
   const markerIcon = new L.Icon({
     iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-red.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+    iconColor: 'red'
+  });
+
+  const markerIcon2 = new L.Icon({
+    iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-orange.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
@@ -49,6 +60,26 @@ const NoviZadatak = () => {
                 })
     .catch((error) => console.error('Error fetching user data for editing:', error));
   }, []);
+
+  useEffect(() => {
+    animalLocations.forEach(marker => marker.remove());
+
+    if (task.animalName !== '') {
+      fetch('/explorer/action/info/tasks/animalPositions', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          animalId: task.animalName.split(' id: ')[1],
+        },
+      })
+      .then((response) => response.json())
+      .then((data) => {;
+        if (mapa) {
+          const marker = L.marker([data.latitude, data.longitude], { icon: markerIcon2 }).addTo(mapa);
+          setAnimalLocations([marker]);
+        }})
+      .catch((error) => console.error('Error fetching user data for editing:', error));
+    }}, [task.animalName, mapa]);
 
   useEffect(() => {
     const initializeMap = () => {
@@ -94,7 +125,9 @@ const NoviZadatak = () => {
               setDone(false);
               i = 0;
             }
+          
           });
+          setMapa(newMap)
         }
       } catch (error) {
         console.error('Error initializing map:', error);
@@ -105,7 +138,7 @@ const NoviZadatak = () => {
     console.log(task.startLocation);
     console.log(task.endLocation);
     console.log(task);
-  }, [task]);
+  }, [task, mapa]);
 
   const handleSave = () => {
     console.log(markers.length);
