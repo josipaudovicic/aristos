@@ -30,28 +30,19 @@ public class AnimalService {
         if (animalPositionRepository.findAll().size() < 200) {
             Random random = new Random();
             List<Long> allAnimalIds = findAllAnimalIds();
-            long bound = 0;
 
             for (Long id : allAnimalIds) {
-                if (id > bound) {
-                    bound = id;
-                }
-            }
+                Timestamp ts = new Timestamp(new Date().getTime());
+                List<AnimalPosition> position = getSingleAnimalPositions(id);
+                double newLatitude = position.get(position.size() - 1).getLatitude() + random.nextDouble(-0.1, 0.1);
+                double newLongitude = position.get(position.size() - 1).getLongitude() + random.nextDouble(-0.1, 0.1);
 
-            for (long id = 1; id < bound + 1; id++) {
-                if (allAnimalIds.contains(id)) {
-                    Timestamp ts = new Timestamp(new Date().getTime());
-                    List<AnimalPosition> position = getSingleAnimalPositions(id);
-                    double newLatitude = position.get(position.size() - 1).getLatitude() + random.nextDouble(-0.1, 0.1);
-                    double newLongitude = position.get(position.size() - 1).getLongitude() + random.nextDouble(-0.1, 0.1);
-
-                    AnimalPosition newPosition = new AnimalPosition();
-                    newPosition.setTimeStamp(ts);
-                    newPosition.setLatitude(newLatitude);
-                    newPosition.setLongitude(newLongitude);
-                    newPosition.setAnimal(returnById(id));
-                    animalPositionRepository.save(newPosition);
-                }
+                AnimalPosition newPosition = new AnimalPosition();
+                newPosition.setTimeStamp(ts);
+                newPosition.setLatitude(newLatitude);
+                newPosition.setLongitude(newLongitude);
+                newPosition.setAnimal(returnById(id));
+                animalPositionRepository.save(newPosition);
             }
         }
     }
