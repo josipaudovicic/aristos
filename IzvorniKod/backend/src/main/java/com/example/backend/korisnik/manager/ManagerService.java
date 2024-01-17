@@ -4,10 +4,12 @@ import com.example.backend.korisnik.HelpingTables.*;
 import com.example.backend.korisnik.UserRepository;
 import com.example.backend.korisnik.UserService;
 import com.example.backend.korisnik.Users;
+import com.example.backend.korisnik.action.ActionRepository;
 import com.example.backend.korisnik.action.Actions;
 import com.example.backend.korisnik.action.ActionService;
 import com.example.backend.korisnik.station.Station;
 import com.example.backend.korisnik.station.StationService;
+import com.example.backend.korisnik.vehicle.Vehicle;
 import com.example.backend.korisnik.vehicle.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +23,16 @@ public class ManagerService {
     private final BelongsToStationRepository belongsToStationRepository;
     private final BelongsToStationService belongsToStationService;
     private final QualifiedForRepository qualifiedForRepository;
-    private final StationService stationService;
     private final VehicleRepository vehicleRepository;
+
+
+    private final VehiclesForActionsRepository vehiclesForActionsRepository;
+    private final StationService stationService;
     private final ActionService actionService;
 
 
     @Autowired
-    public ManagerService(UserRepository userRepository, UserService userService, BelongsToStationRepository belongsToStationRepository, BelongsToStationService belongsToStationService, QualifiedForRepository qualifiedForRepository, StationService stationService, VehicleRepository vehicleRepository, ActionService actionService) {
+    public ManagerService(UserRepository userRepository, UserService userService, BelongsToStationRepository belongsToStationRepository, BelongsToStationService belongsToStationService, QualifiedForRepository qualifiedForRepository, StationService stationService, VehicleRepository vehicleRepository, VehiclesForActionsRepository vehiclesForActionsRepository, ActionService actionService) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.belongsToStationRepository = belongsToStationRepository;
@@ -35,6 +40,7 @@ public class ManagerService {
         this.qualifiedForRepository = qualifiedForRepository;
         this.stationService = stationService;
         this.vehicleRepository = vehicleRepository;
+        this.vehiclesForActionsRepository = vehiclesForActionsRepository;
         this.actionService = actionService;
     }
 
@@ -114,20 +120,41 @@ public class ManagerService {
         return returning;
     }
 
-    public List<Map<String, String>> getRequests(String username){
+    public List<List<String>> getRequests(String username){
         List<Actions> nonStartedActions = actionService.getNonStarted(username);
 
-        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        Map<String, String> translateVehicles = new HashMap<>();
+        translateVehicles.put("foot", "pješke");
+        translateVehicles.put("drone", "dronom");
+        translateVehicles.put("car", "automobilom");
+        translateVehicles.put("motor", "cross motorom");
+        translateVehicles.put("ship", "brodom");
+        translateVehicles.put("helicopter", "helikopterom");
+
+        List<List<String>> returning = new java.util.ArrayList<>(List.of());
         for (Actions action : nonStartedActions){
-            Map<String, String> kaoAction = new HashMap<>();
-            kaoAction.put("id",action.getActionId().toString());
-            kaoAction.put("name",action.getActionName());
-            kaoAction.put("active", action.isActive() ? "true" : "false");
-            kaoAction.put("username", action.getUser().getUsername());
+            List<String> kaoAction = new ArrayList<>();
+            kaoAction.add(action.getActionName());
+            kaoAction.add(action.getActionId().toString());
+
+            for (VehiclesForActions pair: vehiclesForActionsRepository.findAll()) {
+                String vehicleName = pair.getVehicle().getVehicleName();
+                kaoAction.add(translateVehicles.get(vehicleName));
+            }
             returning.add(kaoAction);
         }
 
         return returning;
+    }
+
+    public List<String> getTrackersForRequest(String actionId) {
+        System.out.println("Looking for searchers on station:");
+        long stationId = actionService.getActionById(Long.parseLong(actionId)).getStation().getStationId().longValue();
+
+        List<BelongsToStation> peopleOnStation = belongsToStationRepository.findAll().stream().filter(pair -> (pair.getStationId().longValue() == stationId)).toList();
+        System.out.println(peopleOnStation.size());
+        peopleOnStation.forEach(pair -> System.out.println(pair.getUserName()));
+        return new ArrayList<String>();
     }
 
     public long getStationId(String username) {
@@ -139,6 +166,16 @@ public class ManagerService {
             }
         }
         return -1;
+    }
+
+    public boolean editVehiclesOfTracker(String username, List<String> vehicles) {
+        for (QualifiedFor pair : qualifiedForRepository.findAll()) {
+            if (pair.getUserName().equals(username)) {
+                qualifiedForRepository.delete(pair);
+            }
+        }
+
+        return this.addVehiclesToTracker(username, vehicles);
     }
 
     public boolean addVehiclesToTracker(String trackerUsername, List<String> vehicles) {
