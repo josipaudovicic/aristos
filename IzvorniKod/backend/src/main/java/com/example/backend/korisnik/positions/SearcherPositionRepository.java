@@ -11,4 +11,5 @@ import java.util.List;
 public interface SearcherPositionRepository extends JpaRepository<SearcherPosition, SearcherPositionId> {
     List<SearcherPosition> findByAction(Actions action);
     List<SearcherPosition> findByActionAndUser(Actions action, Users user);
+    List<SearcherPosition> findByUser(Users u);
 }

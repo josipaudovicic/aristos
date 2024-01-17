@@ -11,6 +11,8 @@ import com.example.backend.korisnik.animal.Animal;
 import com.example.backend.korisnik.animal.AnimalService;
 import com.example.backend.korisnik.comment.UserComment;
 import com.example.backend.korisnik.comment.UserCommentService;
+import com.example.backend.korisnik.positions.SearcherPosition;
+import com.example.backend.korisnik.positions.SearcherPositionService;
 import com.example.backend.korisnik.vehicle.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,14 +26,16 @@ public class TrackerService {
     private final AnimalService animalService;
     private final UserCommentService userCommentService;
     private final BelongsToActionService belongsToActionService;
+    private final SearcherPositionService searcherPositionService;
 
     @Autowired
-    public TrackerService(ActionService actionService, UserService userService, AnimalService animalService, UserCommentService userCommentService, BelongsToActionService belongsToActionService) {
+    public TrackerService(ActionService actionService, UserService userService, AnimalService animalService, UserCommentService userCommentService, BelongsToActionService belongsToActionService, SearcherPositionService searcherPositionService) {
         this.actionService = actionService;
         this.userService = userService;
         this.animalService = animalService;
         this.userCommentService = userCommentService;
         this.belongsToActionService = belongsToActionService;
+        this.searcherPositionService = searcherPositionService;
     }
 
     public List<String> getAnimals() {
@@ -88,5 +92,24 @@ public class TrackerService {
         } else {
             return null;
         }
+    }
+
+    public List<Map<String, String>> getTrackers(String actionName, String username) {
+        Actions action = actionService.getActionByName(actionName);
+        List<Users> users = belongsToActionService.getTrackers(action);
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (Users u : users) {
+            if (!Objects.equals(u.getUsername(), username)) {
+                SearcherPosition searcherPosition = searcherPositionService.findLatestByUser(u, action);
+                Map<String, String> kaoUser = new java.util.HashMap<>();
+                kaoUser.put("username", u.getUsername());
+                Vehicle vehicle = belongsToActionService.getVehicle(action, u);
+                kaoUser.put("vehicle", vehicle.getVehicleName());
+                kaoUser.put("longitude", searcherPosition.getLongitude().toString());
+                kaoUser.put("latitude", searcherPosition.getLatitude().toString());
+                returning.add(kaoUser);
+            }
+        }
+        return returning;
     }
 }
