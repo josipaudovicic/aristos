@@ -140,4 +140,10 @@ public class TrackerService {
 
         return returning;
     }
+
+    public void postTask(String taskId) {
+        Task task = taskService.getTaskById(Long.parseLong(taskId));
+        task.setDone(true);
+        taskService.save(task);
+    }
 }

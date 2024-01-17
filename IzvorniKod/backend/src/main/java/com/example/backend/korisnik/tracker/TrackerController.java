@@ -55,4 +55,9 @@ public class TrackerController {
     public List<Map<String, String>> getTasks(@RequestHeader("actionName") String actionName, @RequestHeader("username") String username) {
         return trackerService.getTasks(actionName, username);
     }
+
+    @PostMapping(path = "/action/task/post")
+    public void postTask(@RequestHeader String taskId) {
+        trackerService.postTask(taskId);
+    }
 }
