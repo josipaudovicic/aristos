@@ -25,6 +25,7 @@ function TragaciNaZahtjev() {
         };
         
       fetchTrackers();
+      console.log(trackers);
       }, []); 
 
 
@@ -74,12 +75,12 @@ function TragaciNaZahtjev() {
           <label style={label}>
             {trackers.map((tracker) => (
               <label key={tracker} style={label}>
-                {tracker.trackerName} 
+                {tracker.name} 
               <input
                 type="checkbox"
                 id={tracker.trackerId}
-                onChange={() => handleCheckboxChange(tracker.trackerId)}
-                checked={selectedTrackers.includes(tracker.trackerId)}
+                onChange={() => handleCheckboxChange(tracker.username)}
+                checked={selectedTrackers.includes(tracker.username)}
                 style={checkboxStyle}
               />
             </label>
