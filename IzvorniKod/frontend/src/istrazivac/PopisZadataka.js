@@ -36,7 +36,7 @@ function PopisZadataka() {
 
 
   const handleNewTask = () => {
-      navigate('/explorer/action/info/tasks/newTask', {state: { actionName: actionName}});
+      navigate('/explorer/action/info/tasks/newTask', {state: { actionName: actionName, username: username}});
   };
 
   const handleDelete = (task, index) =>{
@@ -151,7 +151,7 @@ function PopisZadataka() {
   };
 
   const Dropdown = React.memo(({ task, comments }) => {
-    console.log(comments[0].taskId)
+    //console.log(comments[0].taskId)
     const dropdownStyle = {
       position: 'absolute',
       top: '165px',

@@ -25,17 +25,25 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
+    private Double startLatitude;
+    private Double startLongitude;
+    private Double endLatitude;
+    private Double endLongitude;
 
     public Task() {
     }
 
-    public Task(String taskText, boolean b, Actions action, Users user, Animal animal, Vehicle vehicle) {
+    public Task(String taskText, boolean b, Actions action, Users user, Animal animal, Vehicle vehicle, Double startLatitude, Double startLongitude, Double endLatitude, Double endLongitude) {
         this.taskText = taskText;
         this.done = b;
         this.action = action;
         this.user = user;
         this.animal = animal;
         this.vehicle = vehicle;
+        this.startLatitude = startLatitude;
+        this.startLongitude = startLongitude;
+        this.endLatitude = endLatitude;
+        this.endLongitude = endLongitude;
     }
 
     public Long getTaskId() {
@@ -92,5 +100,37 @@ public class Task {
 
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    public Double getStartLatitude() {
+        return startLatitude;
+    }
+
+    public void setStartLatitude(Double startLatitude) {
+        this.startLatitude = startLatitude;
+    }
+
+    public Double getStartLongitude() {
+        return startLongitude;
+    }
+
+    public void setStartLongitude(Double startLongitude) {
+        this.startLongitude = startLongitude;
+    }
+
+    public Double getEndLatitude() {
+        return endLatitude;
+    }
+
+    public void setEndLatitude(Double endLatitude) {
+        this.endLatitude = endLatitude;
+    }
+
+    public Double getEndLongitude() {
+        return endLongitude;
+    }
+
+    public void setEndLongitude(Double endLongitude) {
+        this.endLongitude = endLongitude;
     }
 }

@@ -306,12 +306,12 @@ public class ExplorerService {
     }
 
 
-    public void postTask(String actionName, String taskText, String username, String animalName) {
+    public void postTask(String actionName, String taskText, String username, String animalName, String startLatitude, String startLongitude, String endLatitude, String endLongitude) {
         Actions action = actionService.getActionByName(actionName);
         Users user = userService.getUserByUsername(username);
         Animal animal = animalService.getAnimalByName(animalName);
         Vehicle vehicle = belongsToActionService.getVehicle(action, user);
-        Task task = new Task(taskText, false, action, user, animal, vehicle);
+        Task task = new Task(taskText, false, action, user, animal, vehicle, Double.parseDouble(startLatitude), Double.parseDouble(startLongitude), Double.parseDouble(endLatitude), Double.parseDouble(endLongitude));
         taskService.save(task);
     }
 
