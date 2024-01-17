@@ -7,6 +7,7 @@ function PopisZadataka() {
     const actionName = location.state?.actionName;
     const username = location.state?.username;
     const [tasks, setTasks] = useState([]);
+    const [taskId, setTaskId] = useState(0);
     const [prevTaskId, setPrevTaskId] = useState(0)
     const [comments, setComments] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -69,6 +70,7 @@ function PopisZadataka() {
       .then((data) => {
           setComments(data);
           console.log(task.taskId)
+          setTaskId(task.taskId);
           if (task.taskId === prevTaskId || prevTaskId === 0 || !showDropdown){
             setShowDropdown((prevShowDropdown) => !prevShowDropdown);
           }
@@ -179,13 +181,21 @@ function PopisZadataka() {
         setComments([...comments, newComment]);
         setCommentText('');
       }
+
+    //let taskId = '';
+    /*if (typeof comments[0] === 'object' && comments[0] !== null){
+      taskId = comments[0].taskId;
+    } else {
+      taskId = '';
+    }*/
+    console.log(taskId);
     
     fetch(`/explorer/action/info/tasks/saveComment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username: username, comment: commentText, taskId: comments[0].taskId}),
+      body: JSON.stringify({ username: username, comment: commentText, taskId: taskId}),
     })
     };
     
