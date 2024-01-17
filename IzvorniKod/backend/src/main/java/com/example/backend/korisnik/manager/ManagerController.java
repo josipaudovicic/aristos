@@ -1,6 +1,7 @@
 package com.example.backend.korisnik.manager;
 
 import com.example.backend.korisnik.HelpingTables.BelongsToStation;
+import com.example.backend.korisnik.HelpingTables.QualifiedFor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,10 +47,26 @@ public class ManagerController {
     }
 
     @GetMapping(path = "/requests")
-    public List<Map<String, String>> getRequests(@RequestHeader("username") String username) {
+    public List<List<String>> getRequests(@RequestHeader("username") String username) {
         return managerService.getRequests(username);
     }
 
+    @GetMapping(path = "/requests/trackers")
+    public List<String> getTrackersForRequest(@RequestHeader("actionId") String actionId) {
+        return managerService.getTrackersForRequest(actionId);
+    }
+
+    @PutMapping(path = "/mytrackers/{trackerUsername}")
+    public ResponseEntity<String> editVehiclesOfTracker(@PathVariable String trackerUsername, @RequestBody Map<String, List<String>> requestData) {
+        List<String> editedVehicles = requestData.get("transportModes");
+        boolean vehiclesEdited = managerService.editVehiclesOfTracker(trackerUsername, editedVehicles);
+
+        if (vehiclesEdited == true) {
+            return ResponseEntity.ok("Vehicles processed");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: Could not add vehicles to tracker.");
+        }
+    }
 
     @PutMapping(path = "/tracker/{trackerUsername}")
     public ResponseEntity<String> addVehiclesToTrackers(@PathVariable String trackerUsername, @RequestBody Map<String, List<String>> requestData) {

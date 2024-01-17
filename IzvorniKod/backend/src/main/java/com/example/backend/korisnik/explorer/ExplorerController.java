@@ -103,7 +103,7 @@ public class ExplorerController {
 
     @PostMapping(path = "/action/info/tasks/newTask")
     public void postTask(@RequestHeader("actionName") String actionName, @RequestBody Map<String, String> body) {
-        explorerService.postTask(actionName, body.get("taskText"), body.get("username"), body.get("animalName"));
+        explorerService.postTask(actionName, body.get("taskText"), body.get("username"), body.get("animalName"), body.get("startLocationLat"), body.get("startLocationLng"), body.get("endLocationLat"), body.get("endLocationLng"));
     }
     @DeleteMapping(path = "/action/info/tasks/delete")
     public void deleteTask(@RequestBody Map<String, String> body) {
@@ -124,6 +124,11 @@ public class ExplorerController {
     @GetMapping(path = "/action/info/requests")
     public List<Map<String, String>> getVehicles() {
         return explorerService.getVehicles();
+    }
+
+    @PostMapping(path = "/action/info/requests/post")
+    public void postRequest(@RequestBody Map<String, List<String>> body, @RequestHeader("actionName") String actionName) {
+        explorerService.postRequest(body.get("selectedVehicles"), actionName);
     }
 
 }

@@ -5,25 +5,27 @@ function TragaciNaZahtjev() {
     const navigate = useNavigate();
     const location = useLocation();
     const vehicles = location.state?.vehicles;
+    const actionId = location.state?.actionId;
+    const username = location.state?.username;
     const [trackers, setTrackers] = useState([]);
     const [selectedTrackers, setSelectedTrackers] = useState([]);
-
 
     useEffect(() => {
         const fetchTrackers = () => {
           fetch('/manager/requests/trackers', {
             method: 'GET',
             headers: {
-              'Content-Type': 'application/json', 
-                vehicles: vehicles,
+              'Content-Type': 'application/json',
+               'actionId': actionId
             },
           })
           .then((response) => response.json())
           .then((data) => {setTrackers(data);})
           .catch((error) => console.error('Error fetching trackers data:', error));
         };
-    
+        
       fetchTrackers();
+      console.log(trackers);
       }, []); 
 
 
@@ -73,12 +75,12 @@ function TragaciNaZahtjev() {
           <label style={label}>
             {trackers.map((tracker) => (
               <label key={tracker} style={label}>
-                {tracker.trackerName} 
+                {tracker.name} 
               <input
                 type="checkbox"
                 id={tracker.trackerId}
-                onChange={() => handleCheckboxChange(tracker.trackerId)}
-                checked={selectedTrackers.includes(tracker.trackerId)}
+                onChange={() => handleCheckboxChange(tracker.username)}
+                checked={selectedTrackers.includes(tracker.username)}
                 style={checkboxStyle}
               />
             </label>

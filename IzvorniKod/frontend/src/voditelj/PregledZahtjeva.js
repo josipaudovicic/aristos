@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 function PregledZahtjeva() {
     const navigate = useNavigate();
     const location = useLocation();
-    const username = location.state?.username;
+    const username = location.state.username;
     const [requests, setRequests] = useState([]);
     
     useEffect(() => {
@@ -25,7 +25,8 @@ function PregledZahtjeva() {
   }, []);
 
     const handleClick = (request) => {
-      navigate(`/manager/requests/trackers`, {state: { vehicles: request.slice(2, request.length - 1) }});
+      console.log("Decided to add trackers to action");
+      navigate(`/manager/requests/trackers`, {state: { vehicles: request.slice(2, request.length), username : username , actionId: request[1]}});
     };
       
 
@@ -34,14 +35,14 @@ function PregledZahtjeva() {
             <h2>Zahtjevi</h2>
             <ul>
                 {requests.map((request) => (
-                    <li key={request[1]} onClick={(request) => handleClick} style={{ cursor: 'pointer' }}>
+                    <ul key={request[1]} onClick={() => handleClick(request)} style={{ cursor: 'pointer' }}>
                         <strong>{request[0]}</strong>
-                        {request.slice(2, request.length - 1).map((vehicle, index) => (
+                        {request.slice(2, request.length).map((vehicle, index) => (
                             <li key={index}>
                             <strong>{vehicle}</strong>
                             </li>
                         ))}
-                    </li>
+                    </ul>
                 ))}
             </ul>
           

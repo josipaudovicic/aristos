@@ -19,7 +19,7 @@ function PregledSvojihTragaca() {
       <ul>
         {trackers.map((tracker) => (
           <li key={tracker.username} style={{ cursor: 'pointer' }}>
-            <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}, <strong>Uloga:</strong> {tracker.role}
+            <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}, <strong>Korisničko ime:</strong> {tracker.username}
 
             <button onClick={() => handleClick(tracker)}>Uredi</button>
           </li>

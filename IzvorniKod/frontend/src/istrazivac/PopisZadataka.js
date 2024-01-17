@@ -10,6 +10,8 @@ function PopisZadataka() {
     const [prevTaskId, setPrevTaskId] = useState(0)
     const [comments, setComments] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [commentText, setCommentText] = useState('');
+
 
     useEffect(() => {
       const fetchTasks = async () => {
@@ -55,6 +57,21 @@ function PopisZadataka() {
       }
   }
 
+  const handleComment = (task) => {
+    if (commentText) {
+      const newComment = `${username}: ${commentText}`; 
+      setComments([...comments, newComment]);
+      setCommentText('');
+    }
+  
+  fetch(`/explorer/action/info/tasks/saveComment`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username: username, comment: commentText, taskId: comments[0].taskId}),
+  })
+  };
 
   const handleViewComments = (task) => {
     //console.log(task);
@@ -94,7 +111,7 @@ function PopisZadataka() {
     textAlign: "left",
     marginLeft: "3px",
   };
-
+  
 
  const buttonStyle2 = {
     padding: '8px 16px',
@@ -133,9 +150,7 @@ function PopisZadataka() {
     textAlign: 'center',
   };
 
-  function Dropdown({ task, comments }) {
-    const [commentText, setCommentText] = useState('');
-
+  const Dropdown = React.memo(({ task, comments }) => {
     console.log(comments[0].taskId)
     const dropdownStyle = {
       position: 'absolute',
@@ -170,45 +185,24 @@ function PopisZadataka() {
       marginLeft:'7px',
     };
 
-    const handleCommentText = (e) => {
-      setCommentText(e.target.value);
-
-    };
-
-    const handleComment = (task) => {
-      if (commentText) {
-        const newComment = `${username}: ${commentText}`;
-        setComments([...comments, newComment]);
-        setCommentText('');
-      }
-    
-    fetch(`/explorer/action/info/tasks/saveComment`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username: username, comment: commentText, taskId: comments[0].taskId}),
-    })
-    };
-
     return (
       <div style={dropdownStyle}>
         <p style={{ margin: '0', fontWeight: 'bold' }}>komentari:</p>
         {comments.map((comment) => (
         <div key={comment.comment} style={optionStyle}>
-         {(typeof comment === 'object' && comment !== null) ? `${comment.username}: ${comment.comment}` : comment}
+          {typeof comment === 'object' && comment !== null ? `${comment.username}: ${comment.comment}` : comment}
         </div>))}
         <input
           type="text"
           placeholder="Unesite komentar..."
           value={commentText}
-          onChange={handleCommentText}
+          onChange={(e) => setCommentText(e.target.value)}
           style={commentInputStyle}
         />
-        <button style={{ ...button, display: commentText ? 'inline-block' : 'none' }} disabled={!commentText} onClick={() => handleComment(task)}>Dodaj komentar</button>
+        <button style={{ ...button, display: commentText ? 'inline-block' : 'none' }} disabled={!comment} onClick={() => handleComment(task)}>Dodaj komentar</button>
       </div>
     );
-  }
+  });
   
 
   return (
