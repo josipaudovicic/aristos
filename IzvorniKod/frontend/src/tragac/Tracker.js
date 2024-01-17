@@ -23,6 +23,8 @@ function Tracker() {
       }
 
       const data = await response.json();
+      console.log(username);
+      console.log(data);
       navigate(`/${path}`, { state: { action: data, username: username } });
     } catch (error) {
       console.error(`Error fetching data:`, error.message);
