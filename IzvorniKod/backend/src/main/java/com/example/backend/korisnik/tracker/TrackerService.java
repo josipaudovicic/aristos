@@ -1,8 +1,8 @@
 package com.example.backend.korisnik.tracker;
 
-import com.example.backend.korisnik.HelpingTables.BelongsToAction;
 import com.example.backend.korisnik.HelpingTables.BelongsToActionService;
-import com.example.backend.korisnik.HelpingTables.BelongsToStation;
+import com.example.backend.korisnik.HelpingTables.TrackerCommentService;
+import com.example.backend.korisnik.HelpingTables.TrackerComments;
 import com.example.backend.korisnik.positions.AnimalPosition;
 import com.example.backend.korisnik.task.*;
 import com.example.backend.korisnik.UserService;
@@ -30,9 +30,10 @@ public class TrackerService {
     private final BelongsToActionService belongsToActionService;
     private final SearcherPositionService searcherPositionService;
     private final TaskService taskService;
+    private final TrackerCommentService trackerCommentService;
 
     @Autowired
-    public TrackerService(ActionService actionService, UserService userService, AnimalService animalService, UserCommentService userCommentService, BelongsToActionService belongsToActionService, SearcherPositionService searcherPositionService, TaskService taskService) {
+    public TrackerService(ActionService actionService, UserService userService, AnimalService animalService, UserCommentService userCommentService, BelongsToActionService belongsToActionService, SearcherPositionService searcherPositionService, TaskService taskService, TrackerCommentService trackerCommentService) {
         this.actionService = actionService;
         this.userService = userService;
         this.animalService = animalService;
@@ -40,6 +41,7 @@ public class TrackerService {
         this.belongsToActionService = belongsToActionService;
         this.searcherPositionService = searcherPositionService;
         this.taskService = taskService;
+        this.trackerCommentService = trackerCommentService;
     }
 
     public List<String> getAnimals() {
@@ -145,5 +147,19 @@ public class TrackerService {
         Task task = taskService.getTaskById(Long.parseLong(taskId));
         task.setDone(true);
         taskService.save(task);
+    }
+
+    public List<Map<String, String>> getActionComments(String actionName) {
+        Actions action = actionService.getActionByName(actionName);
+        List<TrackerComments> comments = trackerCommentService.findByAction(action);
+        List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
+        for (TrackerComments comment : comments) {
+            Map<String, String> kaoComment = new java.util.HashMap<>();
+            kaoComment.put("username", comment.getUser().getUsername());
+            kaoComment.put("comment", comment.getComment());
+            returning.add(kaoComment);
+        }
+
+        return returning;
     }
 }

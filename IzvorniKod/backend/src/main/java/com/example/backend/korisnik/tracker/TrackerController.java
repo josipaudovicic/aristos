@@ -60,4 +60,9 @@ public class TrackerController {
     public void postTask(@RequestHeader String taskId) {
         trackerService.postTask(taskId);
     }
+
+    @GetMapping(path = "/action/comments")
+    public List<Map<String, String>> getActionComments(@RequestHeader("actionName") String actionName) {
+        return trackerService.getActionComments(actionName);
+    }
 }
