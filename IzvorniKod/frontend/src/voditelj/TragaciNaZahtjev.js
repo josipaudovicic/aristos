@@ -25,7 +25,6 @@ function TragaciNaZahtjev() {
         };
         
       fetchTrackers();
-      console.log(trackers);
       }, []); 
 
 
@@ -35,7 +34,7 @@ function TragaciNaZahtjev() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ selectedTrackers : selectedTrackers, actionId : actionId }),
+        body: JSON.stringify({ selectedTrackers : selectedTrackers, actionId : [actionId] }),
       });
 
     navigate(`/manager`, {state: { username : username}})
