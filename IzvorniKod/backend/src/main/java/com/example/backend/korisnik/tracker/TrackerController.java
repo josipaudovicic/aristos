@@ -41,5 +41,8 @@ public class TrackerController {
         trackerService.postComment(id, body.get("comment"), body.get("username"));
     }
 
-
+    @GetMapping(path = "/action")
+    public Map<String, String> getAction(@RequestHeader("username") String username) {
+        return trackerService.getAction(username);
+    }
 }

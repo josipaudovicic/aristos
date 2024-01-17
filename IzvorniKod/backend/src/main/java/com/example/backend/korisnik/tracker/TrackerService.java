@@ -1,5 +1,8 @@
 package com.example.backend.korisnik.tracker;
 
+import com.example.backend.korisnik.HelpingTables.BelongsToAction;
+import com.example.backend.korisnik.HelpingTables.BelongsToActionService;
+import com.example.backend.korisnik.HelpingTables.BelongsToStation;
 import com.example.backend.korisnik.UserService;
 import com.example.backend.korisnik.Users;
 import com.example.backend.korisnik.action.ActionService;
@@ -8,6 +11,7 @@ import com.example.backend.korisnik.animal.Animal;
 import com.example.backend.korisnik.animal.AnimalService;
 import com.example.backend.korisnik.comment.UserComment;
 import com.example.backend.korisnik.comment.UserCommentService;
+import com.example.backend.korisnik.vehicle.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +23,15 @@ public class TrackerService {
     private final UserService userService;
     private final AnimalService animalService;
     private final UserCommentService userCommentService;
+    private final BelongsToActionService belongsToActionService;
 
     @Autowired
-    public TrackerService(ActionService actionService, UserService userService, AnimalService animalService, UserCommentService userCommentService) {
+    public TrackerService(ActionService actionService, UserService userService, AnimalService animalService, UserCommentService userCommentService, BelongsToActionService belongsToActionService) {
         this.actionService = actionService;
         this.userService = userService;
         this.animalService = animalService;
         this.userCommentService = userCommentService;
+        this.belongsToActionService = belongsToActionService;
     }
 
     public List<String> getAnimals() {
@@ -66,5 +72,21 @@ public class TrackerService {
         Actions action = actionService.getActionById(0L);
         UserComment userComment = new UserComment(animal, user, action, comment);
         userCommentService.save(userComment);
+    }
+
+    public Map<String, String> getAction(String username) {
+        Users user = userService.getUserByUsername(username);
+        Actions action = belongsToActionService.findByUser(user);
+        Vehicle vehicle = belongsToActionService.getVehicle(action, user);
+        Map<String, String> returning = new java.util.HashMap<>();
+        if (action != null){
+            returning.put("actionName", action.getActionName());
+            returning.put("explorerName", action.getUser().getUsername());
+            returning.put("vehicleName", vehicle.getVehicleName());
+            returning.put("actionId", action.getActionId().toString());
+            return returning;
+        } else {
+            return null;
+        }
     }
 }
