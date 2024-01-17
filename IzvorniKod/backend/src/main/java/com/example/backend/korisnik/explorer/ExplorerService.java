@@ -356,4 +356,14 @@ public class ExplorerService {
             vehiclesForActionsService.save(vehiclesForAction);
         }
     }
+
+    public Map<String, Double> getAnimalPositions(String animalId) {
+        Animal animal = animalService.returnById(Long.parseLong(animalId));
+        AnimalPosition animalPosition = animalService.findLatestPosition(animal);
+        Map<String, Double> returning = new java.util.HashMap<>();
+        returning.put("latitude", animalPosition.getLatitude());
+        returning.put("longitude", animalPosition.getLongitude());
+
+        return returning;
+    }
 }
