@@ -104,11 +104,25 @@
 		
 		
 		\section{Dijagram razmještaja}
-			
-			\textbf{\textit{dio 2. revizije}}
-			
-			 \textit{Potrebno je umetnuti \textbf{specifikacijski} dijagram razmještaja i opisati ga. Moguće je umjesto specifikacijskog dijagrama razmještaja umetnuti dijagram razmještaja instanci, pod uvjetom da taj dijagram bolje opisuje neki važniji dio sustava.}
-			
+
+		UML-dijagram razmještaja je vrsta strukturnog UML-dijagrama 
+		koji prikazuje fizičku arhitekturu i konfiguraciju 
+		razmještaja programskog sustava. Dijagram razmještaja koristan je 
+		za vizualizaciju kako su komponente sustava raspoređene na fizičkim 
+		računalima i kako međusobno komuniciraju.
+		Na poslužiteljskom računalu se 
+		nalaze web poslužitelj i poslužitelj baze podataka. Korisnici preko svog računala koriste web
+		preglednik kako bi pristupili web aplikaciji. Sustav je baziran na arhitekturi 
+		”klijent - poslužitelj”, a komunikacija između računala korisnika, 
+		koji može biti tragač, istraživač, voditelj postaje ili administrator, i poslužitelja se 
+		odvija preko HTTP veze, što je tipičan način komunikacije u web okolinama.
+
+		\begin{figure}[H]
+			\includegraphics[scale=0.7]{slike/dijagram razmještaja.png}
+			\centering
+			\caption{Dijagram razmještaja}
+			\label{fig:dijagram razmještaja}
+		\end{figure}
 			\eject 
 		
 		\section{Upute za puštanje u pogon}
