@@ -52,9 +52,14 @@ public class ManagerController {
     }
 
     @GetMapping(path = "/requests/trackers")
-    public List<String> getTrackersForRequest(@RequestHeader("actionId") String actionId) {
+    public List<Map<String, String>> getTrackersForRequest(@RequestHeader("actionId") String actionId) {
         return managerService.getTrackersForRequest(actionId);
     }
+
+    //@PostMapping(path = "/requests/submit")
+    //public ResponseEntity<String> addTrackersToRequest(@RequestBody Map<String, List<String>> requestData) {
+    //    if (managerService.addTrackersToRequest()
+    //}
 
     @PutMapping(path = "/mytrackers/{trackerUsername}")
     public ResponseEntity<String> editVehiclesOfTracker(@PathVariable String trackerUsername, @RequestBody Map<String, List<String>> requestData) {
