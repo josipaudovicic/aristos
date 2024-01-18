@@ -47,8 +47,8 @@ function EditNacinaTransporta() {
   };
 
   return (
-    <div>
-      <h2>Edit načina transporta tragača {trackerUsername}</h2>
+    <div className='container'>
+      <h2>Uređivanje načina transporta tragača {trackerUsername}</h2>
       <form>
         {transportModesList.map((mode) => (
           <div key={mode}>
@@ -64,7 +64,7 @@ function EditNacinaTransporta() {
           </div>
         ))}
         <button type="button" onClick={handleSubmit}>
-          Submit
+          Potvrdi
         </button>
       </form>
     </div>

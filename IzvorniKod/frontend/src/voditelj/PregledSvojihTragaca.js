@@ -13,15 +13,57 @@ function PregledSvojihTragaca() {
     navigate(`/manager/mytrackers/${tracker.username}`, { state: { tracker: tracker , username: location.state.username} });
   };
 
-  return (
-    <div>
-      <h2>Lista svojih tragača:</h2>
-      <ul>
-        {trackers.map((tracker) => (
-          <li key={tracker.username} style={{ cursor: 'pointer' }}>
-            <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}, <strong>Korisničko ime:</strong> {tracker.username}
+  const li = {
+    border: '1px solid #ccc',
+    marginBottom: '3px',
+    padding: '5px',
+    display: 'flex',
+    flexDirection: 'column',
+    pointer: 'cursor',
+  };
 
-            <button onClick={() => handleClick(tracker)}>Uredi</button>
+  const ul = {
+    listStyleType: 'none',
+    padding: '0',
+  };
+
+  const container = {
+    backgroundColor: '#ffffff',
+    borderRadius: '8px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    padding: '15px',
+    width: '550px',
+    overflowY: 'auto', 
+    maxHeight: '700px',
+  };
+
+  const h2style = {
+    textAlign: 'center',
+  };
+
+  const pStyle = {
+    margin: '3px',
+  };
+
+  const buttonStyle = {
+    marginLeft: '393px',
+    padding: '8px 16px',
+    fontSize: '16px',
+    marginTop: '3px',
+    cursor: 'pointer',
+  };
+
+  return (
+    <div style={container}>
+      <h2 style={h2style}>Lista svojih tragača:</h2>
+      <ul style={ul}>
+        {trackers.map((tracker) => (
+          <li key={tracker.username} style={li}>
+            <p style={pStyle}><b>Ime:</b> {tracker.name} </p>
+            <p style={pStyle}><b>Prezime:</b> {tracker.surname} </p>
+            <p style={pStyle}><b>Korisničko ime:</b> {tracker.username}</p>
+
+            <button style={buttonStyle} onClick={() => handleClick(tracker)}>Uredi</button>
           </li>
         ))}
       </ul>   

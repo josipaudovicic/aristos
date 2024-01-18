@@ -68,7 +68,7 @@ function TragaciNaZahtjev() {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Lista tragača:</h2> 
       <form>
           <label style={label}>

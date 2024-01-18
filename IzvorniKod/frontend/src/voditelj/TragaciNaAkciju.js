@@ -59,7 +59,7 @@ function TragaciNaAkciju() {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Lista tragača na akciji:</h2> 
       <ul>
         {activeTrackers ? activeTrackers.map((tracker) => (
