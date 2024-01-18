@@ -83,11 +83,11 @@ function PregledSvihTragaca() {
   
   
   return (
-    <div>
-      <h2>Pregled svih tragaca</h2>
+    <div className='container'>
+      <h2>Pregled svih tragača</h2>
       <form>
         {/* Tracker selection */}
-        {trackers.map((tracker) => (
+        {trackers ? trackers.map((tracker) => (
           <div key={tracker.username}>
             <label>
               <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}
@@ -102,7 +102,7 @@ function PregledSvihTragaca() {
             {/* Transport mode selection for each tracker */}
             {selectedTrackers.includes(tracker.username) && (
               <div>
-                <label>Select Transport Modes:</label>
+                <label>Izaberi prijevozno sredstvo:</label>
                 {transportModesList.map((mode) => (
                   <div key={mode}>
                     <label>
@@ -119,10 +119,10 @@ function PregledSvihTragaca() {
               </div>
             )}
           </div>
-        ))}
+        )) : <p>Nema tragača.</p>}
 
         <button type="button" onClick={handleSubmit}>
-          Submit
+          Potvrdi
         </button>
       </form>
     </div>

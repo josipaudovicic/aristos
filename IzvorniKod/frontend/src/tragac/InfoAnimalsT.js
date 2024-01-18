@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { useLocation } from 'react-router-dom';
 
 function InfoAnimals() {
@@ -6,12 +6,13 @@ function InfoAnimals() {
     const animal = location.state?.animal;
     const username = location.state?.username;
     const id = location.state?.id;
-    const comments = location.state?.comments;
-    const [comment, setComment] = useState('');
+    const [comments, setComments] = useState([]);
+    const [comment, setComment] = useState([]);
     const [commentsList, setCommentsList] = useState([]);
     var src = null;
 
     console.log(comments);
+    console.log(commentsList);
     if (animal.animalName === "Sivi sokol") {
         src = '/animalImages/sivisokol.jpg';
     } else if (animal.animalName === "Smedi medvjed") {
@@ -21,6 +22,23 @@ function InfoAnimals() {
     } else {
         src = '/animalImages/sivivuk.jpg';
     }
+
+    useEffect(() => {
+        fetch(`/tracker/animals/species/${id}/comments`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            setComments(data);
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      }, []);
 
     const imageStyle = {
         width: '400px',
@@ -69,8 +87,8 @@ function InfoAnimals() {
       const handleSave = () => {
         if (comment) {
             console.log(username);
-            const newComment = `${username}: ${comment}`; 
-            setCommentsList([...commentsList, newComment]);
+            const newComment = {username: username, comment: comment}; 
+            setComments([...comments, newComment]);
             setComment('');
           }
         

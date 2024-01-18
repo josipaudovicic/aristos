@@ -404,7 +404,7 @@ function ExplorerComment ({ task, comments }) {
   };
 
   const optionStyle = {
-    cursor: 'pointer',
+    pointerEvents: 'none',
     padding: '8px',
     borderBottom: '1px solid #eee',
     transition: 'background-color 0.3s',
@@ -416,8 +416,8 @@ function ExplorerComment ({ task, comments }) {
   return (
     <div style={dropdownStyle}>
       <p style={{ margin: '0', fontWeight: 'bold' }}>komentari istraživača:</p>
-      {explorerComments.map((comment) => (
-      <div key={comment} style={optionStyle}>
+      {explorerComments.map((comment, index) => (
+      <div key={index} style={optionStyle}>
         {typeof comment === 'object' && comment !== null ? `${comment.comment}` : comment}
       </div>))}
     </div>
@@ -426,7 +426,7 @@ function ExplorerComment ({ task, comments }) {
 
   return (
     <div>
-      <div id="map" style={{ height: '150vh', width: '150vh' }} />;
+      <div id="map" style={{ height: '150vh', width: '150vh', zIndex: '-1' }} />;
       <h3 style={h3Style}>Ime akcije: {action.actionName}</h3>
       <p style={pStyle}>Tvoj istraživač: {action.explorerName}</p>
       <p style={p2Style}>Tvoje vozilo: {action.vehicleName}</p>

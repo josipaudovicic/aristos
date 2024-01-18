@@ -16,6 +16,8 @@ body {
     padding: 20px;
     width: 400px;
     text-align: center;
+    max-height: 700px;
+    overflow-y: auto;
   }
   
   h2 {

@@ -144,7 +144,7 @@ function Requests() {
 
   return (
     <div className='container'>
-      <h2>Requests</h2>
+      <h2>Zahtjevi</h2>
       <ul style={listStyle}>
         {users.map((user) => (
           <li key={user.username}>

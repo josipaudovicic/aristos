@@ -29,13 +29,45 @@ function PregledZahtjeva() {
       navigate(`/manager/requests/trackers`, {state: { vehicles: request.slice(2, request.length), username : username , actionId: request[1]}});
     };
       
+    const li = {
+      marginBottom: '3px',
+      padding: '5px',
+      display: 'flex',
+      flexDirection: 'column',
+      pointer: 'cursor',
+      marginLeft: '30px',
+    };
+  
+    const ul = {
+      listStyleType: 'none',
+      padding: '0',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+      transition: 'background-color 0.3s ease-in-out',
+      
+    };
+  
+    const container = {
+      backgroundColor: '#ffffff',
+      borderRadius: '8px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      padding: '15px',
+      width: '450px',
+      overflowY: 'auto', 
+      maxHeight: '700px',
+    };
+  
+    const h2style = {
+      textAlign: 'center',
+    };
+  
 
     return (
-        <div>
-            <h2>Zahtjevi</h2>
-            <ul>
-                {requests.map((request) => (
-                    <ul key={request[1]} onClick={() => handleClick(request)} style={{ cursor: 'pointer' }}>
+        <div style={container}> 
+            <h2 style={h2style}>Zahtjevi</h2>
+            <ul style={ul}>
+                {requests ? requests.map((request) => (
+                    <ul key={request[1]} onClick={() => handleClick(request)} style={{...li ,cursor: 'pointer' }}>
                         <strong>{request[0]}</strong>
                         {request.slice(2, request.length).map((vehicle, index) => (
                             <li key={index}>
@@ -43,7 +75,7 @@ function PregledZahtjeva() {
                             </li>
                         ))}
                     </ul>
-                ))}
+                )) : <p>Nema zahtjeva.</p>}
             </ul>
           
         </div>

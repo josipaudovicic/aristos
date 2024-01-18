@@ -27,8 +27,12 @@ function Tracker() {
       console.log(data);
       navigate(`/${path}`, { state: { action: data, username: username } });
     } catch (error) {
-      alert('Čekaj da te voditelj pridodjeli akciji!');
-      console.error(`Error fetching data:`, error.message);
+      if (path === 'profile') {
+        console.error(`Error fetching data:`, error.message);
+      } else {
+        alert('Čekaj da te voditelj pridodjeli akciji!');
+        console.error(`Error fetching data:`, error.message);
+      }
     }
   };
 
