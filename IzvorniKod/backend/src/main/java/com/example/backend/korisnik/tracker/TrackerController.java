@@ -75,4 +75,9 @@ public class TrackerController {
     public void saveComment(@RequestBody Map<String, String> body) {
         trackerService.saveComment(body.get("comment"), body.get("username"), body.get("actionName"));
     }
+
+    @GetMapping(path="/action/task/comments")
+    public List<String> getTaskComments(@RequestHeader("taskId") String taskId) {
+        return trackerService.getTaskComments(taskId);
+    }
 }

@@ -30,4 +30,8 @@ public class TaskCommentService {
         Task task = taskService.getTaskById(l);
         return taskCommentRepository.findAllByTask(task);
     }
+
+    public List<TaskComment> findByTask(Task task) {
+        return taskCommentRepository.findAllByTask(task);
+    }
 }
