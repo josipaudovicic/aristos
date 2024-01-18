@@ -87,7 +87,7 @@ function PregledSvihTragaca() {
       <h2>Pregled svih tragača</h2>
       <form>
         {/* Tracker selection */}
-        {trackers.map((tracker) => (
+        {trackers ? trackers.map((tracker) => (
           <div key={tracker.username}>
             <label>
               <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}
@@ -119,7 +119,7 @@ function PregledSvihTragaca() {
               </div>
             )}
           </div>
-        ))}
+        )) : <p>Nema tragača.</p>}
 
         <button type="button" onClick={handleSubmit}>
           Potvrdi

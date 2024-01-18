@@ -66,7 +66,7 @@ function PregledZahtjeva() {
         <div style={container}> 
             <h2 style={h2style}>Zahtjevi</h2>
             <ul style={ul}>
-                {requests.map((request) => (
+                {requests ? requests.map((request) => (
                     <ul key={request[1]} onClick={() => handleClick(request)} style={{...li ,cursor: 'pointer' }}>
                         <strong>{request[0]}</strong>
                         {request.slice(2, request.length).map((vehicle, index) => (
@@ -75,7 +75,7 @@ function PregledZahtjeva() {
                             </li>
                         ))}
                     </ul>
-                ))}
+                )) : <p>Nema zahtjeva.</p>}
             </ul>
           
         </div>

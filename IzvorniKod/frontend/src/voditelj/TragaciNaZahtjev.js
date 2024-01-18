@@ -72,7 +72,7 @@ function TragaciNaZahtjev() {
       <h2>Lista tragača:</h2> 
       <form>
           <label style={label}>
-            {trackers.map((tracker) => (
+            {trackers ? trackers.map((tracker) => (
               <label key={tracker} style={label}>
                 {tracker.name} 
               <input
@@ -83,7 +83,7 @@ function TragaciNaZahtjev() {
                 style={checkboxStyle}
               />
             </label>
-              ))}
+              )) : <p>Nema tragača.</p>}
           </label>
         </form>
 

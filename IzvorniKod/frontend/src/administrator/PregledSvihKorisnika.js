@@ -37,7 +37,7 @@ function PregledSvihKorisnika() { //dobivam json sa domagojeve stranice o podatc
     <div className='container' style={{ textAlign: 'center', marginTop: '20px' }}>
       <h2>Lista registriranih korisnika:</h2>
       <ul style={{ listStyleType: 'none', padding: '0' }}>
-        {users.map((user) => (
+        {users ? users.map((user) => (
           <li
             key={user.username}
             onClick={() => handleClick(user)}
@@ -54,7 +54,7 @@ function PregledSvihKorisnika() { //dobivam json sa domagojeve stranice o podatc
           >
             <strong>korisničko ime:</strong> {user.username}, <strong>uloga:</strong> {user.role}
           </li>
-        ))}
+        )) : <p>Nema korisnika.</p>}
       </ul>
       <div>
       <Link to="/admin">

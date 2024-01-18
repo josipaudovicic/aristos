@@ -57,7 +57,7 @@ function PregledSvojihTragaca() {
     <div style={container}>
       <h2 style={h2style}>Lista svojih tragača:</h2>
       <ul style={ul}>
-        {trackers.map((tracker) => (
+        {trackers ? trackers.map((tracker) => (
           <li key={tracker.username} style={li}>
             <p style={pStyle}><b>Ime:</b> {tracker.name} </p>
             <p style={pStyle}><b>Prezime:</b> {tracker.surname} </p>
@@ -65,7 +65,7 @@ function PregledSvojihTragaca() {
 
             <button style={buttonStyle} onClick={() => handleClick(tracker)}>Uredi</button>
           </li>
-        ))}
+        )) : <p>Nema tragača.</p>}
       </ul>   
     </div>
   );

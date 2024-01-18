@@ -68,11 +68,11 @@ function PregledAktivnihAkcija(){
         <div className='container'>
             <h2>Aktivne akcije</h2>
             <ul style={ul}>
-                {actions.map((action) => (
+                {actions ? actions.map((action) => (
                     <li key={action.name} onClick={() => redirectToPage('manager/activeActions/mytrackers', action.id)} style={listItemStyle} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
                         <strong>{action.name}</strong>
                     </li>
-                ))}
+                )) : <p>Nema aktivnih akcija.</p>}
             </ul>
         </div>
       );
