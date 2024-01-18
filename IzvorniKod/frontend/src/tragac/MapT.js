@@ -37,8 +37,8 @@ function MapT() {
           const { latitude, longitude } = position.coords;
           console.log('Location data:', latitude, longitude);
           const postData = {
-            latitude: latitude,
-            longitude: longitude,
+            latitude: latitude.toFixed(3),
+            longitude: longitude.toFixed(3),
             username: username,
             actionId: action.actionId,
           };
