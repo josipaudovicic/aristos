@@ -27,6 +27,33 @@ function MapT() {
     iconColor: 'red'
   });
 
+  useEffect(() => {
+    const initializeMap = () => {
+      try {
+        const mapContainer = document.getElementById('map');
+
+        if (mapContainer && !mapContainer._leaflet_id) {
+          console.log('Initializing map...');
+          const newMap = L.map(mapContainer, {
+            center: [45.1, 16.3],
+            zoom: 7,
+          });
+
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+            maxZoom: 15,
+          }).addTo(newMap);
+
+          setMap(newMap);
+        }
+      } catch (error) {
+        console.error('Error initializing map:', error);
+      }
+    };
+
+    initializeMap();
+  }, []);
+
     useEffect(() => {
       const sendLocationData = async () => {
         try {
@@ -61,7 +88,7 @@ function MapT() {
       sendLocationData();
       const intervalId = setInterval(sendLocationData, 3 * 60 * 1000); 
       return () => clearInterval(intervalId);
-    }, [username, action.actionId]); 
+    }, [username, action.actionId]);  
 
   useEffect(() => {
     fetch(`/tracker/action`, {	
@@ -92,6 +119,12 @@ function MapT() {
     
           const data = await response.json();
           console.log(data);
+
+          map.eachLayer((layer) => {
+            if (layer instanceof L.CircleMarker) {
+              map.removeLayer(layer);
+            }
+          });
     
           if (map) {
             L.circleMarker([data.latitude, data.longitude], { radius: 7, color: 'red' })
@@ -107,34 +140,6 @@ function MapT() {
       const intervalId = setInterval(fetchData, 5 * 60 * 1000);
       return () => clearInterval(intervalId);
     }, [username, map]);        
-
-
-    useEffect(() => {
-      const initializeMap = () => {
-        try {
-          const mapContainer = document.getElementById('map');
-  
-          if (mapContainer && !mapContainer._leaflet_id) {
-            const map = L.map(mapContainer, {
-              center: [45.1, 16.3],
-              zoom: 7,
-            });
-  
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-              maxZoom: 15,
-            }).addTo(map);
-
-            setMap(map);
-          }
-        } catch (error) {
-          console.error('Error initializing map:', error);
-        }
-      };
-  
-      initializeMap();
-    }, []);
-
 
     useEffect(() => {
       fetch(`/tracker/action/tasks`, {	
@@ -471,7 +476,7 @@ function ExplorerComment ({ task, comments }) {
 
   return (
     <div>
-      <div id="map" style={{ height: '150vh', width: '150vh', zIndex: '-1' }} />;
+      <div id="map" style={{ height: '150vh', width: '150vh' }} />;
       <h3 style={h3Style}>Ime akcije: {action.actionName}</h3>
       <p style={pStyle}>Tvoj istraživač: {action.explorerName}</p>
       <p style={p2Style}>Tvoje vozilo: {action.vehicleName}</p>
