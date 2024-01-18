@@ -137,6 +137,7 @@ public class TrackerService {
             kaoTask.put("endLatitude", t.getEndLatitude().toString());
             kaoTask.put("taskId", t.getTaskId().toString());
             kaoTask.put("taskText", t.getTaskText());
+            kaoTask.put("done", String.valueOf(t.isDone()));
             returning.add(kaoTask);
         }
 
