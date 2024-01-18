@@ -79,10 +79,12 @@ function InfoAnimals() {
         setComment(event.target.value);
       };
     
+
       const handleSave = () => {
+        console.log(comments);
         if (comment) {
             console.log(username);
-            const newComment = `${username}: ${comment}`; 
+            const newComment = {username: username, comment: comment}; 
             setComments([...comments, newComment]);
             setComment('');
           }
@@ -94,6 +96,8 @@ function InfoAnimals() {
           },
           body: JSON.stringify({ username: username, comment: comment,}),
         })
+
+        console.log(comments);
       };
 
       const handleDelete = (index, comment) => {

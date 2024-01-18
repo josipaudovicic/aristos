@@ -119,7 +119,6 @@ public class ExplorerService {
             if (Objects.equals(comment.getUser().getRole().getRoleName(), "Tragač")) {
                 kaoComment.put("username", comment.getUser().getUsername());
                 kaoComment.put("comment", comment.getSentComment());
-                kaoComment.put("action", comment.getAction().getActionName());
                 kaoComment.put("commentId", comment.getCommentId().toString());
             } else {
                 kaoComment.put("username", comment.getUser().getUsername());

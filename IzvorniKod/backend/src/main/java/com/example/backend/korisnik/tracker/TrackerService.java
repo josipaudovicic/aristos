@@ -62,14 +62,8 @@ public class TrackerService {
         List<Map<String, String>> returning = new java.util.ArrayList<>(List.of());
         for (UserComment comment : comments) {
             Map<String, String> kaoComment = new java.util.HashMap<>();
-            if (Objects.equals(comment.getUser().getRole().getRoleName(), "Tragač")) {
-                kaoComment.put("username", comment.getUser().getUsername());
-                kaoComment.put("comment", comment.getSentComment());
-                kaoComment.put("action", comment.getAction().getActionName());
-            } else {
-                kaoComment.put("username", comment.getUser().getUsername());
-                kaoComment.put("comment", comment.getSentComment());
-            }
+            kaoComment.put("username", comment.getUser().getUsername());
+            kaoComment.put("comment", comment.getSentComment());
             returning.add(kaoComment);
         }
 
