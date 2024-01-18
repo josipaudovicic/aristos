@@ -60,4 +60,19 @@ public class SearcherPositionService {
         }
         return latest;
     }
+
+    public SearcherPosition findLatest(Users user) {
+        List<SearcherPosition> searcherPositions = searcherPositionRepository.findByUser(user);
+        SearcherPosition latest = null;
+        for (SearcherPosition sp : searcherPositions) {
+            if (latest == null) {
+                latest = sp;
+            } else {
+                if (sp.getTimeStamp().after(latest.getTimeStamp())) {
+                    latest = sp;
+                }
+            }
+        }
+        return latest;
+    }
 }
