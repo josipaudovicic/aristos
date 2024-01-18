@@ -163,4 +163,20 @@ public class TrackerService {
 
         return returning;
     }
+
+    public Map<String, String> getMyPosition(String username) {
+        Users user = userService.getUserByUsername(username);
+        SearcherPosition searcherPosition = searcherPositionService.findLatest(user);
+        Map<String, String> kaoPosition = new java.util.HashMap<>();
+        kaoPosition.put("longitude", searcherPosition.getLongitude().toString());
+        kaoPosition.put("latitude", searcherPosition.getLatitude().toString());
+        return kaoPosition;
+    }
+
+    public void saveComment(String comment, String username, String actionName) {
+        Users user = userService.getUserByUsername(username);
+        Actions action = actionService.getActionByName(actionName);
+        TrackerComments trackerComment = new TrackerComments(comment, user, action);
+        trackerCommentService.save(trackerComment);
+    }
 }

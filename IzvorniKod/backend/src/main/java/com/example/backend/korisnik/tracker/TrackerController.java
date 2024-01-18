@@ -65,4 +65,14 @@ public class TrackerController {
     public List<Map<String, String>> getActionComments(@RequestHeader("actionName") String actionName) {
         return trackerService.getActionComments(actionName);
     }
+
+    @GetMapping(path="/action/position")
+    public Map<String, String> getMyPosition(@RequestHeader("username") String username) {
+        return trackerService.getMyPosition(username);
+    }
+
+    @PostMapping(path="/action/saveComment")
+    public void saveComment(@RequestBody Map<String, String> body) {
+        trackerService.saveComment(body.get("comment"), body.get("username"), body.get("actionName"));
+    }
 }
