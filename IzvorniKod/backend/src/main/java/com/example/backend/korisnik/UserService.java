@@ -3,11 +3,14 @@ package com.example.backend.korisnik;
 import com.example.backend.korisnik.email.EmailSender;
 import com.example.backend.korisnik.token.ConfirmationToken;
 import com.example.backend.korisnik.token.ConfirmationTokenService;
+import org.hibernate.internal.log.SubSystemLogging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -37,7 +40,8 @@ public class UserService {
         );
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-        String link = "http://localhost:8080/register/confirm?token=" + token;
+        String link = "http://localhost:3000/register/confirm?token=" + token;
+        System.out.println("Saljemo mail--------------");
         emailSender.send(user.getEmail(), buildEmail(user.getName(), link));
 
         return "sent an email";
@@ -65,12 +69,13 @@ public class UserService {
         return "confirmed";
     }
 
-    public String login(Users user) {
-        boolean exists = userRepository.existsById(user.getUsername());
+    public boolean login(String username, String password) {
+        boolean exists = userRepository.existsById(username);
         if (!exists) {
-            throw new IllegalStateException("User with username " + user.getUsername() + " does not exist!");
+            throw new IllegalStateException("User with username " + username + " does not exist!");
         }
-        return "redirect:/user/" + user.getRole().getRoleName();
+        Users user = userRepository.getReferenceById(username);
+        return Objects.equals(user.getPassword(), password);
     }
 
     public List<Users> getUsers() {
@@ -146,6 +151,16 @@ public class UserService {
                 "</div></div>";
     }
 
+    public String mail(String token) {
+        ConfirmationToken confirmationToken = confirmationTokenService
+                .getToken(token)
+                .orElseThrow(() ->
+                        new IllegalStateException("token not found"));
+        userRepository.enableAppUser(
+                confirmationToken.getUser().getEmail());
+        return confirmationTokenService.getUsername(token);
+    }
+
     public boolean checkEmail(String username) {
         try {
             Users user = userRepository.findById(username).orElseThrow(() -> new IllegalStateException("Wrong username"));
@@ -165,4 +180,37 @@ public class UserService {
         }
     }
 
+    public String getRole(String username){
+        Users user =  userRepository.findById(username).orElseThrow(() -> new IllegalStateException("Wrong username"));
+        return user.getRole().getRoleName();
+    }
+
+    public Map<String, String> getProfile(String username){
+        Users user =  userRepository.findById(username).orElseThrow(() -> new IllegalStateException("Wrong username"));
+        Map<String, String> kaoUser = new java.util.HashMap<>();
+        kaoUser.put("username",user.getUsername());
+        kaoUser.put("email",user.getEmail());
+        kaoUser.put("name",user.getName());
+        kaoUser.put("surname",user.getSurname());
+        kaoUser.put("password",user.getPassword());
+        kaoUser.put("role",user.getRole().getRoleName());
+        kaoUser.put("file",user.getPhoto());
+        return kaoUser;
+    }
+
+    public void saveProfileChanges(String username, Map<String, String> user) {
+        Users newUser =  userRepository.findById(username).orElseThrow(() -> new IllegalStateException("Wrong username"));
+        newUser.setName(user.get("name"));
+        newUser.setSurname(user.get("surname"));
+        newUser.setPassword(user.get("password"));
+        newUser.setEmail(user.get("email"));
+        if (user.get("photo") != null) {
+            newUser.setPhoto(user.get("photo"));
+        }
+        userRepository.save(newUser);
+    }
+
+    public Users getUserByUsername(String username) {
+        return userRepository.findById(username).orElseThrow(() -> new IllegalStateException("Wrong username"));
+    }
 }
