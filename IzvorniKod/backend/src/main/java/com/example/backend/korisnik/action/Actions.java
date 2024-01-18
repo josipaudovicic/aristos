@@ -22,6 +22,8 @@ public class Actions {
     private Station station;
     private Timestamp startTime;
     private Timestamp endTime;
+    @Column(columnDefinition = "boolean default false")
+    private boolean sentRequest;
 
     public Actions() {
     }
@@ -115,5 +117,13 @@ public class Actions {
 
     public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
+    }
+
+    public boolean isSentRequest() {
+        return sentRequest;
+    }
+
+    public void setSentRequest(boolean sentRequest) {
+        this.sentRequest = sentRequest;
     }
 }

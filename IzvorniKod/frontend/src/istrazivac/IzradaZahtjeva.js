@@ -36,6 +36,7 @@ function IzradaZahtjeva(){
 };
     
       const handleSubmit = () => {
+        window.confirm('Jeste li sigurni da želite poslati zahtjev?\nZahtjev možete poslati samo jednom!');
         console.log(selectedVehicles);
           alert('Zahtjev je poslan');
 
@@ -48,7 +49,7 @@ function IzradaZahtjeva(){
             body: JSON.stringify({ selectedVehicles }),
           });
 
-          navigate(`/explorer/action/${actionName}/info`, {state: { actionName: actionName, username: username, data: data}})
+          navigate(`/explorer/action/${actionName}/info`, {state: { actionName: actionName, username: username, data: data, sentRequest: "true"}})
       }; 
       
 

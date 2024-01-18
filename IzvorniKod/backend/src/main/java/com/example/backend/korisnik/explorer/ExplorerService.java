@@ -72,6 +72,7 @@ public class ExplorerService {
             kaoAction.put("started", String.valueOf(action.isStarted()));
             kaoAction.put("station", action.getStation().getStationName());
             kaoAction.put("username", action.getUser().getUsername());
+            kaoAction.put("sentRequest", String.valueOf(action.isSentRequest()));
             returning.add(kaoAction);
         }
 
@@ -350,6 +351,8 @@ public class ExplorerService {
 
     public void postRequest(List<String> body, String actionName) {
         Actions action = actionService.getActionByName(actionName);
+        action.setSentRequest(true);
+        actionService.save(action);
         for (String vehicleId : body) {
             Vehicle vehicle = vehicleService.findVehicleById(Long.parseLong(vehicleId));
             VehiclesForActions vehiclesForAction = new VehiclesForActions(action, vehicle);

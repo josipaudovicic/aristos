@@ -22,7 +22,7 @@ const ListActions = () => {
             if(action.started === "false") {
             } else {
                 console.log(action);
-                navigate(`/explorer/action/${action.actionName}`, { state: {action: action, actions: actions, username: action.username}});
+                navigate(`/explorer/action/${action.actionName}`, { state: {action: action, actions: actions, username: action.username, sentRequest: action.sentRequest}});
             }
         } catch (error) {
             console.error('Error fetching action details:', error.message);

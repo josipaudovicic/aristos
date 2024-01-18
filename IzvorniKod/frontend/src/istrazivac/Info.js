@@ -7,6 +7,7 @@ function InfoStranica() {
   const actionName = location.state?.actionName;
   const username = location.state?.username;
   const actions = location.state?.actions;
+  const sentRequest = location.state?.sentRequest;
   const [buttonEndStyle, setButtonEndStyle] = useState({
     padding: '18px 18px',
     fontSize: 20,
@@ -33,7 +34,15 @@ function InfoStranica() {
 
       const data = await response.json();
       console.log(data);
-      navigate(`/${path}`, {state: {data: data, actionName: actionName, username: username}});
+      if (path === "/explorer/action/info/tasks") {
+        navigate(`/${path}`, {state: {data: data, actionName: actionName, username: username}});
+      } else {
+        if (sentRequest === "true") {
+          alert("Već ste poslali zahtjev za tragačima!");
+        } else {
+          navigate(`/${path}`, {state: {data: data, actionName: actionName, username: username, actions: actions, sentRequest: sentRequest}});
+        }
+      }
 
     } catch (error) {
       console.error(`Error fetching`, error.message);

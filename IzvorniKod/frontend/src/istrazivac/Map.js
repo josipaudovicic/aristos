@@ -10,6 +10,7 @@ const Map = () => {
     const actionName = location.state?.action.actionName || '';
     const username = location.state?.username || '';
     const actions = location.state?.actions;
+    const sentRequest = location.state?.sentRequest;
     const [trackers, setTrackers] = useState();
     const [map, setMap] = useState(null);
     const [heatLayer, setHeatLayer] = useState(null);
@@ -48,7 +49,8 @@ const Map = () => {
     }
 
     const handleInfo = () => {
-        navigate(`/explorer/action/${actionName}/info`, {state : {actionName: actionName, username: username, actions: actions}});
+      console.log(sentRequest);
+        navigate(`/explorer/action/${actionName}/info`, {state : {actionName: actionName, username: username, actions: actions, sentRequest: sentRequest}});
     }
 
     const handleTrackers = () => {
