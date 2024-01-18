@@ -111,6 +111,11 @@ const Map = () => {
     };
 
     const handleOptionClick = (option) => {
+      map.eachLayer((layer) => {
+        if (layer instanceof L.CircleMarker) {
+          map.removeLayer(layer);
+        }
+      });
         setSelectedOption(option);
 
         const fetchData = async () => {
@@ -146,6 +151,15 @@ const Map = () => {
                       }).addTo(map);
 
                       setHeatLayer(newHeatLayer);
+
+                      console.log(data[0].latestLatitude);
+                      console.log(data[0].latestLongitude);
+                      L.circleMarker([data[0].latestLatitude, data[0].latestLongitude], {
+                        color: 'black',
+                        fillColor: 'grey',
+                        fillOpacity: 1,
+                        radius: 5
+                      }).addTo(map);
                     } else {
                       alert('Map not initialized');
                     }
@@ -248,6 +262,11 @@ const Map = () => {
         };
       
         const handleBackToList = () => {
+          map.eachLayer((layer) => {
+            if (layer instanceof L.CircleMarker) {
+              map.removeLayer(layer);
+            }
+          });
           setSelectedOption(null);
 
           if (map && heatLayer) {
