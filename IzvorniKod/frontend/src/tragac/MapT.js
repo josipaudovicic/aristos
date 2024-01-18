@@ -15,6 +15,8 @@ function MapT() {
   let markers = [];
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState([]);
+  const [explorerShowComments, setExplorerShowComments] = useState(false);
+  const [explorerComments, setExplorerComments] = useState([]);
 
   const markerIcon = new L.Icon({
     iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-red.png',
@@ -40,6 +42,24 @@ function MapT() {
         console.error('Error:', error);
       });
     }, [username]);
+
+    useEffect(() => {
+      fetch(`/tracker/action/position`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          username: username,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (map) {
+            L.circleMarker([data.latitude, data.longitude], { radius: 7, color: 'red' }).addTo(map).bindPopup('Moja pozicija').openPopup(); 
+          }
+        })
+        .catch((error) => console.error('Error:', error));
+    }, [username, map]);         
 
 
     useEffect(() => {
@@ -84,7 +104,7 @@ function MapT() {
         .catch((error) => {
           console.error('Error:', error);
         });
-      }, [username, action.actionName, tasks]);
+      }, [username, action.actionName]);
 
 
     const handleTrackers = () => {
@@ -168,6 +188,20 @@ function MapT() {
         })})
       .catch((error) => console.error('Error:', error));
 
+      fetch(`/tracker/action/task/comments`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          taskId: task.taskId,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {setExplorerComments(data);
+          if (!explorerShowComments){
+            setExplorerShowComments((prevShowDropdown) => !prevShowDropdown);
+          }})
+        .catch((error) => console.error('Error:', error));
+
     };
 
     const handleDoneTask = (task) => {
@@ -187,32 +221,41 @@ function MapT() {
       });
 
       const updatedTasks = tasks.map((t) =>
-      t.taskId === task.taskId ? { ...t, completed: true } : t
+      t.taskId === task.taskId ? { ...t, done: true } : t
       );
       setTasks(updatedTasks);
     };
 
-    const CommentsModal = ({ comments, onClose }) => {
+    function CommentsModal({ comments, onClose })  {
       const [commentText, setCommentText] = useState('');
 
       const container = {
         position: 'fixed',
-        bottom: '100px',
-        left: '7px',
-        width: '175px',
+        bottom: '10px',
+        left: '3px',
+        width: '189px',
         backgroundColor: 'white',
         borderRadius: '6px',
         borderBox: '1px solid black',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
         padding: '10px',
+        maxHeight: '530px',
+        overflowY: 'auto', 
       };
 
       const buttonStyle = {
         cursor: 'pointer',
-        padding: '6px 16px',
+        padding: '2px 12px',
+        backgroundColor: 'white',
+        color: 'black',
         borderRadius: '4px',
-        marginLeft: '50px',
-    };
+        display: 'block',
+       marginLeft: 'auto',    
+       marginBottom: '-40px', 
+       border: '1px solid black',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        borderRadius: '10px',
+      };
 
       const listStyle = {
         listStyle: 'none',
@@ -242,7 +285,7 @@ function MapT() {
   
       const handleComment = () => {
         if (commentText) {
-          const newComment = `${username}: ${commentText}`; 
+          const newComment = {username: username, comment: commentText}; 
           setComments([...comments, newComment]);
           setCommentText('');
         }
@@ -258,20 +301,20 @@ function MapT() {
 
       return (
         <div style={container}>
+          <button style={buttonStyle} onClick={onClose}>x</button>
           <h3>Komentari:</h3>
           <ul>
             {comments.map((comment, index) => (
               <li style={listStyle} key={index}>
-                <b>{comment.username + ": "}</b> {" " + comment.comment}
+                <b>{comment.username + ":"}</b>&nbsp;{comment.comment}
                 </li>
             ))}
           </ul>
-          <textarea placeholder="Napiši komentar..." value={commentText} onChange={handleCommentText} style={commentInputStyle}></textarea>
-          <button style={{ ...button, display: commentText ? 'inline-block' : 'none' }} disabled={!commentText} onClick={() => handleComment}>Dodaj komentar</button>
-          <button style={buttonStyle} onClick={onClose}>Zatvori</button>
+          <input type='text' placeholder="Napiši komentar..." value={commentText} onChange={handleCommentText} style={commentInputStyle} />
+          <button style={{ ...button, display: commentText ? 'inline-block' : 'none' }} disabled={!commentText} onClick={() => handleComment()}>Dodaj komentar</button>
         </div>
       );
-    };
+    }
 
 
     const pStyle = {
@@ -308,6 +351,7 @@ const buttonStyle = {
 };
 
 const checkboxStyle = {
+  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   position: 'fixed',
   top: '120px',
   right: '10px',
@@ -342,6 +386,44 @@ const p3Style = {
   marginBottom: '5px',
 };
 
+
+function ExplorerComment ({ task, comments }) {
+  const dropdownStyle = {
+    position: 'absolute',
+    top: '200px',
+    right: '-2px',
+    backgroundColor: '#fff',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    borderRadius: '4px',
+    padding: '8px',
+    zIndex: '1000',
+    border: '1px solid #ddd',
+    minWidth: '170px',
+    overflowY: 'auto', 
+    maxHeight: '200px',
+  };
+
+  const optionStyle = {
+    cursor: 'pointer',
+    padding: '8px',
+    borderBottom: '1px solid #eee',
+    transition: 'background-color 0.3s',
+    Width: '180px',
+    color: 'black',
+  };
+
+  
+  return (
+    <div style={dropdownStyle}>
+      <p style={{ margin: '0', fontWeight: 'bold' }}>komentari istraživača:</p>
+      {explorerComments.map((comment) => (
+      <div key={comment} style={optionStyle}>
+        {typeof comment === 'object' && comment !== null ? `${comment.comment}` : comment}
+      </div>))}
+    </div>
+  );
+}
+
   return (
     <div>
       <div id="map" style={{ height: '150vh', width: '150vh' }} />;
@@ -350,15 +432,15 @@ const p3Style = {
       <p style={p2Style}>Tvoje vozilo: {action.vehicleName}</p>
       <button style={buttonStyle} onClick={handleTrackers}>Ostali tragači na akciji</button>
       {showComments && (<CommentsModal comments={comments} onClose={() => setShowComments(false)}
-      />
-    )} 
+      />)} 
       <div style={checkboxStyle}>
         <ul>
           <p style={p3Style}>Popis zadataka:</p>
           {tasks.map((task) => (
-            <li style={{...text, color: task.done === "true" ? 'green' : 'inherit',}} key={task.taskId} onClick={() => handleClick(task)}>
+            <li style={{...text, color: task.done === "true" ? 'green' : 'inherit'}} key={task.taskId} onClick={() => handleClick(task)}>
             <span style={text.span}>{task.taskText}</span>
             {task.done === "false" && (<button onClick={() => handleDoneTask(task)} style={bstyle}>✔</button>)}
+            {explorerShowComments && <ExplorerComment task={task} comments={comments} />}
             </li>
           ))}
         </ul>
