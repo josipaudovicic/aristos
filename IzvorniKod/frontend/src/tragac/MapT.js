@@ -27,6 +27,42 @@ function MapT() {
     iconColor: 'red'
   });
 
+    useEffect(() => {
+      const sendLocationData = async () => {
+        try {
+          const position = await new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+          });
+  
+          const { latitude, longitude } = position.coords;
+          console.log('Location data:', latitude, longitude);
+          const postData = {
+            latitude: latitude,
+            longitude: longitude,
+            username: username,
+            actionId: action.actionId,
+          };
+
+            const response = await fetch('/tracker/action/position', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData),
+          });
+  
+          const responseData = await response.json();
+          console.log('Location data sent successfully:', responseData);
+        } catch (error) {
+          console.error('Error sending location data:', error.message);
+        }
+      };
+  
+      sendLocationData();
+      const intervalId = setInterval(sendLocationData, 3 * 60 * 1000); 
+      return () => clearInterval(intervalId);
+    }, [username, action.actionId]); 
+
   useEffect(() => {
     fetch(`/tracker/action`, {	
       method: 'GET',
@@ -44,22 +80,33 @@ function MapT() {
     }, [username]);
 
     useEffect(() => {
-      fetch(`/tracker/action/position`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          username: username,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`/tracker/action/position`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              username: username,
+            },
+          });
+    
+          const data = await response.json();
           console.log(data);
+    
           if (map) {
-            L.circleMarker([data.latitude, data.longitude], { radius: 7, color: 'red' }).addTo(map).bindPopup('Moja pozicija').openPopup(); 
+            L.circleMarker([data.latitude, data.longitude], { radius: 7, color: 'red' })
+              .addTo(map)
+              .bindPopup('Moja pozicija')
+              .openPopup();
           }
-        })
-        .catch((error) => console.error('Error:', error));
-    }, [username, map]);         
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+      fetchData();
+      const intervalId = setInterval(fetchData, 5 * 60 * 1000);
+      return () => clearInterval(intervalId);
+    }, [username, map]);        
 
 
     useEffect(() => {
@@ -248,7 +295,6 @@ function MapT() {
         padding: '2px 12px',
         backgroundColor: 'white',
         color: 'black',
-        borderRadius: '4px',
         display: 'block',
        marginLeft: 'auto',    
        marginBottom: '-40px', 
@@ -351,7 +397,6 @@ const buttonStyle = {
 };
 
 const checkboxStyle = {
-  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   position: 'fixed',
   top: '120px',
   right: '10px',
