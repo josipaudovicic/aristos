@@ -71,6 +71,11 @@ public class TrackerController {
         return trackerService.getMyPosition(username);
     }
 
+    @PostMapping(path="/action/position")
+    public void postMyPosition(@RequestBody Map<String, String> body) {
+        trackerService.postMyPosition(body.get("username"), body.get("latitude"), body.get("longitude"), body.get("actionId"));
+    }
+
     @PostMapping(path="/action/saveComment")
     public void saveComment(@RequestBody Map<String, String> body) {
         trackerService.saveComment(body.get("comment"), body.get("username"), body.get("actionName"));
