@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,8 +38,18 @@ public class ManagerController {
     }
 
     @GetMapping(path = "/activeActions")
-    public List<Map<String, String>> getActions(@RequestHeader("username") String username) {
+    public List<Map<String, String>> getActiveActions(@RequestHeader("username") String username) {
         return managerService.getActiveActions(username);
+    }
+
+    @GetMapping(path = "/activeAction/trackers")
+    public Map<String, List<Map<String, String>>> geMyAvailableTrackersForAction(@RequestHeader("actionId") String actionId) {
+        List<Map<String, String>> myAvailableTrackers = managerService.getMyAvailableTrackersForAction(actionId);
+        List<Map<String, String>> trackersOnAction = managerService.getMyTrackersOnActiveAction(actionId);
+        Map<String, List<Map<String, String>>> trackers = new HashMap<>();
+        trackers.put("activeTrackers", trackersOnAction);
+        trackers.put("availableTrackers", myAvailableTrackers);
+        return trackers;
     }
 
     @GetMapping(path = "/inactiveActions")
@@ -51,15 +62,28 @@ public class ManagerController {
         return managerService.getRequests(username);
     }
 
+    @PutMapping(path = "/activeAction/trackers/addTracker")
+    public ResponseEntity<String> addTrackerToAction(@RequestBody Map<String, String> requestData) {
+        if (managerService.addTrackersToAction(requestData) == true) {
+            return ResponseEntity.ok("Trackers successfully added to action");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: could not add trackers to action.");
+        }
+    }
+
     @GetMapping(path = "/requests/trackers")
     public List<Map<String, String>> getTrackersForRequest(@RequestHeader("actionId") String actionId) {
         return managerService.getTrackersForRequest(actionId);
     }
 
-    //@PostMapping(path = "/requests/submit")
-    //public ResponseEntity<String> addTrackersToRequest(@RequestBody Map<String, List<String>> requestData) {
-    //    if (managerService.addTrackersToRequest()
-    //}
+    @PostMapping(path = "/requests/submit")
+    public ResponseEntity<String> addTrackersToRequest(@RequestBody Map<String, List<String>> requestData) {
+        if (managerService.addTrackersToRequest(requestData) == true) {
+            return ResponseEntity.ok("Trackers successfully added to request");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: could not add trackers to request.");
+        }
+    }
 
     @PutMapping(path = "/mytrackers/{trackerUsername}")
     public ResponseEntity<String> editVehiclesOfTracker(@PathVariable String trackerUsername, @RequestBody Map<String, List<String>> requestData) {

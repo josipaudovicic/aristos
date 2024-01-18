@@ -23,6 +23,12 @@ public class BelongsToAction {
     public BelongsToAction() {
     }
 
+    public BelongsToAction(Actions action, Users user, Vehicle vehicle) {
+        this.action = action;
+        this.user = user;
+        this.vehicle = vehicle;
+    }
+
     public Actions getAction() {
         return action;
     }

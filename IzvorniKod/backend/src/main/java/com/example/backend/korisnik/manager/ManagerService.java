@@ -14,6 +14,7 @@ import com.example.backend.korisnik.vehicle.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
 import java.util.*;
 
 @Service
@@ -126,6 +127,49 @@ public class ManagerService {
         return returning;
     }
 
+    public List<Map<String, String>> getMyAvailableTrackersForAction(String actionId) {
+        return getTrackersForRequest(actionId);
+    }
+
+    public List<Map<String, String>> getMyTrackersOnActiveAction(String actionId) {
+        List<Map<String, String>> trackersOnAction = new ArrayList<>();
+        Actions action = actionRepository.getReferenceById(Long.parseLong(actionId));
+
+        if (action.getActionActive() == true) {
+            for (BelongsToAction pair: belongsToActionRepository.findAll()) {
+                if (pair.getAction().getActionId().toString().equals(actionId)) {
+                    Map<String, String> newSearcher = new HashMap<>();
+                    Users tracker = pair.getUser();
+                    newSearcher.put("username", tracker.getUsername());
+                    newSearcher.put("email", tracker.getEmail());
+                    newSearcher.put("name", tracker.getName());
+                    newSearcher.put("surname", tracker.getSurname());
+                    newSearcher.put("password", tracker.getPassword());
+                    newSearcher.put("role", tracker.getRole().getRoleName());
+                    newSearcher.put("file", tracker.getPhoto());
+                    trackersOnAction.add(newSearcher);
+                }
+            }
+        }
+
+        return trackersOnAction;
+    }
+
+    public boolean addTrackersToAction(Map<String, String> requestData) {
+        String actionId = requestData.get("actionId");
+        List<String> actionsId = new ArrayList<>();
+        actionsId.add(actionId);
+
+        String username = requestData.get("trackerId");
+        List<String> usernames = new ArrayList<>();
+        usernames.add(username);
+
+        Map<String, List<String>> newRequestData = new HashMap<>();
+        newRequestData.put("actionId", actionsId);
+        newRequestData.put("selectedTrackers", usernames);
+        return addTrackersToRequest(newRequestData);
+    }
+
     public List<List<String>> getRequests(String username){
         String stationId = belongsToStationRepository.findByUserName(username).getStationId().toString();
         List<Actions> allActionsOnStation = actionRepository.findAll().stream().filter(action -> (action.getStation().getStationId().toString().equals(stationId))).toList();
@@ -140,27 +184,74 @@ public class ManagerService {
 
         List<List<String>> returning = new java.util.ArrayList<>(List.of());
         for (Actions action : allActionsOnStation){
-            System.out.println(action.getActionName());
-            List<String> kaoAction = new ArrayList<>();
-            kaoAction.add(action.getActionName());
-            kaoAction.add(action.getActionId().toString());
-
-            for (VehiclesForActions pair: vehiclesForActionsRepository.findAll()) {
-                System.out.println(pair.getAction().getActionId());
+            if (actionHasNotrackers(action.getActionId().toString())) {
                 System.out.println(action.getActionName());
-                System.out.println("------------");
-                if (pair.getAction().getActionId().longValue() == action.getActionId().longValue()) {
-                    String vehicleName = pair.getVehicle().getVehicleName();
-                    kaoAction.add(translateVehicles.get(vehicleName));
-                }
-            }
+                List<String> kaoAction = new ArrayList<>();
+                kaoAction.add(action.getActionName());
+                kaoAction.add(action.getActionId().toString());
 
-            if (kaoAction.size() > 2) {
-                returning.add(kaoAction);
+                for (VehiclesForActions pair : vehiclesForActionsRepository.findAll()) {
+                    System.out.println(pair.getAction().getActionId());
+                    System.out.println(action.getActionName());
+                    System.out.println("------------");
+                    if (pair.getAction().getActionId().longValue() == action.getActionId().longValue()) {
+                        String vehicleName = pair.getVehicle().getVehicleName();
+                        kaoAction.add(translateVehicles.get(vehicleName));
+                    }
+                }
+
+                if (kaoAction.size() > 2) {
+                    returning.add(kaoAction);
+                }
             }
         }
 
         return returning;
+    }
+
+    public boolean addTrackersToRequest(Map<String, List<String>> requestData) {
+        String actionId = requestData.get("actionId").get(0);
+        List<String> requestedVehicles = new ArrayList<>();
+        vehiclesForActionsRepository.findAll().stream().filter(pair -> (pair.getAction()).getActionId().toString().equals(actionId)).toList().forEach(pair -> requestedVehicles.add(pair.getVehicle().getVehicleId().toString()));
+        //System.out.print("Requested vehicles: ");
+        //System.out.println(requestedVehicles);
+
+        Map<String, List<String>> trackersQualifications = new HashMap<>();
+        List<String> sentTrackers = requestData.get("selectedTrackers");
+        sentTrackers.forEach(tracker -> trackersQualifications.put(tracker, new ArrayList<>()));
+
+        for (String tracker : trackersQualifications.keySet()) {
+            for (QualifiedFor qualification : qualifiedForRepository.findAll()) {
+                if (qualification.getUserName().equals(tracker)) {
+                    List<String> oldList = trackersQualifications.get(tracker);
+                    oldList.add(qualification.getVehicleId().toString());
+                    trackersQualifications.put(tracker, oldList);
+                }
+            }
+        }
+        //System.out.print("Qualified for: ");
+        //System.out.println(trackersQualifications);
+        for (String tracker : trackersQualifications.keySet()) {
+            boolean foundVehicle = false;
+            for (String trackerVehicle : trackersQualifications.get(tracker)) {
+                for (String vehicle : requestedVehicles) {
+                    if (vehicle.equals(trackerVehicle)) {
+                        Users newUser = userRepository.getReferenceById(tracker);
+                        Actions newAction = actionService.getActionById(Long.parseLong(actionId));
+                        Vehicle newVehicle = vehicleRepository.getReferenceById(Long.parseLong(vehicle));
+                        BelongsToAction newEntry = new BelongsToAction(newAction, newUser, newVehicle);
+                        belongsToActionRepository.save(newEntry);
+                        foundVehicle = true;
+                        break;
+                    }
+                }
+                if (foundVehicle == true) {
+                    break;
+                }
+            }
+        }
+
+        return true;
     }
 
     public List<Map<String, String>> getTrackersForRequest(String actionId) {
@@ -187,6 +278,15 @@ public class ManagerService {
         return trackersForRequest;
     }
 
+    public boolean actionHasNotrackers(String actionId) {
+        for (BelongsToAction pair : belongsToActionRepository.findAll()) {
+            if (pair.getAction().getActionId().toString().equals(actionId)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean trackerIsOnActiveAction(String username) {
         List<String> actionIdHistory = new ArrayList<>();
 
@@ -209,7 +309,7 @@ public class ManagerService {
         List<String> requestedVehicles = new ArrayList<>();
         vehiclesForActionsRepository.findAll().stream().filter(pair -> (pair.getAction().getActionId().equals(Long.parseLong(actionId)))).toList().forEach(pair -> requestedVehicles.add(pair.getVehicle().getVehicleName()));
 
-        if (requestedVehicles.isEmpty() == true) {
+        if (requestedVehicles.isEmpty()) {
             return true;
         } else {
             List<String> trackerQualifiedFor = new ArrayList<>();
