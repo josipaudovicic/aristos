@@ -125,6 +125,8 @@ function PopisZadataka() {
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     padding: '15px',
     width: '550px',
+    overflowY: 'auto', 
+    maxHeight: '700px',
   };
 
   const pStyle = {

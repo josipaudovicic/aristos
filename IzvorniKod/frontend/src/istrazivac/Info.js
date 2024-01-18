@@ -33,8 +33,9 @@ function InfoStranica() {
       }
 
       const data = await response.json();
+      console.log(path);
       console.log(data);
-      if (path === "/explorer/action/info/tasks") {
+      if (path === "explorer/action/info/tasks") {
         navigate(`/${path}`, {state: {data: data, actionName: actionName, username: username}});
       } else {
         if (sentRequest === "true") {

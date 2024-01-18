@@ -27,6 +27,7 @@ function TragaciNaAkciju() {
           const data = await response.json();
           setAvailableTrackers(data.availableTrackers);
           setActiveTrackers(data.activeTrackers);
+
         };
 
     
@@ -61,20 +62,20 @@ function TragaciNaAkciju() {
     <div>
       <h2>Lista tragača na akciji:</h2> 
       <ul>
-        {activeTrackers.map((tracker) => (
+        {activeTrackers ? activeTrackers.map((tracker) => (
           <li key={tracker.username}>
             <strong>Username</strong> {tracker.username}, <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}
           </li>
-        ))}
+        )) : <p>Nema aktivnih tragača</p>}
       </ul>
       <h2>Lista tragača dostupnih za dodavanje na akciju:</h2> 
       <ul>
-        {availableTrackers.map((tracker) => (
+        {availableTrackers ? availableTrackers.map((tracker) => (
           <li key={tracker.username} style={{ cursor: 'pointer' }}>
             <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}
             <button style={buttonStyle} onClick={() => handleAdd(tracker.username)}>Dodaj</button>
           </li>
-        ))}
+        )) : <p>Nema dostupnih tragača</p>}
       </ul>
     </div>
   );
