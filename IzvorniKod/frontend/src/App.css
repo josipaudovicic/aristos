@@ -1,0 +1,134 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    background-image: url("../public/slike/horizontal-banner-silhouette-deer-doe-260nw-2012211323.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 400px;
+    text-align: center;
+    max-height: 700px;
+    overflow-y: auto;
+  }
+  
+  h2 {
+    color: #333333;
+    margin-bottom: 35px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  label {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .roles1 {
+    font-weight: normal;
+    margin-left: -140px; 
+  }
+
+  .roles2 {
+    font-weight: normal;
+    margin-left: -100px;
+  }
+
+  .roles3 {
+    font-weight: normal;
+    margin-left: -88px;
+  }
+  
+  input {
+    padding: 5px;
+    margin-bottom: 10px; 
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+  }
+
+  input:not([name="status"]) {
+    width: calc(100% - 20px);
+  }
+  
+  button {
+    background-color: #024D44;
+    color: #ffffff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  button:hover {
+    background-color: #012B27;
+  }
+  
+  p {
+    margin-top: 15px;
+    color: #333333;
+  }
+  
+  a {
+    color: #024D44;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  fieldset {
+    width: 250px; 
+    border: 1px solid black; 
+    margin-bottom: 20px;
+    margin-left: 10px; 
+    padding: 10px; 
+}
+  
+  legend {
+    font-size: large;
+    font-weight: bold;
+    margin-left: -30px;
+}
+
+#submitBtn {
+    color: #ffffff;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+  
+.poruka {
+    font-weight: bold;
+    margin-top: 30px;
+    margin-left: 30px;
+}
