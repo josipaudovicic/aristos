@@ -10,6 +10,15 @@ public class Station {
     private Long stationId;
     private String stationName;
 
+    public Station() {}
+
+    public Station(Long stationId, String stationName) {
+        this.stationId = stationId;
+        this.stationName = stationName;
+    }
+
+
+
     public Long getStationId() {
         return stationId;
     }

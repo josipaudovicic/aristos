@@ -75,16 +75,15 @@ const Map = () => {
     const pStyle = {
         position: 'fixed',
         top: '0px',
-        left: '1px',
+        right: '40px',
         padding: '8px 16px',
     }
 
     const buttonStyle = {
         position: 'fixed',
         top: '45px',
-        left: '20px',
+        right: '15px',
         padding: '8px 16px',
-        backgroundColor: '#5C5C5C',
         color: '#fff',
         borderRadius: '4px',
         cursor: 'pointer',
@@ -94,9 +93,8 @@ const Map = () => {
     const button2Style = {
         position: 'fixed',
         top: '85px',
-        left: '20px',
+        right: '15px',
         padding: '8px 16px',
-        backgroundColor: '#5C5C5C',
         color: '#fff',
         borderRadius: '4px',
         cursor: 'pointer',
@@ -203,7 +201,7 @@ const Map = () => {
         const dropdownStyle = {
           position: 'absolute',
           top: '165px',
-          left: '8px',
+          right: '8px',
           backgroundColor: '#fff',
           boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
           borderRadius: '4px',
@@ -276,7 +274,7 @@ const Map = () => {
         const dropdownStyle = {
           position: 'absolute',
           top: '165px',
-          left: '8px',
+          right: '8px',
           backgroundColor: '#fff',
           boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
           borderRadius: '4px',
