@@ -5,7 +5,7 @@ Arhitektura sustava može se podijeliti na tri ključna podsustava:
 \begin{packed_enum}
 	\item Web poslužitelj:
 	\begin{packed_enum}
-		\item Srce web aplikacije.
+		\item Ključan dio web aplikacije.
 		\item Odgovoran za interakciju između klijenta i aplikacije.
 		\item Koristi HTTP/HTTPS protokol za prijenos informacija na webu.
 		\item Inicira pokretanje web aplikacije i proslijeđuje zahtjeve.
@@ -33,23 +33,16 @@ Ova interakcija omogućuje korisnicima pregled i manipulaciju sadržajem putem w
 	\label{fig:arhitektura}
 \end{figure}
 
-React je biblioteka koju smo odabrali za izradu naše web aplikacije, zajedno sa Spring Boot radnim okvirom te programskim jezikom JavaScript. 
-Odabrano razvojno okruženje je Visual Studio Code. Arhitektura sustava temeljiti će se na MVC(Model-View-Controller) konceptu.
-\newline React je biblioteka otvorenog koda koja se koristi za izgradnju korisničkih sučelja.
-\begin{packed_item}
-	\item Jezik: Povezan je s JavaScriptom
-	\item Slučajevi upotrebe: Često se koristi za izradu jednostranih aplikacija, gdje je potrebna brza i prilagodljiva interakcija
-	\item Platforma: Nema specifičnu platformu; može se koristiti u web aplikacijama na različitim platformama
-\end{packed_item}
-Spring Boot je radno okruženje koje se koristi za izgradnju aplikacija.
-\begin{packed_item}
-	\item Jezik: prvenstveno povezan s Javom
-	\item Radno okruženje: Spring Boot dio je Spring Frameworka za Java razvoj
-	\item Slučajevi upotrebe: naširoko se koristi za izradu web aplikacija temeljenih na Javi
-	\item Ekosustav: Java ekosustav, s jakom integracijom s tehnologijama kao što su Spring MVC, Spring Data itd.
-	\item Platforma: Java Virtual Machine (JVM)
-\end{packed_item}
-Spring Boot podržava koncept MVC (Model-View-Controller) arhitekture, a to se postiže kroz Spring Web MVC modul. Spring Boot podržava MVC koncept:
+Za izradu ovog projekta koristili smo se Spring Boot frameworkom u Javi kroz
+razvojno okruženje IntelliJ Community Edition, Javascriptom uz React u Visual
+Studio Code-u te drugim programima za dizajn slika i grafova ( AstahUML itd.).
+
+
+ Spring Boot podržava koncept MVC, odnosno Model-Pogled-Nadglednik
+(engl. \textit{Model View Controller}), arhitekture, tj. stilističke varijacije arhitekture zasnovane 
+na događajima. Takve arhitekture odlikuje to što se komponente međusobno ne pozivaju
+eksplicitno, već neke od njih generiraju signale (događaje) ne znajući koja druga
+"osluškuje" tj. očekuje takav signal i na njega reagira. To se postiže kroz Spring Web MVC modul. 
 \begin{packed_item}
 	\item Model: Spring Boot omogućava korištenje Java objekata kao modela. Ovi objekti predstavljaju podatke koji se koriste u aplikaciji.
 	Spring Data može se integrirati za jednostavno upravljanje podacima i komunikaciju s bazom podataka.
@@ -59,14 +52,21 @@ Spring Boot podržava koncept MVC (Model-View-Controller) arhitekture, a to se p
 	@RequestMapping i slične anotacije omogućuju mapiranje HTTP zahtjeva na određene metode kontrolera.
 	Spring Boot automatski prepoznaje i konfigurira komponente kontrolera.		
 \end{packed_item}
-Primjena MVC koncepta u Spring Boot-u olakšava održavanje i proširivost aplikacija.
-	
+
+Kod MVC-a pogodno je što smanjuje međuovisnost korisničkog sučelja i ostatka sustava, a omogućuje i nezavisan razvoj, nadogradnje i dodavanje različitih dijelova aplikacije. Sadrži različite
+gotove predloške za klase koji nam olakšavaju proces izrade.
 				
 		\section{Baza podataka}
 			    
 
 
-		Baze podataka neizostavan su dio razvoja programske potpore jer danas gotova svaka domena primjene obiluje mnoštvom podataka koje treba pohraniti na organiziran način kako bi se efikasno dohvaćali, mijenjali i nadopunjavali. Za upravljanje bazom podataka mogu se koristiti različiti sustavi koji obavljaju optimiranje upita i omogućuju rukovanje podatcima. Mi smo odlučili koristiti PostgreSQL koji nam je bio preporučen na kolegiju Baze podataka. \newline Iako stvarni svijet ne možemo prikazati sa svim detaljima, relacijski nam model baze podataka omogućuje vjeran prikaz stvarnosti pomoću relacija u koje pohranjujemo vrijednosti odabranih atributa vezanih uz entitete bitne za domenu primjene. Formalno gledano relacija, tj. instanca relacije, definirana na relacijskoj shemi je skup n-torki, a neformalno možemo reći da je to imenovana dvodimenzionalna tablica. Atributi su imenovani stupci te tablice. ER (Entity-Relationship) model podataka zadržava dobra svojstva relacijskog modela, a uz to omogućuje eksplicitni prikaz semantičkih informacija vezanih uz veze (odnose) između entiteta. Kako bismo prikazali kako su eniteti našeg sustava povezani koristit ćemo ER model baze podataka.
+		Baze podataka neizostavan su dio razvoja programske potpore jer danas gotova svaka domena primjene 
+		obiluje mnoštvom podataka koje treba pohraniti na organiziran način kako bi se efikasno dohvaćali,
+		 mijenjali i nadopunjavali. Za upravljanje bazom podataka mogu se koristiti različiti sustavi koji 
+		 obavljaju optimiranje upita i omogućuju rukovanje podatcima. Mi smo odlučili koristiti PostgreSQL 
+		 koji nam je bio preporučen na kolegiju Baze podataka. \newline Relacijski nam model baze podataka 
+		 omogućuje vjeran prikaz stvarnosti pomoću relacija u koje pohranjujemo vrijednosti odabranih 
+		 atributa vezanih uz entitete bitne za domenu primjene. Atributi su imenovani stupci te tablice. ER (Entity-Relationship) model podataka zadržava dobra svojstva relacijskog modela, a uz to omogućuje eksplicitni prikaz semantičkih informacija vezanih uz veze (odnose) između entiteta. Kako bismo prikazali kako su eniteti našeg sustava povezani koristit ćemo ER model baze podataka.
 za podataka ove aplikacije sastoji se od sljedećih entiteta:
 		\begin{packed_item}
 			\item Korisnik
@@ -86,7 +86,11 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 		\eject
 			\subsection{Opis tablica}
 			
-				
+					\textbf {Zadatak} Ovaj entitet sadrži sve važne informacije o zadatcima koje obavljaju tragači tijekom akcije, a stvaraju istraživači. Sadrži
+				atribute: šifra zadatka, korisničko ime, tekst, završen, početna lokacija, krajnja lokacija šifra akcije, šifra životinje i šifra vozila. 
+				Ova tablica je u vezi s tablicom Prijevozno sredstvo preko tablice Osposobljen za te izravno preko 
+				dentifikatora vozila(šifra vozila), s tablicom Akcija izravno preko identifikatora akcije (šifra akcije), 
+				s tablicom Životinja izravno preko identifikatora životinje (šifra životinje).
 				
 				\begin{longtblr}[
 					label=none,
@@ -98,13 +102,20 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \SetCell[c=3]{c}{\textbf{Zadatak}}	 \\ \hline[3pt]
 					\SetCell{LightGreen} Šifra Zadatka & INT	&  	Jedinstveni brojčani identifikator zadatka  	\\ \hline
-					\SetCell{LightGreen} Korisničko ime & VARCHAR	& 	Korisničko ime korisnika\\ \hline
-					Tekst	& VARCHAR & Opis Zadatka  	\\ \hline 
+					Tekst	& VARCHAR & Opis zadatka  	\\ \hline 
 					Završen & BOOLEAN & Status je li zadatak završen  \\ \hline 
-          \SetCell{LightBlue} Šifra akcije 	& INT & Jedinstveni brojčani identifikator akcije   	\\ \hline 
-          \SetCell{LightBlue} Šifra životinje 	& INT &   Jedinstveni brojčani identifikator životinje  	\\ \hline 
-          \SetCell{LightBlue} Šifra vozila 	& INT &  Jedinstveni brojčani identifikator vozila 	\\ \hline 
+					Početna lokacija & DOUBLE & Početak rute kojom tragač mora proći 	\\ \hline 
+					Krajnja lokacija	& DOUBLE & Kraj rute kojom tragač mora proći  	\\ \hline 
+					\SetCell{LightBlue} Korisničko ime & VARCHAR	& 	Korisničko ime korisnika\\ \hline
+          			\SetCell{LightBlue} Šifra akcije 	& INT & Jedinstveni brojčani identifikator akcije   	\\ \hline 
+          			\SetCell{LightBlue} Šifra životinje 	& INT &   Jedinstveni brojčani identifikator životinje  	\\ \hline 
+          			\SetCell{LightBlue} Šifra vozila 	& INT &  Jedinstveni brojčani identifikator vozila 	\\ \hline 
 				\end{longtblr}
+
+				\textbf {Akcija} Ovaj entitet sadrži sve važne informacije o akcijama pretraživanja i praćenja. Sadrži
+			atribute: šifra akcije, naziv akcije, aktivna, započeta, početak akcije, kraj akcije, poslan zahtjev i korisničko ime. 
+			Ova tablica je u vezi s tablicom Korisnik preko identifikatora korisnika(korisničko ime),
+			 s tablicom Životinja preko tablice Komentar korisnika, s tablicom Zadatak i tablicom Pozicija tragača.
 				
 				\begin{longtblr}[
 					label=none,
@@ -118,9 +129,16 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 					\SetCell{LightGreen} Šifra akcije & INT	&  	Jedinstveni ključ za identifikaciju zadatka  	\\ \hline
 					Naziv akcije	& VARCHAR &  Puni naziv akcije  	\\ \hline 
 					Aktivna & BOOLEAN & Status je li akcija aktvna  \\ \hline 
+					Započeta & BOOLEAN & Status je li akcija započela  \\ \hline 
+					Početak akcije & TIMESTAMP & Kad je akcija započela  \\ \hline 
+					Kraj akcije & TIMESTAMP & Kad je akcija završila  \\ \hline 
+					Poslan zahtjev & BOOLEAN & Ograničava istraživačima slanje zahtjeva za tragačima  \\ \hline 
           \SetCell{LightBlue} Korisničko ime 	& VARCHAR &  Korisničko ime korisnika 	\\ \hline 
 				\end{longtblr}
 			
+				\textbf {Komentar korisnika} Ovaj entitet sadrži informacije o komentarima korisnika o praćenoj životinji 
+				koje mogu ostaviti tijekom akcije. Sadrži atribute: šifra komentara, šifra životinje, korisničko ime, šifra akcije i komentar. 
+		
 
 				\begin{longtblr}[
 					label=none,
@@ -131,12 +149,16 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
           \hline \SetCell[c=3]{c}{\textbf{Komentar korisnika}}	 \\ \hline[3pt]
-					\SetCell{LightGreen} Šifra životinje & INT	&  	Jedinstveni brojčani identifikator zadatka  	\\ \hline
-					\SetCell{LightGreen} Korisničko ime & VARCHAR	&  	Korisničko ime korisnika 	\\ \hline
-					\SetCell{LightGreen} Šifra akcije & INT	&  	Jedinstveni brojčani identifikator akcije  	\\ \hline
-					Komentar	& VARCHAR & Sadržaj komentara  	\\ \hline 
+		  			\SetCell{LightGreen} Šifra komentara & INT	&  	Jedinstveni brojčani identifikator komentara  	\\ \hline
+		  			Komentar	& VARCHAR & Sadržaj komentara  	\\ \hline 
+					\SetCell{LightBlue} Šifra životinje & INT	&  	Jedinstveni brojčani identifikator zadatka  	\\ \hline
+					\SetCell{LightBlue} Korisničko ime & VARCHAR	&  	Korisničko ime korisnika 	\\ \hline
+					\SetCell{LightBlue} Šifra akcije & INT	&  	Jedinstveni brojčani identifikator akcije  	\\ \hline
 				\end{longtblr}
-			
+				
+				\textbf {Životinja} Ovaj entitet sadrži sve važne informacije o životinjama. Sadrži
+			atribute: šifra životinje, naziv , latinski naziv i opis. 
+			Ova tablica povezana je s tablicom Pozicija životinje s tablicom Zadatak preko identifikatora životinje(šifra životinje) te s tablicom Akcija
 
 				\begin{longtblr}[
 					label=none,
@@ -152,6 +174,10 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 					Latinski naziv	& VARCHAR & Latinski naziv životinje  	\\ \hline 
 					Opis	& VARCHAR & Sadržaj komentara  	\\ \hline 
 				\end{longtblr}
+
+				\textbf {Pozicija životinje} Ovaj entitet sadrži informacije o poziciji životinje. 
+				Pomoću njega bilježimo gibanje životinje na kartama. Sadrži
+			atribute: šifra životinje, vremenska oznaka, geografska širina i geografska dužina.
 
 
 				\begin{longtblr}[
@@ -169,6 +195,9 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
           Geografska dužina	& DOUBLE & Iznos geografske dužine  	\\ \hline 
 				\end{longtblr}
 
+				\textbf {Pozicija tragača} Ovaj entitet sadrži informacije o poziciji tragača. 
+				Pomoću njega bilježimo kretanje tragača na kartama. Sadrži
+			atribute: korisničko ime, vremenska oznaka, šifra akcije, geografska širina i geografska dužina.
 
 				\begin{longtblr}[
 					label=none,
@@ -186,6 +215,9 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
           Geografska dužina	& DOUBLE & Iznos geografske dužine  	\\ \hline 
 				\end{longtblr}
 
+				\textbf {Korisnik} Ovaj entitet sadrži sve važne informacije o korisnicima. Sadrži
+			atribute: korisničko ime, email, lozinka, ime, prezime, fotografija, provjeren mail, potvrdio admin i šifra uloge.
+			Ova tablica je u vezi s tablicama Akcija, Pozicija tragača, Uloga i Komentar korisnika.
 
 				\begin{longtblr}[
 					label=none,
@@ -202,10 +234,14 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
           Ime & VARCHAR & Ime korisnika \\ \hline
           Prezime & VARCHAR & Prezime korisnika \\ \hline
           Fotografija & VARCHAR & Fotografija korisnika \\ \hline
+		  Provjeren email & BOOLEAN & Provjera je li osoba potvrdila mail \\ \hline
+          Potvrdio admin & BOOLEAN & Voditelja i istraživača mora potvrditi admin \\ \hline
           \SetCell{LightBlue} Šifra uloge 	& INT &   Jedinstveni brojčani identifikator uloge	\\ \hline 
 
 				\end{longtblr}
 
+				\textbf {Pripada postaji} Ova veza sadrži informacije po kojima saznajemo koji korisnik pripada kojoj postaji.
+				Povezuje entitete Korisnik i Postaja te sadrži njihove ključne atribute: korisničko ime i šifra postaje.
 
 				\begin{longtblr}[
 					label=none,
@@ -221,6 +257,8 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 
 				\end{longtblr}
 
+				\textbf {Postaja} Ovaj entitet sadrži informacije o postajama. Sastoji se od
+			atributa: šifra postaje i naziv postaje.
 
 				\begin{longtblr}[
 					label=none,
@@ -236,6 +274,8 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 
 				\end{longtblr}
 
+				\textbf {Osposobljen za} Ova veza sadrži informacije po kojima saznajemo koji korisnik ima sposobnosti za voziti koje prijevozno sredstvo.
+				Povezuje entitete Korisnik i Prijevozno sredstvo te sadrži njihove ključne atribute: korisničko ime i šifra vozila.
 
 				\begin{longtblr}[
 					label=none,
@@ -250,6 +290,9 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 					\SetCell{LightGreen} Šifra vozila & INT	&   Jedinstveni brojčani identifikator vozila  	\\ \hline
 
 				\end{longtblr}
+
+				\textbf {Prijevozno sredstvo} Ovaj entitet sadrži informacije o vozilima za koje tragači mogu biti osposobljeni.
+				 Sastoji se od atributa: šifra vozila i naziv vozila.
 
 
 				\begin{longtblr}[
@@ -266,6 +309,9 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 
 				\end{longtblr}
 
+				\textbf {Uloga} Ovaj entitet sadrži informacije o ulogama korisnika. Sastoji se od
+			atributa: šifra uloge i naziv uloge.
+
 
 				\begin{longtblr}[
 					label=none,
@@ -281,12 +327,114 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 
 				\end{longtblr}
 
+				\textbf {Konfirmacijski token} Ovaj entitet sadrži informacije o konfirmacijskim tokenima.
+				 Sastoji se od atributa: šifra tokena, vrijeme potvrde, vrijeme stvaranja, vrijeme isteka, token i korisničko ime.
+				 Povezana je s tablicom Korisnik preko identifikatora korisnika(korisničko ime).
+
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+          \hline \SetCell[c=3]{c}{\textbf{Konfirmacijski token}}	 \\ \hline[3pt]
+          \SetCell{LightGreen} Šifra tokena & INT	&  Jedinstveni brojčani identifikator tokena	\\ \hline
+          Vrijeme potvrde	& TIMESTAMP & Vrijeme potvrde emaila  	\\ \hline 
+		  Vrijeme stvaranja	& TIMESTAMP & Vrijeme stvaranja emaila  	\\ \hline 
+          Vrijeme isteka	& TIMESTAMP & Vrijeme isteka emaila  	\\ \hline 
+		  Token & VARCHAR & Token za potvrdu maila 	\\ \hline
+		  \SetCell{LightBlue} Korisničko ime & VARCHAR & Korisničko ime korisnika \\ \hline
+
+				\end{longtblr}
+
+				\textbf {Komentari zadatka} Ovaj entitet sadrži informacije o komentarima zadataka.
+				 Sastoji se od atributa: šifra komentara, komentar, šifra zadatka i korisničko ime.
+				 Povezana je s tablicom Zadatak preko identifikatora zadatka(šifra zadatka) i s tablicom Korisnik preko identifikatora korisnika(korisničko ime).
+
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+          \hline \SetCell[c=3]{c}{\textbf{Komentari zadatka}}	 \\ \hline[3pt]
+          \SetCell{LightGreen} Šifra komentara & INT	&  Jedinstveni brojčani identifikator komentara	\\ \hline
+          Komentar	& VARCHAR & Tekst komentara  	\\ \hline 
+		  \SetCell{LightBlue} Šifra zadatka & INT & Jedinstveni brojčani identifikator zadatka 	\\ \hline
+		  \SetCell{LightBlue} Korisničko ime & VARCHAR & Korisničko ime istraživača \\ \hline
+
+				\end{longtblr}
+
+
+				\textbf {Komentari tragača} Ovaj entitet sadrži informacije o komentarima tragača.
+				 Sastoji se od atributa: šifra komentara, komentar, šifra akcije i korisničko ime.
+				 Povezana je s tablicom Akcija preko identifikatora akcije(šifra akcije) i s tablicom Korisnik preko identifikatora korisnika(korisničko ime).
+
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+          \hline \SetCell[c=3]{c}{\textbf{Komentari tragača}}	 \\ \hline[3pt]
+          \SetCell{LightGreen} Šifra komentara & INT	&  Jedinstveni brojčani identifikator komentara	\\ \hline
+          Komentar	& VARCHAR & Tekst komentara  	\\ \hline 
+		  \SetCell{LightBlue} Šifra akcije & INT & Jedinstveni brojčani identifikator akcije 	\\ \hline
+		  \SetCell{LightBlue} Korisničko ime & VARCHAR & Korisničko ime tragača \\ \hline
+
+				\end{longtblr}
+
+				\textbf {Pripada akciji} Ova veza sadrži informacije po kojima saznajemo koji tragač pripada kojoj akciji.
+				Povezuje entitete Korisnik i Akcija te sadrži njihove ključne atribute: korisničko ime i šifra akcije.
+				Povezana je s tablicom Prijevozno sredstvo preko identifikatora vozila(šifra vozila).
+
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+          \hline \SetCell[c=3]{c}{\textbf{Pripada akciji}}	 \\ \hline[3pt]
+          \SetCell{LightGreen} Šifra akcije & INT	&  Jedinstveni brojčani identifikator akcije	\\ \hline
+		  \SetCell{LightGreen} Korisničko ime & VARCHAR & Korisničko ime tragača \\ \hline
+		  \SetCell{LightBlue} Šifra vozila & INT & Jedinstveni brojčani identifikator vozila 	\\ \hline
+
+				\end{longtblr}
+
+				\textbf {Vozila za akciju} Ova veza sadrži informacije po kojima saznajemo koja vozila pripadaju kojoj akciji.
+				Povezuje entitete Akcija i Prijevozno sredstvo te sadrži njihove ključne atribute: šifra akcije i šifra postaje.
+				Još sadrži i atribut šifra tablice koji je jedinstveni brojčani identifikator tablice.
+
+
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+          \hline \SetCell[c=3]{c}{\textbf{Vozila za akciju}}	 \\ \hline[3pt]
+          \SetCell{LightGreen} Šifra tablice & INT	&  Jedinstveni brojčani identifikator tablice	\\ \hline
+		  \SetCell{LightBlue} Šifra akcije & INT & Jedinstveni brojčani identifikator akcije \\ \hline
+		  \SetCell{LightBlue} Šifra postaje & INT & Jedinstveni brojčani identifikator postaje 	\\ \hline
+
+				\end{longtblr}
+
 			\eject
 
 			\subsection{Dijagram baze podataka}
 
 			\begin{figure}[H]
-				\includegraphics[scale=0.9]{slike/dijagram baze podataka.png} 
+				\includegraphics[scale=0.6]{slike/dijagram_baze_podataka.png} 
 				\centering
 				\caption{Dijagram baze podataka}
 				\label{fig:dijagram_baze_podataka}
@@ -302,15 +450,16 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 		Metode implementirane u tim razredima manipuliraju s Data transfer object, a oni
 		su dohvaćeni s pomoću metoda u Model razredima. 
 
-		Metode unutar Controller razreda vraćaju JSON datoteke s odgovarajućim html status kodom.
+		Metode unutar Controller razreda vraćaju JSON datoteke.
 		Razredi su logički podijeljeni prema pravu pristupa metodama specifičnih aktora kako bi se smanjila prenapučenost unutar dijagrama.
 		Pri prikazu su naglašene samo ovisnosti između razreda koji pripadaju istom dijelu dijagrama radi jednostavnije organizacije.
 		Vrsta ovisnosti između različitim razredima može se zaključiti iz naziva i tipova atributa unutar tih razreda.
+		Controller razredi sadrži privatne varijable koje im omogućuju komunikaciju sa Service razredima.
 		
 		\eject
 
 			\begin{figure}[H]
-				\includegraphics[scale=0.4]{slike/klasni_dijagram_controllers.jpg}
+				\includegraphics[scale=0.23]{slike/klasni_dijagram_controllers.jpg}
 				\centering
 				\caption{Dijagram razreda - dio Controllers}
 				\label{fig:controllers}
@@ -319,7 +468,7 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 			\eject
 
 			\begin{figure}[H]
-				\includegraphics[scale=0.5]{slike/klasni_dijagram_data_transfer_objects.jpg}
+				\includegraphics[scale=0.35]{slike/klasni_dijagram_DTO.jpg}
 				\centering
 				\caption{Dijagram razreda - dio Data transfer objects}
 				\label{fig:data_transfer_objects}
@@ -328,25 +477,17 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 			Model razredi prikazuju strukturu baze podataka u aplikaciji. 
 			Implementirane metode komuniciraju s bazom podataka te vraćaju tražene podatke. 
 			Razred Users predstavlja neregistriranog korisnika koji se može registrirati u 
-			sustav unošenjem informacija. Razred Administrator predstavlja administratora 
-			sustava koji ima najveće ovlasti. Razred Leader predstavlja voditelja postaje koji ima mogućnost postavljanja tragača određenom istraživaču.
-			Razred Researcher predstavlja istraživača koji ima pristup karti tragača i životinja te može tragaču zadati zadatak. 
-			Razred Searcher predstavlja tragača koji ima pristup karti životinja te može ispunjavati zadatke.
+			sustav unošenjem informacija.
 
 
 			\eject
 
 			\begin{figure}[H]
-				\includegraphics[scale=0.4]{slike/klasni_dijagram_models.jpg}
+				\includegraphics[scale=0.15]{slike/klasni_dijagram_models.jpg}
 				\centering
 				\caption{Dijagram razreda - dio Models}
 				\label{fig:models}
 			\end{figure}
-			
-
-			\textbf{\textit{dio 2. revizije}}\\			
-			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
 			
 			
 			
@@ -354,23 +495,64 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 		
 		\section{Dijagram stanja}
 			
-			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
-			
+			Dijagram stanja (slika \ref{fig:dijagram stanja - tragač}) opisuje dinamičko ponašanje sustava uslijed raznih mogućih
+		događaja. Uspješnom prijavom prikazana je početna stranica korisnika u ulozi tragača. 
+		Na početnoj stranici tragač bira jednu od tri opcije:
+		\begin{packed_item}
+		\item opciju \textit{Moj profil} dostupnu svakom korisniku, koja ga vodi na stranicu sa osobnim podacima, gdje ih može uređivati
+		\item opciju \textit{O životinjama} koja ga vodi na stranicu na kojoj su prikazane sve vrste životinja u aplikaciji, a klikom na pojedinu vrstu dobiva popis jedinki te vrste i dalje klikom na pojedinu jedinku dobiva opširnije informacije specifično o toj jedinki
+		\item opciju \textit{Moja akcija} koja ga vodi na stranicu s prikazom karte i dodatnim opcijama za pregled zadataka, ostalih tragača i praćenih životinja; nakon klika na praćene životinje ili ostale tragače, tragaču se prikazuje lista istih, a klikom na pojedinca te liste(tragača ili životinju) na karti mu se prikazuje trenutna pozicija odabranog
+		\end{packed_item}
+
+		\begin{figure}[H]
+			\includegraphics[scale=0.9]{slike/dijagram stanja - tragač.png}
+			\centering
+			\caption{Dijagram stanja - tragač}
+			\label{fig:dijagram stanja - tragač}
+		\end{figure}
 			
 			\eject 
 		
 		\section{Dijagram aktivnosti}
-			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
-			
+
+		Dijagramom aktivnosti na slici  \ref{fig:dijagram aktivnosti - stvaranje nove akcije} modelirano je stvaranje nove akcije korisnika u ulozi istraživača.
+		Do postupka stvaranja nove akcije dolazi se sa stranice prikaza popisa akcija klikom na 
+		\textit{Stvori novu akciju}. Na formularu za novu akciju se prilikom klika na \textit{Stvori novu akciju},
+		prije spremanja podataka nove akcije u bazu, provjerava jesu li uneseni svi potrebni podatci i jesu li uneseni podatci ispravni.
+		Nakon uspješnog stvaranja nove akcije, korisniku se prikazuje osvježen popis akcija, a ukoliko korisnik odustane od stvaranja nove akcije klikom na 
+		\textit{Odustani} prikaz se vraća na popis akcija.
+
+		\begin{figure}[H]
+			\includegraphics[scale=0.45]{slike/dijagram aktivnosti - stvaranje nove akcije.png}
+			\centering
+			\caption{Dijagram aktivnosti - stvaranje nove akcije}
+			\label{fig:dijagram aktivnosti - stvaranje nove akcije}
+		\end{figure}
+
 			\eject
+
+
 		\section{Dijagram komponenti}
+
+		UML-dijagram komponenti je vrsta strukturnog UML-dijagrama koji
+		prikazuje organizaciju i odnose komponenti koje čine programsku potporu. Pruža vizualni prikaz
+		arhitekture sustava, naglašavajući modularnu strukturu i interakcije između komponenti, interne strukture i okoline.
+		\newline Sustavu se pristupa preko dva razlicita sučelja. Preko sučelja za dohvat HTML, CSS i JS datoteka poslužuju se
+datoteke koje pripadaju \textit{frontend} dijelu aplikacije. Router je komponenta koja na
+upit s url određuje koja datoteka će se poslužiti na sučelje. Frontend dio se sastoji
+od niza JavaScript datoteka koje su raspoređene u logičke cjeline nazvane po tipovima aktora koji im pristupaju. Sve JavaScript datoteke ovise o React biblioteci iz
+koje dohvaćaju gotove komponente kao što su gumbi, forme i slično. Preko sučelja 
+za dohvat JSON podataka pristupa se REST API komponenti. REST API poslužuje
+podatke koji pripadaju \textit{backend} dijelu aplikacije. JpaRepository je sučelje Spring Data JPA projekta korišteno
+za jednostavan dohvat i manipulaciju s podacima u bazi podataka, pružajući apstrakciju nad JPA 
+(Java Persistence API) omogućavajući  izvođenje operacija nad entitetima bez potrebe za izravnim pisanjem SQL upita. Podaci koji su pristigli 
+iz baze se šalju dalje MVC arhitekturi u obliku DTO  (Data transfer object). 
+React-view komponenta preko dostupnih sučelja komunicira sa \textit{WildTrack} aplikacijom
+te ovisno o korisnikovim akcijama osvježava prikaz i dohvaća nove podatke ili datoteke.
 		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+		\begin{figure}[H]
+			\includegraphics[scale=0.35]{slike/dijagram komponenti.png}
+			\centering
+			\caption{Dijagram komponenti}
+			\label{fig:dijagram komponenti}
+		\end{figure}
