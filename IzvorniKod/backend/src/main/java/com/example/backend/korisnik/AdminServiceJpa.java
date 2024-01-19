@@ -134,7 +134,6 @@ public class AdminServiceJpa {
                     return true;
                 }
             }
-
         }
         return false;
     }
@@ -156,12 +155,17 @@ public class AdminServiceJpa {
                         break;
                     }
                 }
-                System.out.println("Station has no manager. Save new.");
-                BelongsToStation newEntry = new BelongsToStation(username, id);
-                belongsToStationRepository.save(newEntry);
-            }
 
+                if (id != null) {
+                    System.out.println("Station has no manager. Save new.");
+                    BelongsToStation newEntry = new BelongsToStation(username, id);
+                    belongsToStationRepository.save(newEntry);
+                } else {
+                    return false;
+                }
+            }
         }
+
         userRepository.save(user_confirm);
         return true;
     }
