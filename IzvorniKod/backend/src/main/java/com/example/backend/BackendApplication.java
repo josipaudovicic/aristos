@@ -19,7 +19,7 @@ public class BackendApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://wildtrack-y796.onrender.com")
+                        .allowedOrigins("https://wildtrack-qnk5.onrender.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE");
             }
         };
