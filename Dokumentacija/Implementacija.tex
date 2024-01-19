@@ -127,12 +127,75 @@
 		
 		\section{Upute za puštanje u pogon}
 		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
+			Puštanje web aplikacije u pogon sastoji se od tri segmenta:
+
+			\begin{packed_item}
+				\item Stvaranje baze podataka
+				\item Puštanje \textit{backend-a} u pogon
+				\item Puštanje \textit{frontend-a} u pogon
+			\end{packed_item}
+
+			\subsubsection{Stvaranje baze podataka}
+
+			Baza podataka besplatno je spremljena na web-oblaku render.com. 
+			Ona se postavlja i osposobljava sljedećim koracima:
+
+			\begin{packed_enum}
+				\item Stvaranje nove baze
+				
+				\begin{packed_item}
+					\item Potrebno je (nakon registracije na render.com) odabrati opciju New te na padajućem izborniku PostgreSQL
+					\item Pojavljuje se izbornik koji ispunjavamo kao na slici \ref{fig:postavljanje baze1}
+					\item Biramo \textit{Create Database}
+				\end{packed_item}
+
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/postavljanje baze1.png}
+				\centering
+				\caption{Stvaranje nove PostgreSQL baze}
+				\label{fig:postavljanje baze1}
+			\end{figure}
+
+			 \item Dohvat podataka za spajanje
+			 \begin{packed_item}
+				\item Odabiremo \textit{Dashboard -  wildtrack BAZA -  Info}
+				\item Spuštamo stranicu do izbora \textit{Connections} sa informacijama potrebnim za spajanje na bazu (slika \ref{fig:postavljanje baze2}).
+			\end{packed_item}
+
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/postavljanje baze2.png}
+				\centering
+				\caption{Dohvat podataka za spajanje baze}
+				\label{fig:postavljanje baze2}
+			\end{figure}
+
+			\item Spajanje putem pgAdmina
+			\begin{packed_item}
+				\item Odabiremo \textit{Object - Create - Server}
+				\item Na kartici \textit{General} unosimo ime servera kojeg otvaramo u pgAdminu
+				\item Na kartici \textit{Connection} unosimo podatke kao na slici \ref{fig:postavljanje baze3} i spremamo ih sa \textit{Save}
+			\end{packed_item}
+
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/postavljanje baze3.png}
+				\centering
+				\caption{Unos podataka za spajanje baze}
+				\label{fig:postavljanje baze3}
+			\end{figure}
+
+			\item Spajanje iz \textit{backenda}
+			\begin{packed_item}
+				\item U \textit{src/main/resources/application.properties} upisujemo naredbe sa slike \ref{fig:postavljanje baze4}
+			\end{packed_item}
 			
-			
-			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
-			
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/postavljanje baze4.png}
+				\centering
+				\caption{Spajanje baze iz \textit{backenda}}
+				\label{fig:postavljanje baze4}
+			\end{figure}
+
+
+			\end{packed_enum}
 			
 			\eject 
