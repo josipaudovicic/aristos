@@ -84,7 +84,7 @@ function Profile() {
       </div>
       <div>
         <label style={labelStyle}>Fotografija: </label>
-        {userData.file && <span style={spanStyle}><img src={userData.file} style={img} alt="User" /></span>}
+        {userData.file && <span style={spanStyle}><img src={BASE_URL + '' + userData.file} style={img} alt="User" /></span>}
       </div>
       <div style={centerStyle}>
         <button style={buttonStyle} onClick={handleEdit}>

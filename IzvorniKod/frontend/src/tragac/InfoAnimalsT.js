@@ -16,13 +16,13 @@ function InfoAnimals() {
     console.log(comments);
     console.log(commentsList);
     if (animal.animalName === "Sivi sokol") {
-        src = '/animalImages/sivisokol.jpg';
+        src = `${BASE_URL}/animalImages/sivisokol.jpg`;
     } else if (animal.animalName === "Smedi medvjed") {
-        src = '/animalImages/smedimedvjed.jpg';
+        src = `${BASE_URL}/animalImages/smedimedvjed.jpg`;
     } else if (animal.animalName === "Kuna bjelica") {
-        src = '/animalImages/kunabjelica.jpg';
+        src = `${BASE_URL}/animalImages/kunabjelica.jpg`;
     } else {
-        src = '/animalImages/sivivuk.jpg';
+        src = `${BASE_URL}/animalImages/sivivuk.jpg`;
     }
 
     useEffect(() => {

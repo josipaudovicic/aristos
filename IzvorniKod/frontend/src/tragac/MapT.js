@@ -226,7 +226,7 @@ function MapT() {
       const marker = L.marker([task.animalLatitude, task.animalLongitude], { icon: markerIcon }).addTo(map).bindPopup(task.animalName).openPopup();
       markers.push(marker);
       console.log(task);
-      fetch(`http://router.project-osrm.org/route/v1/${action.vehicle}/${task.startLongitude},${task.startLatitude};${task.endLongitude},${task.endLatitude}?overview=false&steps=true&geometries=polyline`, {
+      fetch(`https://router.project-osrm.org/route/v1/${action.vehicle}/${task.startLongitude},${task.startLatitude};${task.endLongitude},${task.endLatitude}?overview=false&steps=true&geometries=polyline`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
