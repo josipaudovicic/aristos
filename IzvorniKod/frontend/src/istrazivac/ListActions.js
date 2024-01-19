@@ -7,6 +7,7 @@ const ListActions = () => {
     const [actions, setActions] = useState(location.state?.actions);
     const username = location.state?.username;
     const navigate = useNavigate();
+    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
         fetch(`${BASE_URL}/explorer/actions` , {
@@ -55,7 +56,11 @@ const ListActions = () => {
         borderRadius: '50%',
         cursor: 'pointer',
         fontSize: '30px',
-    };
+        fontWeight: 'bold',
+        backgroundColor: isHovered ? '#024D44' : 'beige', 
+        color: isHovered ? 'beige' : '#024D44', 
+        cursor: 'pointer', 
+      };
 
 
     const handleMouseOver = (e) => {
@@ -87,7 +92,7 @@ const ListActions = () => {
             ))}
           </ul>
           <div>
-            <button onClick={handleAction} style={bStyle} title="Stvori novu akciju">+</button>
+            <button onClick={handleAction} style={bStyle} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} title="Stvori novu akciju">+</button>
           </div>
         </div>
       </div>

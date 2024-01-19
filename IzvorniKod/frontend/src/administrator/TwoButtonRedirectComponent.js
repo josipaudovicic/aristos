@@ -27,23 +27,25 @@ function TwoButtonRedirectComponent() {
   };
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h2>Odaberi opciju:</h2>
+    <div style={{ textAlign: 'center', marginTop: '-150px' }}>
+      <h2 style={{marginBottom: '5px'}}>Odaberi opciju:</h2>
       <button
         style={{
           fontSize: '1.5em',
           padding: '10px 20px',
-          margin: '10px',
+          marginTop: '20px',
+          width: '230px',
         }}
         onClick={() => redirectToPage('getUsers')}
       >
         Pregled Korisnika
-      </button>
+      </button> <br></br>
       <button
         style={{
           fontSize: '1.5em',
           padding: '10px 20px',
-          margin: '10px',
+          marginTop: '20px',
+          width: '230px',
         }}
         onClick={() => redirectToPage('requests')}
       >

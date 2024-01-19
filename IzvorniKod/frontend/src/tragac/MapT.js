@@ -29,33 +29,6 @@ function MapT() {
     iconColor: 'red'
   });
 
-  useEffect(() => {
-    const initializeMap = () => {
-      try {
-        const mapContainer = document.getElementById('map');
-
-        if (mapContainer && !mapContainer._leaflet_id) {
-          console.log('Initializing map...');
-          const newMap = L.map(mapContainer, {
-            center: [45.1, 16.3],
-            zoom: 7,
-          });
-
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-            maxZoom: 15,
-          }).addTo(newMap);
-
-          setMap(newMap);
-        }
-      } catch (error) {
-        console.error('Error initializing map:', error);
-      }
-    };
-
-    initializeMap();
-  }, []);
-
     useEffect(() => {
       const sendLocationData = async () => {
         try {
@@ -90,7 +63,7 @@ function MapT() {
       sendLocationData();
       const intervalId = setInterval(sendLocationData, 3 * 60 * 1000); 
       return () => clearInterval(intervalId);
-    }, [username, action.actionId]);  
+    }, [username, action.actionId]); 
 
   useEffect(() => {
     fetch(`${BASE_URL}/tracker/action`, {	
@@ -121,12 +94,6 @@ function MapT() {
     
           const data = await response.json();
           console.log(data);
-
-          map.eachLayer((layer) => {
-            if (layer instanceof L.CircleMarker) {
-              map.removeLayer(layer);
-            }
-          });
     
           if (map) {
             L.circleMarker([data.latitude, data.longitude], { radius: 7, color: 'red' })
@@ -142,6 +109,34 @@ function MapT() {
       const intervalId = setInterval(fetchData, 5 * 60 * 1000);
       return () => clearInterval(intervalId);
     }, [username, map]);        
+
+
+    useEffect(() => {
+      const initializeMap = () => {
+        try {
+          const mapContainer = document.getElementById('map');
+  
+          if (mapContainer && !mapContainer._leaflet_id) {
+            const map = L.map(mapContainer, {
+              center: [45.1, 16.3],
+              zoom: 7,
+            });
+  
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+              maxZoom: 15,
+            }).addTo(map);
+
+            setMap(map);
+          }
+        } catch (error) {
+          console.error('Error initializing map:', error);
+        }
+      };
+  
+      initializeMap();
+    }, []);
+
 
     useEffect(() => {
       fetch(`${BASE_URL}/tracker/action/tasks`, {	
@@ -286,7 +281,7 @@ function MapT() {
       const container = {
         position: 'fixed',
         bottom: '10px',
-        left: '3px',
+        right: '3px',
         width: '189px',
         backgroundColor: 'white',
         borderRadius: '6px',
@@ -372,31 +367,33 @@ function MapT() {
 
     const pStyle = {
       position: 'fixed',
-      top: '35px',
-      left: '1px',
+      bottom: '35px',
+      left: '10px',
       padding: '8px 16px',
+      color: '#fff',
   }
 
   const p2Style = {
     position: 'fixed',
-    top: '60px',
-    left: '1px',
+    bottom: '60px',
+    left: '10px',
     padding: '8px 16px',
+    color: '#fff',
 }
 
   const h3Style = {
     position: 'fixed',
-    top: '0px',
-    left: '1px',
+    bottom: '0px',
+    left: '10px',
     padding: '8px 16px',
+    color: '#fff',
 }
 
 const buttonStyle = {
   position: 'fixed',
-  top: '120px',
-  left: '10px',
+  top: '70px',
+  right: '10px',
   padding: '8px 16px',
-  backgroundColor: '#5C5C5C',
   color: '#fff',
   borderRadius: '4px',
   cursor: 'pointer',
@@ -406,7 +403,7 @@ const buttonStyle = {
 const checkboxStyle = {
   position: 'fixed',
   top: '120px',
-  right: '10px',
+  left: '10px',
   backgroundColor: 'white',
   borderRadius: '6px',
   width: '180px',
@@ -448,7 +445,6 @@ function ExplorerComment ({ task, comments }) {
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     borderRadius: '4px',
     padding: '8px',
-    zIndex: '1000',
     border: '1px solid #ddd',
     minWidth: '170px',
     overflowY: 'auto', 
@@ -476,12 +472,13 @@ function ExplorerComment ({ task, comments }) {
   );
 }
 
+
   return (
     <div>
-      <div id="map" style={{ height: '150vh', width: '150vh' }} />;
-      <h3 style={h3Style}>Ime akcije: {action.actionName}</h3>
-      <p style={pStyle}>Tvoj istraživač: {action.explorerName}</p>
-      <p style={p2Style}>Tvoje vozilo: {action.vehicleName}</p>
+      <div id="map" style={{ height: '103vh', width: '150vh'}} />;
+        <h3 style={h3Style}>Ime akcije: {action.actionName}</h3>
+        <p style={pStyle}>Tvoj istraživač: {action.explorerName}</p>
+        <p style={p2Style}>Tvoje vozilo: {action.vehicleName}</p>
       <button style={buttonStyle} onClick={handleTrackers}>Ostali tragači na akciji</button>
       {showComments && (<CommentsModal comments={comments} onClose={() => setShowComments(false)}
       />)} 

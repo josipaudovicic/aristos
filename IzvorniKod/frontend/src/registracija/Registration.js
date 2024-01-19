@@ -6,6 +6,7 @@ import { BASE_URL } from '../config';
 
 function Registration() {
   const navigate = useNavigate();
+  const [isHovered, setIsHovered] = useState(false);
 
   const [formData, setFormData] = useState({
     status: '',
@@ -111,6 +112,19 @@ function Registration() {
     return true;
   };
 
+  const button = {
+    backgroundColor: isHovered ? '#012B27' : '#024D44', 
+    color: 'white',
+    padding: '10px',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    marginTop: '5px',
+    fontFamily: 'Arial',
+    fontSize: '16px',
+    width: '100px',
+  };
+
   return (
     <div className='container'>
       <h2>Registriraj se:</h2>
@@ -141,7 +155,7 @@ function Registration() {
         <label htmlFor="surname">Prezime: <input type="text" id="surname" name="surname" value={formData.surname} onChange={handleInputChange} required/></label>
         <label htmlFor="email">E-mail: <input type="email" id='email' name='email' value={formData.email} onChange={handleInputChange} required/></label>
         <label> 
-          <input type="submit" id="submitBtn" value={"Potvrdi"} onClick={handleSubmit} />
+          <input type="submit" style={button} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} value={"Potvrdi"} onClick={handleSubmit} />
         </label>
         <p>Već ste se registrirali? <Link to="/">Prijava</Link></p>
       </form>

@@ -67,7 +67,8 @@ public class ManagerController {
         if (managerService.addTrackersToAction(requestData) == true) {
             return ResponseEntity.ok("Trackers successfully added to action");
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: could not add trackers to action.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: could not add trackers to action" +
+                    ".");
         }
     }
 

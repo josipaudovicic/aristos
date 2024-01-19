@@ -51,7 +51,7 @@ const Korisnik = () => {
 
 
   return (
-    <div>
+    <div className='container'>
       <h2>Korisnik: {user.username}</h2>
       <p>Ime: {user.name}</p>
       <p>Prezime: {user.surname}</p>
