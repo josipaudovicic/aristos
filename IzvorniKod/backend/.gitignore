@@ -1,5 +1,4 @@
-/node_modules
-HELP.md
+cdHELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -32,20 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-=======
-*.aux
-
-*.lof
-*.log
-
-*.lot
-
-*.out
-
-*.synctex.gz
-
-*.toc
-
-*.fdb_latexmk
-*.fls
-
