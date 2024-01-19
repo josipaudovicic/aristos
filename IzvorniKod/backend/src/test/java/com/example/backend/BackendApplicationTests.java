@@ -3,10 +3,7 @@ package com.example.backend;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import com.example.backend.korisnik.*;
 import com.example.backend.korisnik.HelpingTables.BelongsToStation;
@@ -72,7 +69,6 @@ class BackendApplicationTests {
     @Transactional
     //Testiranje vraća li funkcija pravog korisnika za dohvaćanje korisnika s postojećim korisničkim imenom
     void testGetUserByUsernameThatExists() {
-        // Arrange
         String username = "testUser";
         Users expectedUser = new Users(username, "email", "password", "name", "surname"); // Adjust based on your Users entity
 
@@ -120,5 +116,20 @@ class BackendApplicationTests {
     void testFindVehicleByNonexistentId() {
         Long nonExistentVehicleId = 10L;
         assertThrows(IllegalStateException.class, () -> vehicleService.findVehicleById(nonExistentVehicleId));
+    }
+
+    @Test
+    @Transactional
+    //Test hoće li funkcija za dobro ime, ali lošu lozinku vratiti False
+    public void testLoginInvalidPassword() {
+        String testUsername = "testUser";
+        String testCorrectPassword = "testCorrectPassword";
+        String testWrongPassword = "testWrongPassword";
+        Users testUser = new Users(testUsername, "testUser@gmail.com", testCorrectPassword, "Test", "User");
+
+        when(userRepository.existsById(testUsername)).thenReturn(true);
+        when(userRepository.getReferenceById(testUsername)).thenReturn(testUser);
+
+        assertFalse(userService.login(testUsername, testWrongPassword));
     }
 }
