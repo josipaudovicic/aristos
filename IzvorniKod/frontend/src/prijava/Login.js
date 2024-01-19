@@ -47,7 +47,7 @@ function Login() {
           const result = await response.text(); // Assuming the backend returns a simple string response
           console.log(result);
           if (result === "true") {
-            const response = await fetch(`/role`, {
+            const response = await fetch(`${BASE_URL}/role`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
