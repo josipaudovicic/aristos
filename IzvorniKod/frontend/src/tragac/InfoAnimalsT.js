@@ -1,5 +1,7 @@
 import React, { useEffect, useState }  from 'react';
 import { useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
+
 
 function InfoAnimals() {
     const location = useLocation();
@@ -24,7 +26,7 @@ function InfoAnimals() {
     }
 
     useEffect(() => {
-        fetch(`/tracker/animals/species/${id}/comments`, {
+        fetch(`${BASE_URL}/tracker/animals/species/${id}/comments`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -92,7 +94,7 @@ function InfoAnimals() {
             setComment('');
           }
         
-        fetch(`/tracker/animals/species/${id}/comment`, {
+        fetch(`${BASE_URL}/tracker/animals/species/${id}/comment`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

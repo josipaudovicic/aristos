@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
+
 
 function Individual () {
     const [animalData, setAnimalData] = useState({});
@@ -10,7 +12,7 @@ function Individual () {
     const username = location.state?.username;
 
     useEffect(() => {
-        fetch(`/tracker/animals/species`, {
+        fetch(`${BASE_URL}/tracker/animals/species`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -28,7 +30,7 @@ function Individual () {
         const parts = animal.split(': ');
         const id = parts[1];
       
-        fetch(`/tracker/animals/species/${id}`, {
+        fetch(`${BASE_URL}/tracker/animals/species/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -36,7 +38,7 @@ function Individual () {
         })
           .then((response1) => response1.json())
           .then((data1) => {
-            return fetch(`/tracker/animals/species/${id}/comments`, {
+            return fetch(`${BASE_URL}/tracker/animals/species/${id}/comments`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',

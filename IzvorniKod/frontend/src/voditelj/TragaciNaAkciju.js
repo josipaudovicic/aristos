@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function TragaciNaAkciju() {
     const [availableTrackers, setAvailableTrackers] = useState([]);
@@ -15,9 +16,8 @@ function TragaciNaAkciju() {
     
     
     useEffect(() => {
-        // Fetch users with confirmed attribute set to NULL
         const fetchTrackers = async () => {
-         const response =  await fetch('/manager/activeAction/trackers', {
+         const response =  await fetch(`${BASE_URL}/manager/activeAction/trackers`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ function TragaciNaAkciju() {
 
   const handleAdd = async (trackerId) => {
     try {
-      const response = await fetch(`/manager/activeAction/trackers/addTracker`, {
+      const response = await fetch(`${BASE_URL}/manager/activeAction/trackers/addTracker`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

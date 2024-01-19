@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function OdabirAkcija() {
   
@@ -13,7 +14,7 @@ function OdabirAkcija() {
       let response;
       console.log("Username prije odabira tipa akcije: ", location.state.username);
       if (path === "inactiveActions") {
-        response = await fetch(`/manager/inactiveActions`, { 
+        response = await fetch(`${BASE_URL}/manager/inactiveActions`, { 
         method: 'GET', 
         headers: {
           'Content-Type': 'application/json', 
@@ -21,7 +22,7 @@ function OdabirAkcija() {
         },
       });
       } else {
-        response = await fetch(`/manager/activeActions`, { 
+        response = await fetch(`${BASE_URL}/manager/activeActions`, { 
           method: 'GET', 
           headers: {
             'Content-Type': 'application/json', 

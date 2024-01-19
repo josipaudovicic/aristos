@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
+
 
 function Species () {
     const [animalData, setAnimalData] = useState({});
@@ -8,7 +10,7 @@ function Species () {
     const username = location.state?.username;
 
     useEffect(() => {
-        fetch(`/tracker/animals`, {
+        fetch(`${BASE_URL}/tracker/animals`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

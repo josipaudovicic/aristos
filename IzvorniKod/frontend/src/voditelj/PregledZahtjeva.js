@@ -1,5 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function PregledZahtjeva() {
     const navigate = useNavigate();
@@ -9,7 +10,7 @@ function PregledZahtjeva() {
     
     useEffect(() => {
       const fetchRequests = () => {
-        fetch(`/manager/requests`, {
+        fetch(`${BASE_URL}/manager/requests`, {
           method: 'GET', 
           headers: {
             'Content-Type': 'application/json', 

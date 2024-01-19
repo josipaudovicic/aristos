@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { BASE_URL } from '../config';
 
 
 function Poruka() {
@@ -14,7 +15,7 @@ function Poruka() {
         
         const fetchData = async () => {
           try {
-            const response = await fetch("/waitEmail", {
+            const response = await fetch(`${BASE_URL}/waitEmail`, {
               method: 'GET', 
               headers: {
                 'Content-Type': 'application/json', 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 const transportModesList = ['pješke', 'dronom', 'automobilom', 'cross motorom', 'brodom', 'helikopterom'];
 
@@ -38,7 +39,7 @@ function PregledSvihTragaca() {
 
   const handleSubmit = async () => {
     try {
-      const addTrackersResponse = await fetch(`/manager/${location.state.username}/station/addTrackers`, {
+      const addTrackersResponse = await fetch(`${BASE_URL}/manager/${location.state.username}/station/addTrackers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +57,7 @@ function PregledSvihTragaca() {
         try {
           const selectedTracker = trackers.find((tracker) => tracker.username === selectedTrackerUsername);
   
-          const response = await fetch(`/manager/tracker/${selectedTracker.username}`, {
+          const response = await fetch(`${BASE_URL}/manager/tracker/${selectedTracker.username}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',

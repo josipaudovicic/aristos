@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { BASE_URL } from '../config';
 
 function Confirmation() {
     const location = useLocation();
@@ -17,7 +18,7 @@ function Confirmation() {
         return;
       }
       try {
-        const response = await fetch(`/mail?token=${token}`, {
+        const response = await fetch(`${BASE_URL}/mail?token=${token}`, {
           method: "GET"
         });
 
