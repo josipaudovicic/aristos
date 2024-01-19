@@ -17,6 +17,7 @@ const Map = () => {
     const [vehicles, setVehicles] = useState();
     const [showDropdown, setShowDropdown] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
+    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
         const initializeMap = () => {
@@ -73,16 +74,15 @@ const Map = () => {
     const pStyle = {
         position: 'fixed',
         top: '0px',
-        left: '1px',
+        right: '40px',
         padding: '8px 16px',
     }
 
     const buttonStyle = {
         position: 'fixed',
         top: '45px',
-        left: '20px',
+        right: '15px',
         padding: '8px 16px',
-        backgroundColor: '#5C5C5C',
         color: '#fff',
         borderRadius: '4px',
         cursor: 'pointer',
@@ -92,9 +92,8 @@ const Map = () => {
     const button2Style = {
         position: 'fixed',
         top: '85px',
-        left: '20px',
+        right: '15px',
         padding: '8px 16px',
-        backgroundColor: '#5C5C5C',
         color: '#fff',
         borderRadius: '4px',
         cursor: 'pointer',
@@ -104,10 +103,13 @@ const Map = () => {
     const b2Style = {
         position: 'fixed',
         bottom: '20px',
-        right: '20px',
+        left: '20px',
         padding: '6px 16px',
         width: '100px',
         fontSize: '20px',
+        backgroundColor: isHovered ? '#024D44' : 'beige', 
+        color: isHovered ? 'beige' : '#024D44', 
+        cursor: 'pointer', 
     };
 
     const handleOptionClick = (option) => {
@@ -224,7 +226,7 @@ const Map = () => {
         const dropdownStyle = {
           position: 'absolute',
           top: '165px',
-          left: '8px',
+          right: '8px',
           backgroundColor: '#fff',
           boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
           borderRadius: '4px',
@@ -310,7 +312,7 @@ const Map = () => {
             <button onClick={handleAnimals} style={button2Style}>Životinje</button>
             {showDropdown && <Dropdown />}
             {location.state?.action.actionActive === "true" && (
-            <button onClick={handleInfo} style={b2Style}>Info</button>)}
+            <button onClick={handleInfo} style={b2Style} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>Info</button>)}
         </div>
     );
 };
