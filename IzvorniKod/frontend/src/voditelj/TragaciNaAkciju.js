@@ -50,32 +50,74 @@ function TragaciNaAkciju() {
     navigate('/manager', { state: { username: location.state.username}});
   };
 
+
+  const li = {
+    border: '1px solid #ccc',
+    marginBottom: '3px',
+    padding: '5px',
+    display: 'flex',
+    flexDirection: 'column',
+    pointer: 'cursor',
+  };
+
+  const ul = {
+    listStyleType: 'none',
+    padding: '0',
+  };
+
+  const container = {
+    backgroundColor: '#ffffff',
+    borderRadius: '8px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    padding: '15px',
+    width: '550px',
+    overflowY: 'auto', 
+    maxHeight: '700px',
+  };
+
+  const h2style = {
+    textAlign: 'center',
+    marginBottom: '10px',
+    marginTop: '30px',
+  };
+
+  const pStyle = {
+    margin: '3px',
+  };
+
   const buttonStyle = {
-    flex: '1', 
-    marginLeft: '8px',
+    marginLeft: '393px',
     padding: '8px 16px',
     fontSize: '16px',
-    marginTop: '12px',
+    marginTop: '3px',
+    cursor: 'pointer',
+  };
+
+  const p = {
+    textAlign: 'center',
   };
 
   return (
-    <div className='container'>
-      <h2>Lista tragača na akciji:</h2> 
-      <ul>
+    <div style={container}> 
+      <h2 style={h2style}>Lista tragača na akciji:</h2> 
+      <ul style={ul}>
         {activeTrackers ? activeTrackers.map((tracker) => (
-          <li key={tracker.username}>
-            <strong>Username</strong> {tracker.username}, <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}
+          <li style={li} key={tracker.username}>
+            <p style={pStyle}><b>Username:</b> {tracker.username}</p>
+            <p style={pStyle}><b>Ime:</b> {tracker.name}</p>
+            <p style={pStyle}><b>Prezime:</b> {tracker.surname}</p>
           </li>
-        )) : <p>Nema aktivnih tragača</p>}
+        )) : <p style={p}>Nema aktivnih tragača</p>}
       </ul>
-      <h2>Lista tragača dostupnih za dodavanje na akciju:</h2> 
-      <ul>
+      <h2 style={h2style}>Lista tragača dostupnih za dodavanje na akciju:</h2> 
+      <ul style={ul}>
         {availableTrackers ? availableTrackers.map((tracker) => (
-          <li key={tracker.username} style={{ cursor: 'pointer' }}>
-            <strong>Ime:</strong> {tracker.name}, <strong>Prezime:</strong> {tracker.surname}
+          <li key={tracker.username} style={{...li, cursor: 'pointer' }}>
+            <p style={pStyle}><b>Ime:</b> {tracker.name}</p>
+            <p style={pStyle}><b>Prezime:</b> {tracker.surname}</p>
             <button style={buttonStyle} onClick={() => handleAdd(tracker.username)}>Dodaj</button>
           </li>
-        )) : <p>Nema dostupnih tragača</p>}
+        )) : <p style={p}>Nema dostupnih tragača</p>}
       </ul>
     </div>
   );

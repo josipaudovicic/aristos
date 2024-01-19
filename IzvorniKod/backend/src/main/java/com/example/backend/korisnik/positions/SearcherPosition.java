@@ -23,6 +23,17 @@ public class SearcherPosition {
     private Double latitude;
     private Double longitude;
 
+    public SearcherPosition() {
+    }
+
+    public SearcherPosition(Users user, Actions action, Double latitude, Double longitude) {
+        this.user = user;
+        this.action = action;
+        this.timeStamp = new Timestamp((System.currentTimeMillis()));
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public Users getUser() {
         return user;
     }

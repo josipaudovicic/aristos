@@ -183,4 +183,11 @@ public class TrackerService {
         }
         return returning;
     }
+
+    public void postMyPosition(String username, String latitude, String longitude, String actionId) {
+        Users user = userService.getUserByUsername(username);
+        Actions action = actionService.getActionById(Long.parseLong(actionId));
+        SearcherPosition searcherPosition = new SearcherPosition(user, action, Double.parseDouble(latitude), Double.parseDouble(longitude));
+        searcherPositionService.save(searcherPosition);
+    }
 }

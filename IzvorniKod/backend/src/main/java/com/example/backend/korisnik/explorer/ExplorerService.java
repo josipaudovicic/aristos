@@ -167,6 +167,7 @@ public class ExplorerService {
         Actions action = actionService.getActionByName(actionName);
         Users user = userService.getUserByUsername(username);
         List<SearcherPosition> allSearchers = searcherPositionService.findByActionAndUser(action, user);
+        SearcherPosition latest = searcherPositionService.findLatestByUser(user, action);
         List<SearcherPosition> filtered = new java.util.ArrayList<>(List.of());
         for (SearcherPosition searcher : allSearchers) {
             if (actionService.isBetweenTime(searcher.getTimeStamp(), action)) {
@@ -181,6 +182,8 @@ public class ExplorerService {
             kaoSearcher.put("latitude", searcher.getLatitude().toString());
             kaoSearcher.put("longitude", searcher.getLongitude().toString());
             kaoSearcher.put("vehicleId", vehicle.getVehicleId().toString());
+            kaoSearcher.put("latestLatitude", latest.getLatitude().toString());
+            kaoSearcher.put("latestLongitude", latest.getLongitude().toString());
             returning.add(kaoSearcher);
         }
 

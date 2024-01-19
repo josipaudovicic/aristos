@@ -28,6 +28,69 @@ function MapT() {
   });
 
   useEffect(() => {
+    const initializeMap = () => {
+      try {
+        const mapContainer = document.getElementById('map');
+
+        if (mapContainer && !mapContainer._leaflet_id) {
+          console.log('Initializing map...');
+          const newMap = L.map(mapContainer, {
+            center: [45.1, 16.3],
+            zoom: 7,
+          });
+
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+            maxZoom: 15,
+          }).addTo(newMap);
+
+          setMap(newMap);
+        }
+      } catch (error) {
+        console.error('Error initializing map:', error);
+      }
+    };
+
+    initializeMap();
+  }, []);
+
+    useEffect(() => {
+      const sendLocationData = async () => {
+        try {
+          const position = await new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+          });
+  
+          const { latitude, longitude } = position.coords;
+          console.log('Location data:', latitude, longitude);
+          const postData = {
+            latitude: latitude.toFixed(3),
+            longitude: longitude.toFixed(3),
+            username: username,
+            actionId: action.actionId,
+          };
+
+            const response = await fetch('/tracker/action/position', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData),
+          });
+  
+          const responseData = await response.json();
+          console.log('Location data sent successfully:', responseData);
+        } catch (error) {
+          console.error('Error sending location data:', error.message);
+        }
+      };
+  
+      sendLocationData();
+      const intervalId = setInterval(sendLocationData, 3 * 60 * 1000); 
+      return () => clearInterval(intervalId);
+    }, [username, action.actionId]);  
+
+  useEffect(() => {
     fetch(`/tracker/action`, {	
       method: 'GET',
       headers: {
@@ -44,50 +107,39 @@ function MapT() {
     }, [username]);
 
     useEffect(() => {
-      fetch(`/tracker/action/position`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          username: username,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          if (map) {
-            L.circleMarker([data.latitude, data.longitude], { radius: 7, color: 'red' }).addTo(map).bindPopup('Moja pozicija').openPopup(); 
-          }
-        })
-        .catch((error) => console.error('Error:', error));
-    }, [username, map]);         
-
-
-    useEffect(() => {
-      const initializeMap = () => {
+      const fetchData = async () => {
         try {
-          const mapContainer = document.getElementById('map');
-  
-          if (mapContainer && !mapContainer._leaflet_id) {
-            const map = L.map(mapContainer, {
-              center: [45.1, 16.3],
-              zoom: 7,
-            });
-  
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-              maxZoom: 15,
-            }).addTo(map);
+          const response = await fetch(`/tracker/action/position`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              username: username,
+            },
+          });
+    
+          const data = await response.json();
+          console.log(data);
 
-            setMap(map);
+          map.eachLayer((layer) => {
+            if (layer instanceof L.CircleMarker) {
+              map.removeLayer(layer);
+            }
+          });
+    
+          if (map) {
+            L.circleMarker([data.latitude, data.longitude], { radius: 7, color: 'red' })
+              .addTo(map)
+              .bindPopup('Moja pozicija')
+              .openPopup();
           }
         } catch (error) {
-          console.error('Error initializing map:', error);
+          console.error('Error:', error);
         }
       };
-  
-      initializeMap();
-    }, []);
-
+      fetchData();
+      const intervalId = setInterval(fetchData, 5 * 60 * 1000);
+      return () => clearInterval(intervalId);
+    }, [username, map]);        
 
     useEffect(() => {
       fetch(`/tracker/action/tasks`, {	
@@ -248,7 +300,6 @@ function MapT() {
         padding: '2px 12px',
         backgroundColor: 'white',
         color: 'black',
-        borderRadius: '4px',
         display: 'block',
        marginLeft: 'auto',    
        marginBottom: '-40px', 
@@ -351,7 +402,6 @@ const buttonStyle = {
 };
 
 const checkboxStyle = {
-  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   position: 'fixed',
   top: '120px',
   right: '10px',
@@ -426,7 +476,7 @@ function ExplorerComment ({ task, comments }) {
 
   return (
     <div>
-      <div id="map" style={{ height: '150vh', width: '150vh', zIndex: '-1' }} />;
+      <div id="map" style={{ height: '150vh', width: '150vh' }} />;
       <h3 style={h3Style}>Ime akcije: {action.actionName}</h3>
       <p style={pStyle}>Tvoj istraživač: {action.explorerName}</p>
       <p style={p2Style}>Tvoje vozilo: {action.vehicleName}</p>
