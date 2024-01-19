@@ -87,7 +87,7 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 			\subsection{Opis tablica}
 			
 					\textbf {Zadatak} Ovaj entitet sadrži sve važne informacije o zadatcima koje obavljaju tragači tijekom akcije, a stvaraju istraživači. Sadrži
-				atribute: šifra zadatka, korisničko ime, tekst, završen, šifra akcije, šifra životinje i šifra vozila. 
+				atribute: šifra zadatka, korisničko ime, tekst, završen, početna lokacija, krajnja lokacija šifra akcije, šifra životinje i šifra vozila. 
 				Ova tablica je u vezi s tablicom Prijevozno sredstvo preko tablice Osposobljen za te izravno preko 
 				dentifikatora vozila(šifra vozila), s tablicom Akcija izravno preko identifikatora akcije (šifra akcije), 
 				s tablicom Životinja izravno preko identifikatora životinje (šifra životinje).
@@ -102,16 +102,18 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \SetCell[c=3]{c}{\textbf{Zadatak}}	 \\ \hline[3pt]
 					\SetCell{LightGreen} Šifra Zadatka & INT	&  	Jedinstveni brojčani identifikator zadatka  	\\ \hline
-					\SetCell{LightGreen} Korisničko ime & VARCHAR	& 	Korisničko ime korisnika\\ \hline
 					Tekst	& VARCHAR & Opis zadatka  	\\ \hline 
 					Završen & BOOLEAN & Status je li zadatak završen  \\ \hline 
-          \SetCell{LightBlue} Šifra akcije 	& INT & Jedinstveni brojčani identifikator akcije   	\\ \hline 
-          \SetCell{LightBlue} Šifra životinje 	& INT &   Jedinstveni brojčani identifikator životinje  	\\ \hline 
-          \SetCell{LightBlue} Šifra vozila 	& INT &  Jedinstveni brojčani identifikator vozila 	\\ \hline 
+					Početna lokacija & DOUBLE & Početak rute kojom tragač mora proći 	\\ \hline 
+					Krajnja lokacija	& DOUBLE & Kraj rute kojom tragač mora proći  	\\ \hline 
+					\SetCell{LightBlue} Korisničko ime & VARCHAR	& 	Korisničko ime korisnika\\ \hline
+          			\SetCell{LightBlue} Šifra akcije 	& INT & Jedinstveni brojčani identifikator akcije   	\\ \hline 
+          			\SetCell{LightBlue} Šifra životinje 	& INT &   Jedinstveni brojčani identifikator životinje  	\\ \hline 
+          			\SetCell{LightBlue} Šifra vozila 	& INT &  Jedinstveni brojčani identifikator vozila 	\\ \hline 
 				\end{longtblr}
 
 				\textbf {Akcija} Ovaj entitet sadrži sve važne informacije o akcijama pretraživanja i praćenja. Sadrži
-			atribute: šifra akcije, naziv akcije, aktivna i korisničko ime. 
+			atribute: šifra akcije, naziv akcije, aktivna, započeta, početak akcije, kraj akcije, poslan zahtjev i korisničko ime. 
 			Ova tablica je u vezi s tablicom Korisnik preko identifikatora korisnika(korisničko ime),
 			 s tablicom Životinja preko tablice Komentar korisnika, s tablicom Zadatak i tablicom Pozicija tragača.
 				
@@ -127,11 +129,15 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 					\SetCell{LightGreen} Šifra akcije & INT	&  	Jedinstveni ključ za identifikaciju zadatka  	\\ \hline
 					Naziv akcije	& VARCHAR &  Puni naziv akcije  	\\ \hline 
 					Aktivna & BOOLEAN & Status je li akcija aktvna  \\ \hline 
+					Započeta & BOOLEAN & Status je li akcija započela  \\ \hline 
+					Početak akcije & TIMESTAMP & Kad je akcija započela  \\ \hline 
+					Kraj akcije & TIMESTAMP & Kad je akcija završila  \\ \hline 
+					Poslan zahtjev & BOOLEAN & Ograničava istraživačima slanje zahtjeva za tragačima  \\ \hline 
           \SetCell{LightBlue} Korisničko ime 	& VARCHAR &  Korisničko ime korisnika 	\\ \hline 
 				\end{longtblr}
 			
 				\textbf {Komentar korisnika} Ovaj entitet sadrži informacije o komentarima korisnika o praćenoj životinji 
-				koje mogu ostaviti tijekom akcije. Sadrži atribute: šifra životinje, korisničko ime, šifra akcije i komentar. 
+				koje mogu ostaviti tijekom akcije. Sadrži atribute: šifra komentara, šifra životinje, korisničko ime, šifra akcije i komentar. 
 		
 
 				\begin{longtblr}[
@@ -143,10 +149,11 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
           \hline \SetCell[c=3]{c}{\textbf{Komentar korisnika}}	 \\ \hline[3pt]
-					\SetCell{LightGreen} Šifra životinje & INT	&  	Jedinstveni brojčani identifikator zadatka  	\\ \hline
-					\SetCell{LightGreen} Korisničko ime & VARCHAR	&  	Korisničko ime korisnika 	\\ \hline
-					\SetCell{LightGreen} Šifra akcije & INT	&  	Jedinstveni brojčani identifikator akcije  	\\ \hline
-					Komentar	& VARCHAR & Sadržaj komentara  	\\ \hline 
+		  			\SetCell{LightGreen} Šifra komentara & INT	&  	Jedinstveni brojčani identifikator komentara  	\\ \hline
+		  			Komentar	& VARCHAR & Sadržaj komentara  	\\ \hline 
+					\SetCell{LightBlue} Šifra životinje & INT	&  	Jedinstveni brojčani identifikator zadatka  	\\ \hline
+					\SetCell{LightBlue} Korisničko ime & VARCHAR	&  	Korisničko ime korisnika 	\\ \hline
+					\SetCell{LightBlue} Šifra akcije & INT	&  	Jedinstveni brojčani identifikator akcije  	\\ \hline
 				\end{longtblr}
 				
 				\textbf {Životinja} Ovaj entitet sadrži sve važne informacije o životinjama. Sadrži
@@ -209,7 +216,7 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 				\end{longtblr}
 
 				\textbf {Korisnik} Ovaj entitet sadrži sve važne informacije o korisnicima. Sadrži
-			atribute: korisničko ime, email, lozinka, ime, prezime, fotografija i šifra uloge.
+			atribute: korisničko ime, email, lozinka, ime, prezime, fotografija, provjeren mail, potvrdio admin i šifra uloge.
 			Ova tablica je u vezi s tablicama Akcija, Pozicija tragača, Uloga i Komentar korisnika.
 
 				\begin{longtblr}[
@@ -227,6 +234,8 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
           Ime & VARCHAR & Ime korisnika \\ \hline
           Prezime & VARCHAR & Prezime korisnika \\ \hline
           Fotografija & VARCHAR & Fotografija korisnika \\ \hline
+		  Provjeren email & BOOLEAN & Provjera je li osoba potvrdila mail \\ \hline
+          Potvrdio admin & BOOLEAN & Voditelja i istraživača mora potvrditi admin \\ \hline
           \SetCell{LightBlue} Šifra uloge 	& INT &   Jedinstveni brojčani identifikator uloge	\\ \hline 
 
 				\end{longtblr}
@@ -318,12 +327,114 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 
 				\end{longtblr}
 
+				\textbf {Konfirmacijski token} Ovaj entitet sadrži informacije o konfirmacijskim tokenima.
+				 Sastoji se od atributa: šifra tokena, vrijeme potvrde, vrijeme stvaranja, vrijeme isteka, token i korisničko ime.
+				 Povezana je s tablicom Korisnik preko identifikatora korisnika(korisničko ime).
+
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+          \hline \SetCell[c=3]{c}{\textbf{Konfirmacijski token}}	 \\ \hline[3pt]
+          \SetCell{LightGreen} Šifra tokena & INT	&  Jedinstveni brojčani identifikator tokena	\\ \hline
+          Vrijeme potvrde	& TIMESTAMP & Vrijeme potvrde emaila  	\\ \hline 
+		  Vrijeme stvaranja	& TIMESTAMP & Vrijeme stvaranja emaila  	\\ \hline 
+          Vrijeme isteka	& TIMESTAMP & Vrijeme isteka emaila  	\\ \hline 
+		  Token & VARCHAR & Token za potvrdu maila 	\\ \hline
+		  \SetCell{LightBlue} Korisničko ime & VARCHAR & Korisničko ime korisnika \\ \hline
+
+				\end{longtblr}
+
+				\textbf {Komentari zadatka} Ovaj entitet sadrži informacije o komentarima zadataka.
+				 Sastoji se od atributa: šifra komentara, komentar, šifra zadatka i korisničko ime.
+				 Povezana je s tablicom Zadatak preko identifikatora zadatka(šifra zadatka) i s tablicom Korisnik preko identifikatora korisnika(korisničko ime).
+
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+          \hline \SetCell[c=3]{c}{\textbf{Komentari zadatka}}	 \\ \hline[3pt]
+          \SetCell{LightGreen} Šifra komentara & INT	&  Jedinstveni brojčani identifikator komentara	\\ \hline
+          Komentar	& VARCHAR & Tekst komentara  	\\ \hline 
+		  \SetCell{LightBlue} Šifra zadatka & INT & Jedinstveni brojčani identifikator zadatka 	\\ \hline
+		  \SetCell{LightBlue} Korisničko ime & VARCHAR & Korisničko ime istraživača \\ \hline
+
+				\end{longtblr}
+
+
+				\textbf {Komentari tragača} Ovaj entitet sadrži informacije o komentarima tragača.
+				 Sastoji se od atributa: šifra komentara, komentar, šifra akcije i korisničko ime.
+				 Povezana je s tablicom Akcija preko identifikatora akcije(šifra akcije) i s tablicom Korisnik preko identifikatora korisnika(korisničko ime).
+
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+          \hline \SetCell[c=3]{c}{\textbf{Komentari tragača}}	 \\ \hline[3pt]
+          \SetCell{LightGreen} Šifra komentara & INT	&  Jedinstveni brojčani identifikator komentara	\\ \hline
+          Komentar	& VARCHAR & Tekst komentara  	\\ \hline 
+		  \SetCell{LightBlue} Šifra akcije & INT & Jedinstveni brojčani identifikator akcije 	\\ \hline
+		  \SetCell{LightBlue} Korisničko ime & VARCHAR & Korisničko ime tragača \\ \hline
+
+				\end{longtblr}
+
+				\textbf {Pripada akciji} Ova veza sadrži informacije po kojima saznajemo koji tragač pripada kojoj akciji.
+				Povezuje entitete Korisnik i Akcija te sadrži njihove ključne atribute: korisničko ime i šifra akcije.
+				Povezana je s tablicom Prijevozno sredstvo preko identifikatora vozila(šifra vozila).
+
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+          \hline \SetCell[c=3]{c}{\textbf{Pripada akciji}}	 \\ \hline[3pt]
+          \SetCell{LightGreen} Šifra akcije & INT	&  Jedinstveni brojčani identifikator akcije	\\ \hline
+		  \SetCell{LightGreen} Korisničko ime & VARCHAR & Korisničko ime tragača \\ \hline
+		  \SetCell{LightBlue} Šifra vozila & INT & Jedinstveni brojčani identifikator vozila 	\\ \hline
+
+				\end{longtblr}
+
+				\textbf {Vozila za akciju} Ova veza sadrži informacije po kojima saznajemo koja vozila pripadaju kojoj akciji.
+				Povezuje entitete Akcija i Prijevozno sredstvo te sadrži njihove ključne atribute: šifra akcije i šifra postaje.
+				Još sadrži i atribut šifra tablice koji je jedinstveni brojčani identifikator tablice.
+
+
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+          \hline \SetCell[c=3]{c}{\textbf{Vozila za akciju}}	 \\ \hline[3pt]
+          \SetCell{LightGreen} Šifra tablice & INT	&  Jedinstveni brojčani identifikator tablice	\\ \hline
+		  \SetCell{LightBlue} Šifra akcije & INT & Jedinstveni brojčani identifikator akcije \\ \hline
+		  \SetCell{LightBlue} Šifra postaje & INT & Jedinstveni brojčani identifikator postaje 	\\ \hline
+
+				\end{longtblr}
+
 			\eject
 
 			\subsection{Dijagram baze podataka}
 
 			\begin{figure}[H]
-				\includegraphics[scale=0.8]{slike/dijagram baze podataka.png} 
+				\includegraphics[scale=0.6]{slike/dijagram_baze_podataka.png} 
 				\centering
 				\caption{Dijagram baze podataka}
 				\label{fig:dijagram_baze_podataka}
