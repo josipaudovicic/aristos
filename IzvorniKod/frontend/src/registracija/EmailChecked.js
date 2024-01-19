@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { BASE_URL } from '../config';
 
 function rename(role){
   if (role==="Istraživač"){
@@ -25,7 +26,7 @@ function EmailChecked() {
     
     const fetchData = async () => {
       try {
-        const response = await fetch("/emailChecked", {
+        const response = await fetch(`${BASE_URL}/emailChecked`, {
             method: 'GET', 
             headers: {
               'Content-Type': 'application/json', 

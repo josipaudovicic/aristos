@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function StationManager() {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ function StationManager() {
   console.log(username);
 
   useEffect(() => {
-    fetch(`/manager/station`, {
+    fetch(`${BASE_URL}/manager/station`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -26,7 +27,7 @@ function StationManager() {
       let response;
       if (path === 'manager/trackers') {
         console.log("Hello World");
-        response = await fetch(`/manager/trackers`,{
+        response = await fetch(`${BASE_URL}/manager/trackers`,{
           method: 'GET', 
           headers: {
             'Content-Type': 'application/json', 
@@ -34,7 +35,7 @@ function StationManager() {
           },
         });
       } else if (path === 'manager/mytrackers') {
-        response = await fetch(`/manager/mytrackers`, {
+        response = await fetch(`${BASE_URL}/manager/mytrackers`, {
           method: 'GET', 
           headers: {
             'Content-Type': 'application/json', 
@@ -45,7 +46,7 @@ function StationManager() {
         navigate('/manager/actions', {state : {username: username}});
       } else if (path === 'manager/requests') {
         console.log("Username that wants to know requests for actions", username);
-        response = await fetch(`/manager/requests`, {
+        response = await fetch(`${BASE_URL}/manager/requests`, {
           method: 'GET', 
           headers: {
             'Content-Type': 'application/json', 

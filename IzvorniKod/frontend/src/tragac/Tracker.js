@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
+
 
 function Tracker() {
   const navigate = useNavigate();
@@ -10,14 +12,14 @@ function Tracker() {
     try {
       let response;
       if (path === 'tracker/action') {
-        response = await fetch(`/tracker/action` , {
+        response = await fetch(`${BASE_URL}/tracker/action` , {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             username: username,
           },  });
       } else if (path === 'tracker/animals') {
-        response = await fetch(`/tracker/animals`);
+        response = await fetch(`${BASE_URL}/tracker/animals`);
       } else if (path === 'profile') {
         navigate(`/profile`, { state: { username: username } });
       }

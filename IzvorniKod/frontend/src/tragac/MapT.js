@@ -4,6 +4,8 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';  
 import 'leaflet.heat';
 import polyline from '@mapbox/polyline';
+import { BASE_URL } from '../config';
+
 
 function MapT() {
   const location = useLocation();
@@ -70,7 +72,7 @@ function MapT() {
             actionId: action.actionId,
           };
 
-            const response = await fetch('/tracker/action/position', {
+            const response = await fetch(`${BASE_URL}/tracker/action/position`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -91,7 +93,7 @@ function MapT() {
     }, [username, action.actionId]);  
 
   useEffect(() => {
-    fetch(`/tracker/action`, {	
+    fetch(`${BASE_URL}/tracker/action`, {	
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -109,7 +111,7 @@ function MapT() {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await fetch(`/tracker/action/position`, {
+          const response = await fetch(`${BASE_URL}/tracker/action/position`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -142,7 +144,7 @@ function MapT() {
     }, [username, map]);        
 
     useEffect(() => {
-      fetch(`/tracker/action/tasks`, {	
+      fetch(`${BASE_URL}/tracker/action/tasks`, {	
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -175,7 +177,7 @@ function MapT() {
       
       console.log(markers);
 
-      fetch(`/tracker/action/trackers`, {
+      fetch(`${BASE_URL}/tracker/action/trackers`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -194,7 +196,7 @@ function MapT() {
       console.log(markers);
 
 
-      fetch(`/tracker/action/comments`, {
+      fetch(`${BASE_URL}/tracker/action/comments`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -240,7 +242,7 @@ function MapT() {
         })})
       .catch((error) => console.error('Error:', error));
 
-      fetch(`/tracker/action/task/comments`, {
+      fetch(`${BASE_URL}/tracker/action/task/comments`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -264,7 +266,7 @@ function MapT() {
       });
       
 
-      fetch(`/tracker/action/task/post`, {
+      fetch(`${BASE_URL}/tracker/action/task/post`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -341,7 +343,7 @@ function MapT() {
           setCommentText('');
         }
         
-      fetch(`/tracker/action/saveComment`, {
+      fetch(`${BASE_URL}/tracker/action/saveComment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

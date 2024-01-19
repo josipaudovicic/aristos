@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
+import { BASE_URL } from '../config';
 
 function Registration() {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ function Registration() {
           formDataToSend.append(key, formData[key]);
         }
   
-        const response = await fetch('/register', {
+        const response = await fetch(`${BASE_URL}/register`, {
           method: 'POST',
           body: formDataToSend,
         });

@@ -1,5 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 
 function PregledAktivnihAkcija(){
@@ -13,7 +14,7 @@ function PregledAktivnihAkcija(){
     useEffect(() => {
     const fetchActions = async () => {
       try {
-        const response = await fetch(`/manager/activeActions`, { 
+        const response = await fetch(`${BASE_URL}/manager/activeActions`, { 
           method: 'GET', 
           headers: {
             'Content-Type': 'application/json', 

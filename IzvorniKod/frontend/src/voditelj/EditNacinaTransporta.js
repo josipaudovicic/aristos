@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 const transportModesList = ['pješke', 'dronom', 'automobilom', 'cross motorom', 'brodom', 'helikopterom'];
 
@@ -26,7 +27,7 @@ function EditNacinaTransporta() {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch(`/manager/mytrackers/${trackerUsername}`, {
+      const response = await fetch(`${BASE_URL}/manager/mytrackers/${trackerUsername}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

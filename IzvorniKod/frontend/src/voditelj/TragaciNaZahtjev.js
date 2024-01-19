@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../config';
 
 function TragaciNaZahtjev() {
     const navigate = useNavigate();
@@ -12,7 +13,7 @@ function TragaciNaZahtjev() {
 
     useEffect(() => {
         const fetchTrackers = () => {
-          fetch('/manager/requests/trackers', {
+          fetch(`${BASE_URL}/manager/requests/trackers`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -29,7 +30,7 @@ function TragaciNaZahtjev() {
 
 
   const handleSubmit = () => {
-    fetch('/manager/requests/submit', {
+    fetch(`${BASE_URL}/manager/requests/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
