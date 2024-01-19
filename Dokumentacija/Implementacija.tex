@@ -246,7 +246,62 @@
 			\end{packed_item}
 
 			\subsubsection{Puštanje frontenda u pogon}
+
+			Frontend dio projekta također koristi render.com za puštanje u pogon. Preduvjeti za to su:
+			
+			\begin{packed_item}
+				\item U IzvorniKod/package.json dodajemo dependency-e (primarno http-proxy-middleware, dotenv, express) kao na slici \ref{fig:frontendDeploy1}
+				
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/frontendDeploy1.png}
+				\centering
+				\caption{Dio koda package.json \textit{dependency}}
+				\label{fig:frontendDeploy1}
+			\end{figure}
+			
+				\item U IzvorniKod/package.json dodajemo kod kao na slici \ref{fig:frontendDeploy2} zbog funkcionalnosti Node-a
+				
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/frontendDeploy2.png}
+				\centering
+				\caption{Dio koda package.json za funkcionalnost\textit{Node-a}}
+				\label{fig:frontendDeploy2}
+			\end{figure}
+			
+				\item Dodajemo /src/setupProxy.js koji služi kao proxy server za lokalni development (preusmjerava api pozive na localhost:8080)
+				\item Dodajemo app.js, u kojem se nalazi express server za produkcijski proxy i posluživanje \textit{frontenda} (slika \ref{fig:frontendDeploy3})
+			
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/frontendDeploy3.png}
+				\centering
+				\caption{Kod datoteke app.js}
+				\label{fig:frontendDeploy3}
+			\end{figure}
+
+			Stvaranje frontenda postižemo na sljedeći način:
+			\begin{packed_item}
+				\item Odabiremo na renderu \textit{New - Web Service}
+				\item Odabiremo željeni GitHub repozitorij
+				\item Unosimo tražene podatke (slika \ref{fig:frontendDeploy4})
+				\item Potvrđujemo s \textit{Create Web Service}
+			\end{packed_item}
+
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/frontendDeploy4.png}
+				\centering
+				\caption{Spajanje \textit{frontenda}}
+				\label{fig:frontendDeploy4}
+			\end{figure}
+
+		
+		\end{packed_item}
+			
 			
 
 			
+
+			
+
+
+
 			\eject 
