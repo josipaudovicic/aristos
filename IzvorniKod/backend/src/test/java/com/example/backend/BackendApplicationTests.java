@@ -117,7 +117,6 @@ class BackendApplicationTests {
         Long nonExistentVehicleId = 10L;
         assertThrows(IllegalStateException.class, () -> vehicleService.findVehicleById(nonExistentVehicleId));
     }
-
     @Test
     @Transactional
     //Test hoće li funkcija za dobro ime, ali lošu lozinku vratiti False
