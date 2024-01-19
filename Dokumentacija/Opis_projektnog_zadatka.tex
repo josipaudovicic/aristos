@@ -2,12 +2,10 @@
 		
 	Cilj ovog projekta je razviti programsku podršku za web aplikaciju "Wild Track".
 	Ta aplikacija olakšava korisniku pronalazak i praćenje divljih životinja.
-	Prilikom otvaranja aplikacije prikazuje se karta koja pokazuje gdje se nalazi koja životinja.
-	Praćene životinje imaju na sebi gps uređaj koji aplikaciji odašilje njihovu poziciju i tako korisnik može cijelo vrijeme znati njihovu točnu lokaciju.
-	Kad korisnik odabere koju životinju želi pratiti, može vidjeti neke podatke o njoj, kao na primjer povijesne podatke gdje se nalazila, naziv vrste, slika i opis.
+	Prilikom otvaranja aplikacije prikazuje se stranica za prijavu te opcija za registraciju.	
 	
-	Neregistrirani korisnik je ograničen samo s dosad nabrojanim akcijama, ako želi nešto više s aplikacijom omogućeno mu je prijavljivanje u sustav s postojećim računom 
-	(potrebno je upisati korisničko ime i lozinku) ili kreiranjem novog računa. Za kreiranje novog računa potrebni su sljedeći podaci: 
+	Neregistriranom korisniku omogućeno mu je prijavljivanje u sustav s postojećim računom (potrebno je upisati korisničko ime i lozinku) ili kreiranje novog računa. 
+	Za kreiranje novog računa potrebni su sljedeći podaci: 
 	\begin{packed_item}
 		\item uloga za koju se prijavljuje - može biti istraživač, voditelj postaje ili tragač na terenu
 		\item korisničko ime 
@@ -19,20 +17,23 @@
 	\end{packed_item}
 
 	Registracijom u sustav korisniku se dodjeljuju prava istraživača, voditelja postaje, tragača na terenu ili administratora.
-	Registrirani korisnik može, uz opcije koje ima njegova željena uloga, još i pregledati, mijenjati osobne podatke te izbrisati svoj korisnički račun.
+	Registrirani korisnik može, uz opcije koje ima njegova željena uloga, još i pregledati te mijenjati osobne podatke.
 
 	Registracija je završena kad korisnik preko svoje email adrese potvrdi, osim ako je korisnik izabrao biti istraživač ili voditelj postaje. 
 	U tom slučaju, administrator mora potvrditi njihovu ulogu. 
 	Administrator sustava ima najveće ovlasti. 
 	On ima ovlasti da vidi popis svih registriranih korisnika i njihovih osobnih podataka, odnosno pristup bazi s popisom registriranih korisnika, te može mijenjati njihova dodijeljena prava i osobne podatke.
 	
-	Voditelj postaje može izabrati koji će tragači biti dio njegove postaje i bira na koji način će oni izvoditi pretraživanje životinja. 
-	Postaje su određena mjesta na karti koja voditelj postaje bira, to na primjer može biti postaja Biokovo ili postaja Lonjsko polje.
+	Voditelj postaje može izabrati koji će tragači biti dio njegove postaje i bira na koji način oni mogu izvoditi pretraživanje životinja. 
+	Postaje su određena mjesta na karti koja admin bira kada potvrđuje voditelja, to na primjer može biti postaja Biokovo ili postaja Lonjsko polje.
+	Voditelj može pregledati aktivne i neaktivne akcije. Na aktivne akcije može dodati tragače koji su dio njegove postaje. Tragači se na akciju mogu dodavati i nakon pregleda zahtjeva od istraživača.
+	Načine transporta za koji su njegovi tragači osposobljeni voditelj može promijeniti u svakom trenutku.
 
-	Ako se korisnik prijavi kao tragač, njemu se na karti prikazuju zadaci koje mora obaviti, trenutna pozicija ostalih tragača koji su aktivni na istoj akciji, te trenutna pozicija životinja koje prate.
+	Ako se korisnik prijavi kao tragač, njemu se na karti mogu prikazati zadaci koje mora obaviti, trenutna pozicija ostalih tragača koji su aktivni na istoj akciji, te trenutna pozicija životinja koje prati.
+	Praćene životinje imaju na sebi gps uređaj koji aplikaciji odašilje njihovu poziciju i tako korisnik može cijelo vrijeme znati njihovu točnu lokaciju. 
 	Tragač tijekom svoje akcije može ostavljati komentare o životinji koju je pratio te također može ostaviti komentar ostalim tragačima i istraživačima, to jest drugim sudionicima u akciji.
-	Također, cijeli put koji tragači prođu se bilježi, odnosno označavaju se staze kojima su putovali i način kojim su se kretali. To će biti potrebno istraživačima koji vizualiziraju njihovo kretanje u obliku toplinskih karata te potom to koriste za analiziranje kretanja životinja i njihovih omiljenih staništa.
-	
+	Također, cijeli put koji tragači prođu se bilježi, odnosno označavaju se staze kojima su putovali i način kojim su se kretali. To će biti potrebno istraživačima koji vizualiziraju njihovo kretanje u obliku toplinskih karata 
+	te potom to koriste za analiziranje kretanja životinja i njihovih omiljenih staništa. Tragač može i pregledati podatke o pojedinačnim životinjama(latinski naziv, sliku, opis i komentare). 
 	Načini kojima se tragači kreću mogu biti različiti, kao na primjer:
 	\begin{packed_item}
 		\item pješke
@@ -44,10 +45,8 @@
 	\end{packed_item}
 
 	Ovisno o tome kojom je tragač metodom osposobljen za obavljanje zadataka, svaka metoda je drugačije prikazana na karti.
-	Svaka metoda pruža različitu vidljivost i područje pokrivanja te se na prikladne načine prikazuje na kartama. 
 	Ako je tragač odabran da ide pješke njegova će karta biti detaljnija i prikazana na manjem prostoru nego karta tragača koji putuje helikopterom. 
-	Tragači koji obavljaju zadatak s pomoću drona, helikoptera ili plovila, moraju na karti imati pravocrtnu rutu.
-	Svaki tragač je osposobljen za samo jednu vozilo i tijekom te akcije se njegov tip prijevoza ne mijenja.
+	Svaki tragač koristi samo jednu vozilo i tijekom te akcije se njegov tip prijevoza ne mijenja.
 
 	Ako je korisnik odlučio biti istraživač, on može stvoriti nove akcije pretraživanja i praćenja životinja s detaljima o određenim vrstama, jedinkama ili staništima za proučavanje.
 	Svaki istraživač je zadužen za jednu akciju.
@@ -109,5 +108,6 @@
 	Time je moguće određivati zdravlje životinje, kretnje životinje, da li životinja spava ili je budna\dots
 	Tu smo dobili nove komponente aplikacije koje se mogu nazvati trenutne aktivnosti životinje i zdravlje životinje te tu tragači i istraživači imaju još više informacija o životinjama, a ne samo one općenite.
 	Isto tako možemo dodati tragačima opciju da slikaju i snimaju životinje te im dati mogućnost da slike i videe objavljuju na aplikaciju. Time je opet doživljaj određene životinje bolji, a ne općenit.
+	Aplikaciju bi svakako mogli poboljšati i tako da napravimo vizualno privlačniji i moderniji UI.
 
 	
