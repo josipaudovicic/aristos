@@ -929,9 +929,10 @@
 				\noindent 
 				Neregistrirani korisnik šalje zahtjev za registracijom. Aplikacija dohvaća popis registriranih korisnika
         				iz baze podataka.
-        				Ako korisnik nije na popisu aplikacija mu šalje potvrdu na mail koju korisnik mora potvrditi.
+        				Ako korisnik nije na popisu aplikacija mu šalje potvrdu na mail preko mail-poslužitelja koju korisnik mora potvrditi.
         				U slučaju da se korisnik registrira da bi bio voditelj postaje ili istraživač aplikacija šalje administratoru
-        				zahtjev za potvrdom te administrator mora potvrditi registraciju.
+        				zahtjev za potvrdom te administrator mora potvrditi registraciju. U slučaju odbijanja zahtjeva za 
+						ulogom neregistriranom korisniku se ispisuje poruka o odbijanju.
         				Zatim aplikacija zapisuje podatke u bazu podataka te dobiva potvrdu o uspjehu registracije od baze podataka
         				te aplikacija korisniku prikazuje poruku o uspješnoj registraciji.
         				Ako korisnik postoji u bazi podataka aplikacija, korisnik se obavještava da korisnik već postoji u bazi podataka.
@@ -939,7 +940,7 @@
 				
 				
 				\begin{figure}[H]
-					\includegraphics[scale=0.5]{slike/UC1 - Registracija.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+					\includegraphics[scale=0.45]{slike/UC1 - Registracija.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 					\centering
 					\caption{Sekvencijski dijagram za UC1}
 					\label{fig:UC1 - Registracija}
@@ -948,66 +949,20 @@
 				\eject
 
 				\noindent
-				\textbf{Obrazac uporabe UC19 - Dodavanje tragača na akciju}\\
+				\textbf{Obrazac uporabe UC28 - Stvaranje nove akcije pretraživanja}\\
 
 				\noindent
-				Voditelj postaje šalje aplikaciji upit za novim akcijama.
-        			Aplikacija dohvaća popis aktivnih akcija iz baze podataka te ih prikazuje voditelju postaje.
-        			Voditelj postaje zatim prolazi kroz sve aktivne akcije.
-        			Aplikacija iz baze podataka dohvaća sve slobodne tragače koji zadovoljavaju zahtjeve istraživača.
-        			U slučaju da ne postoje takvi tragači voditelju se postaje ispisuje poruka da nema dostupnih tragača.
-        			U slučaju da popis nije prazan voditelju postaje prikazuje se popis tragača.
-        			Voditelj postaje potom šalje odabrane tragače aplikaciji koja zatim dodaje akciju tragaču u bazi podataka te
-        			vraća voditelju postaje obavijest da je zahtjev poslan tragaču.
-
+				Istraživač odabire opciju stvaranja nove akcije. Prikazuje
+				mu se formular za unos podataka o akciji. Nakon što Istraživač potvrdi stvaranje akcije
+				provjerava se ispravnost podataka (postoji li već željeno ime akcije u bazi) i provjerava se jesu li sva potrebna polja ispunjena te se Istraživaču šalje
+				obavijest ukoliko nešto nije zadovoljeno. Kada su unsesni svi podaci i zadovoljavaju uvjete, stvara se nova akcija i ažurira baza.
+				 Istraživač u svakom trenu može odustati od stvaranja nove akcije.
 				
 
 				\begin{figure}[H]
-					\includegraphics[scale=0.5]{slike/UC19 - Dodavanje tragača na akciju.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+					\includegraphics[scale=0.33]{slike/UC28 - Stvaranje nove akcije pretraživanja.jpg} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 					\centering
-					\caption{Sekvencijski dijagram za UC19}
-					\label{fig:UC19 - Dodavanje tragača na akciju}
-				\end{figure}
-	
-				\eject
-
-				\noindent
-				\textbf{Obrazac uporabe UC24 - Završavanje akcije}\\
-
-				\noindent
-				Tragač šalje aplikaciji zahtjev za krajem akcije.
-        				Aplikacija dohvaća popis zadataka iz baze podataka i prikazuje popis tragaču.
-        				Ako popis nije prazan tragaču se ispisuje poruka da nisu svi zadatci riješeni.
-				        Ako je popis prazan aplikacija šalje bazi podataka zahtjev za krajem akcije
-        				te potom obavještava tragača da je akcija završena.
-
-				
-
-				\begin{figure}[H]
-					\includegraphics[scale=0.6]{slike/UC24 - Završavanje akcije.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
-					\centering
-					\caption{Sekvencijski dijagram za UC24}
-					\label{fig:UC24 - Završavanje akcije}
-				\end{figure}
-
-				\eject
-
-				\noindent
-				\textbf{Obrazac uporabe UC37 - Stvaranje nove akcije pretraživanja}\\
-
-				\noindent
-				Istraživač aplikaciji šalje zahtjev za novom akcijom.
-				        Aplikacija provjerava ima li istraživač već aktivne akcije.
-        				U slučaju da istraživač već ima aktivnu akciju aplikacija obavještava istraživača da već postoji aktivna akcija.
-        				Ako istraživač nema aktivnu akciju aplikacija bazi podataka šalje zahtjev za dodavanjem nove akcije te se
-        				istraživač obavještava da je akcija uspješno stvorena.
-
-				
-
-				\begin{figure}[H]
-					\includegraphics[scale=0.5]{slike/UC37 - Stvaranje nove akcije pretraživanja.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
-					\centering
-					\caption{Sekvencijski dijagram za UC37}
+					\caption{Sekvencijski dijagram za UC28}
 					\label{fig:UC37 - Stvaranje nove akcije pretraživanja}
 				\end{figure}
 
