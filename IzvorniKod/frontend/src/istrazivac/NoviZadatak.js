@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { BASE_URL } from '../config';
 
 const NoviZadatak = () => {
   let startLocation = null;
@@ -45,7 +46,7 @@ const NoviZadatak = () => {
   });
 
   useEffect(() => {
-    fetch('/explorer/action/info/tasks/newTask', {
+    fetch(`${BASE_URL}/explorer/action/info/tasks/newTask`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -65,7 +66,7 @@ const NoviZadatak = () => {
     animalLocations.forEach(marker => marker.remove());
 
     if (task.animalName !== '') {
-      fetch('/explorer/action/info/tasks/animalPositions', {
+      fetch(`${BASE_URL}/explorer/action/info/tasks/animalPositions`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -160,7 +161,7 @@ const NoviZadatak = () => {
     }
   
     try {
-      fetch(`/explorer/action/info/tasks/newTask`, {
+      fetch(`${BASE_URL}/explorer/action/info/tasks/newTask`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

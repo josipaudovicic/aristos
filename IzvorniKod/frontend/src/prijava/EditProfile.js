@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const EditProfile = () => {
   });
 
   useEffect(() => {
-    fetch('/profile', {
+    fetch(`${BASE_URL}/profile`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -41,7 +42,7 @@ const EditProfile = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const response = await fetch('/save-profile-changes', {
+      const response = await fetch(`${BASE_URL}/save-profile-changes`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

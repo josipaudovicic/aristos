@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function PopisZadataka() {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ function PopisZadataka() {
     useEffect(() => {
       const fetchTasks = async () => {
         try {
-          const response1 = await fetch('/explorer/action/info/tasks', {
+          const response1 = await fetch(`${BASE_URL}/explorer/action/info/tasks`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -44,7 +45,7 @@ function PopisZadataka() {
     setTasks(updatedTasksList);
     console.log(task);
     try {
-        fetch(`/explorer/action/info/tasks/delete`, {
+        fetch(`${BASE_URL}/explorer/action/info/tasks/delete`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -59,7 +60,7 @@ function PopisZadataka() {
 
   const handleViewComments = (task) => {
     //console.log(task);
-    fetch(`/explorer/action/info/tasks/comments`, {
+    fetch(`${BASE_URL}/explorer/action/info/tasks/comments`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -192,7 +193,7 @@ function PopisZadataka() {
     }*/
     console.log(taskId);
     
-    fetch(`/explorer/action/info/tasks/saveComment`, {
+    fetch(`${BASE_URL}/explorer/action/info/tasks/saveComment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

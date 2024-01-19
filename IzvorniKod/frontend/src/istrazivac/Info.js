@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function InfoStranica() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function InfoStranica() {
       try {
       let response;
       if (path === "/explorer/action/info/tasks") {
-        response = await fetch(`/explorer/action/info/tasks`, {
+        response = await fetch(`${BASE_URL}/explorer/action/info/tasks`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -29,7 +30,7 @@ function InfoStranica() {
           }, 
         });
       } else {
-        response = await fetch(`/explorer/action/info/requests`);
+        response = await fetch(`${BASE_URL}/explorer/action/info/requests`);
       }
 
       const data = await response.json();
@@ -54,7 +55,7 @@ function InfoStranica() {
       const confirmEnd = window.confirm("Jeste li sigurni da želite završiti akciju?");
     
       if (confirmEnd) {
-        fetch(`/explorer/action/info/end`, {
+        fetch(`${BASE_URL}/explorer/action/info/end`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

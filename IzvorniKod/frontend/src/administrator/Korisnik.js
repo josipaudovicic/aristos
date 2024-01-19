@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 const Korisnik = () => {
   console.log("Renderamo korisnika");
@@ -20,7 +21,7 @@ const Korisnik = () => {
 
   const handleDelete = async () => {
     try {
-      await fetch(`/admin/users/${user.username}`, {
+      await fetch(`${BASE_URL}/admin/users/${user.username}`, {
         method: 'DELETE',
       });
       navigate('/admin');

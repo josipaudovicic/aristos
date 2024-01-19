@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 const ListActions = () => {
     const location = useLocation()
@@ -8,7 +9,7 @@ const ListActions = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`/explorer/actions` , {
+        fetch(`${BASE_URL}/explorer/actions` , {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

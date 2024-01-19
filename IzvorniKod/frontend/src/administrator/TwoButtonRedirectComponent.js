@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function TwoButtonRedirectComponent() {
   const navigate = useNavigate();
@@ -10,9 +11,9 @@ function TwoButtonRedirectComponent() {
       //console.log(path);
       let response;
       if (path === "getUsers") {
-        response = await fetch(`/admin/getAllUsers`);
+        response = await fetch(`${BASE_URL}/admin/getAllUsers`);
       } else {
-        response = await fetch(`/admin/toConfirm`);
+        response = await fetch(`${BASE_URL}/admin/toConfirm`);
       }
 
       const data = await response.json();

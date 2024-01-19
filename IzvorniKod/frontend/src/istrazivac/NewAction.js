@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function NewAction() {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ function NewAction() {
     });
 
     useEffect(() => {
-        fetch('/explorer/actions/station', {
+        fetch(`${BASE_URL}/explorer/actions/station`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ function NewAction() {
           return;
       }
 
-          const response = await fetch(`/explorer/actions/newAction`, {
+          const response = await fetch(`${BASE_URL}/explorer/actions/newAction`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';  
 import 'leaflet.heat';
+import { BASE_URL } from '../config';
 
 const Map = () => {
     const [map, setMap] = useState(null);
@@ -39,7 +40,7 @@ const Map = () => {
       }, []);
 
     const handleAnimals  = () => {
-        fetch(`/explorer/animals`, {
+        fetch(`${BASE_URL}/explorer/animals`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -56,7 +57,7 @@ const Map = () => {
     }
 
     const handleSpecies = () => {
-          fetch(`/explorer/animals/species`, {
+          fetch(`${BASE_URL}/explorer/animals/species`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -110,7 +111,7 @@ const Map = () => {
 
         const fetchData = async () => {
             try {
-                const response = await fetch(`/explorer/map/species`, {
+                const response = await fetch(`${BASE_URL}/explorer/map/species`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -158,7 +159,7 @@ const Map = () => {
         const fetchData = async () => {
             try {
                 const id = option.split(': ')[1];
-                const response = await fetch(`/explorer/map/species/${id}`, {
+                const response = await fetch(`${BASE_URL}/explorer/map/species/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

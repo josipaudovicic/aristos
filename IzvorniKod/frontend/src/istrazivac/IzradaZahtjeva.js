@@ -1,5 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function IzradaZahtjeva(){
     const navigate = useNavigate();
@@ -12,7 +13,7 @@ function IzradaZahtjeva(){
 
   useEffect(() => {
     const fetchVehicles = () => { 
-          fetch('/explorer/action/info/requests', {
+          fetch(`${BASE_URL}/explorer/action/info/requests`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -40,7 +41,7 @@ function IzradaZahtjeva(){
         console.log(selectedVehicles);
           alert('Zahtjev je poslan');
 
-          fetch('/explorer/action/info/requests/post', {
+          fetch(`${BASE_URL}/explorer/action/info/requests/post`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

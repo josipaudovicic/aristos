@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import '../App.css';
+import { BASE_URL } from '../config';
 
 function Login() {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ function Login() {
           formDataToSend.append(key, formData[key]);
         }
   
-        const response = await fetch('/login', {
+        const response = await fetch(`${BASE_URL}/login`, {
           method: 'POST',
           body: formDataToSend,
         });
@@ -46,7 +47,7 @@ function Login() {
           const result = await response.text(); // Assuming the backend returns a simple string response
           console.log(result);
           if (result === "true") {
-            const response = await fetch('/role', {
+            const response = await fetch(`/role`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',

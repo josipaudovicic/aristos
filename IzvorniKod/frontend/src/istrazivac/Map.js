@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';  
 import 'leaflet.heat';
+import { BASE_URL } from '../config';
 
 const Map = () => {
     const location = useLocation();
@@ -54,7 +55,7 @@ const Map = () => {
     }
 
     const handleTrackers = () => {
-        fetch(`/explorer/action/${actionName}/trackers`, {
+        fetch(`${BASE_URL}/explorer/action/${actionName}/trackers`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -120,7 +121,7 @@ const Map = () => {
 
         const fetchData = async () => {
             try {
-                const response = await fetch(`/explorer/action/${actionName}/tracker`, {
+                const response = await fetch(`${BASE_URL}/explorer/action/${actionName}/tracker`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -177,7 +178,7 @@ const Map = () => {
 
         const fetchData = async () => {
             try {
-                const response = await fetch(`/explorer/action/${actionName}/vehicle`, {
+                const response = await fetch(`${BASE_URL}/explorer/action/${actionName}/vehicle`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
