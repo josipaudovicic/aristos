@@ -844,18 +844,20 @@
 						\item \textbf{Glavni sudionik: } Istraživač
 						\item  \textbf{Cilj:} Izrada karte na temelju tragača
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:}
+						\item  \textbf{Preduvjet:} Postoji barem jedan tragač na akciji
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
 							\item Istraživač izabire akciju sa popisa akcija
 							\item Istraživač izabire opciju prikaži na karti: "Tragače"
-							\item Istraživač odabire ?? vozila provjerim
+							\item Prikazuje se lista tragača sa akcije
+							\item Istraživač izabire željenog tragača
 							\item Prikazuju mu se pozicije tragača na karti							
 							
 						\end{packed_enum}
-					\end{packed_item}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					\end{packed_item}
+					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          30         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					\noindent \underbar{\textbf{UC30 – 	Pregled karte na temelju životinja}}
@@ -864,7 +866,7 @@
 						\item \textbf{Glavni sudionik: } Istraživač
 						\item  \textbf{Cilj:} Izrada karte na temelju životinja
 						\item  \textbf{Sudionici:} Baza podataka
-						\item  \textbf{Preduvjet:}
+						\item  \textbf{Preduvjet:} Postoji barem jedna životinja
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -876,6 +878,26 @@
 							
 						\end{packed_enum}
 					\end{packed_item}
+
+					\noindent \underbar{\textbf{UC31 – Pregled karte na temelju vozila}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik: } Istraživač
+						\item  \textbf{Cilj:} Izrada karte na temelju vozila
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Postoji barem jedan tragač na akciji koji je obavio barem jedan zadatak
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Istraživač izabire akciju sa popisa akcija
+							\item Istraživač izabire opciju prikaži na karti: "Tragače"
+							\item Prikazuje se lista tragača sa akcije i vozila na akciji
+							\item Istraživač izabire željeno vozilo
+							\item Prikazuju mu se povijesne pozicije vozila							
+							
+						\end{packed_enum}
+					\end{packed_item}
 					
 					
 					
@@ -884,7 +906,7 @@
 					\textit{}
 				
 					\begin{figure}[H]
-						\includegraphics[scale=0.55]{slike/dijagram admin.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+						\includegraphics[scale=0.5]{slike/dijagram admin.png} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 						\centering
 						\caption{Funkcionalnost neregistriranog korisnika, generaliziranog korisnika, administratora aplikacije i voditelja postaje}
 						\label{fig:Funkcionalnost neregistriranog korisnika, administratora aplikacije i voditelja postaje}
