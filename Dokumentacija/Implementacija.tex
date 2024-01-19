@@ -146,7 +146,10 @@
 			\label{fig:dijagram razmještaja}
 		\end{figure}
 			\eject 
-		
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 		\section{Upute za puštanje u pogon}
 		
 			Puštanje web aplikacije u pogon sastoji se od tri segmenta:
@@ -219,5 +222,31 @@
 
 
 			\end{packed_enum}
+
+			\subsubsection{Puštanje backenda u pogon}
+
+			Backend dio projekta također koristi render.com za puštanje u pogon. Preduvjeti za to su:
+			\begin{packed_item}
+				\item Dodavanje Dockerfile-a prikazanog na slici \ref{fig:dockerfile}
+				\item povezivanje s GitHub-om na renderu
+			\end{packed_item}
+
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/dockerfile.png}
+				\centering
+				\caption{Potrebni Dockerfile}
+				\label{fig:dockerfile}
+			\end{figure}
+
+			Stvaranje backenda postižemo na sljedeći način:
+			\begin{packed_item}
+				\item Odabiremo na renderu \textit{New - Web Service}
+				\item Odabiremo željeni GitHub repozitorij
+				\item Unosimo tražene podatke i potvrđujemo s \textit{Create Web Service}
+			\end{packed_item}
+
+			\subsubsection{Puštanje frontenda u pogon}
+			
+
 			
 			\eject 
