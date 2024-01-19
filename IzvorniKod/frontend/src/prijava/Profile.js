@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function Profile() {
   const [userData, setUserData] = useState({});
@@ -8,7 +9,7 @@ function Profile() {
   const username = location.state?.username;
 
   useEffect(() => {
-    fetch(`/profile`, {
+    fetch(`${BASE_URL}/profile`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

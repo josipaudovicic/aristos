@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 const EditKorisnik = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const EditKorisnik = () => {
   useEffect(() => {
     console.log(formerUsername);
     if (formerUsername !== undefined){
-      fetch('/profile', {
+      fetch(`${BASE_URL}/profile`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -38,7 +39,7 @@ const EditKorisnik = () => {
 
         const fetchStations = async () => {
               try {
-                const response = await fetch('/admin/getAllStations');
+                const response = await fetch(`${BASE_URL}/admin/getAllStations`);
                 if (response.ok) {
                   const stationData = await response.json();
                   console.log(stationData);
@@ -73,7 +74,7 @@ const EditKorisnik = () => {
         userData.station = selectedStation;
         console.log(`Confirmed for manager: ${userData.username}, Station: ${selectedStation}`);
         try {
-          const response = await fetch(`/admin/changeUserData/${userData.username}`, {
+          const response = await fetch(`${BASE_URL}/admin/changeUserData/${userData.username}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -95,7 +96,7 @@ const EditKorisnik = () => {
       }
     } else {
         try {
-        const response = await fetch(`/admin/changeUserData/${userData.username}`, {
+        const response = await fetch(`${BASE_URL}/admin/changeUserData/${userData.username}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

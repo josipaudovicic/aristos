@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function Explorer() {
   const navigate = useNavigate();
@@ -10,16 +11,16 @@ function Explorer() {
     try {
       let response;
       if (path === 'explorer/actions') {
-        response = await fetch(`/explorer/actions` , {
+        response = await fetch(`${BASE_URL}/explorer/actions` , {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             username: username,
           },  });
       } else if (path === 'explorer/map') {
-        response = await fetch(`/explorer/map`);
+        response = await fetch(`${BASE_URL}/explorer/map`);
       } else if (path === 'explorer/animals') {
-        response = await fetch(`/explorer/animals`);
+        response = await fetch(`${BASE_URL}/explorer/animals`);
       } else if (path === 'profile') {
         navigate(`/profile`, { state: { username: username } });
       }

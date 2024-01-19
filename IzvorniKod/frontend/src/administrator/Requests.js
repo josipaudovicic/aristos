@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../config';
 
 function Requests() {
   const [users, setUsers] = useState([]);
@@ -26,7 +27,7 @@ function Requests() {
     
     const fetchStations = async () => {
       try {
-        const response = await fetch('/admin/getAllStations');
+        const response = await fetch(`${BASE_URL}/admin/getAllStations`);
         if (response.ok) {
           const stationData = await response.json();
           console.log(stationData);
@@ -49,7 +50,7 @@ function Requests() {
       if (selectedStation) {
         console.log(`Confirmed for manager: ${user.username}, Station: ${selectedStation}`);
         try {
-          const response = await fetch(`/admin/users/${user.username}`, {
+          const response = await fetch(`${BASE_URL}/admin/users/${user.username}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -77,7 +78,7 @@ function Requests() {
     } else {
       // druge uloge
       try {
-        const response = await fetch(`/admin/users/${user.username}`, {
+        const response = await fetch(`${BASE_URL}/admin/users/${user.username}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -103,7 +104,7 @@ function Requests() {
 
   const handleDecline = async (userName) => {
     try {
-      const response = await fetch(`/admin/users/${userName}`, {
+      const response = await fetch(`${BASE_URL}/admin/users/${userName}`, {
         method: 'DELETE',
       });
 
