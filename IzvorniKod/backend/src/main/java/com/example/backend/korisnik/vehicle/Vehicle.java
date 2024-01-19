@@ -11,6 +11,13 @@ public class Vehicle {
     @Column(unique = true)
     private String vehicleName;
 
+    public Vehicle(){}
+
+    public Vehicle(Long vehicleId, String vehicleName) {
+        this.vehicleId = vehicleId;
+        this.vehicleName = vehicleName;
+    }
+
     public Long getVehicleId() {
         return vehicleId;
     }
