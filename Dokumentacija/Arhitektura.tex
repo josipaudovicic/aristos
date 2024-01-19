@@ -339,15 +339,16 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 		Metode implementirane u tim razredima manipuliraju s Data transfer object, a oni
 		su dohvaćeni s pomoću metoda u Model razredima. 
 
-		Metode unutar Controller razreda vraćaju JSON datoteke s odgovarajućim html status kodom.
+		Metode unutar Controller razreda vraćaju JSON datoteke.
 		Razredi su logički podijeljeni prema pravu pristupa metodama specifičnih aktora kako bi se smanjila prenapučenost unutar dijagrama.
 		Pri prikazu su naglašene samo ovisnosti između razreda koji pripadaju istom dijelu dijagrama radi jednostavnije organizacije.
 		Vrsta ovisnosti između različitim razredima može se zaključiti iz naziva i tipova atributa unutar tih razreda.
+		Controller razredi sadrži privatne varijable koje im omogućuju komunikaciju sa Service razredima.
 		
 		\eject
 
 			\begin{figure}[H]
-				\includegraphics[scale=0.4]{slike/klasni_dijagram_controllers.jpg}
+				\includegraphics[scale=0.23]{slike/klasni_dijagram_controllers.jpg}
 				\centering
 				\caption{Dijagram razreda - dio Controllers}
 				\label{fig:controllers}
@@ -356,7 +357,7 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 			\eject
 
 			\begin{figure}[H]
-				\includegraphics[scale=0.5]{slike/klasni_dijagram_data_transfer_objects.jpg}
+				\includegraphics[scale=0.35]{slike/klasni_dijagram_DTO.jpg}
 				\centering
 				\caption{Dijagram razreda - dio Data transfer objects}
 				\label{fig:data_transfer_objects}
@@ -365,25 +366,17 @@ za podataka ove aplikacije sastoji se od sljedećih entiteta:
 			Model razredi prikazuju strukturu baze podataka u aplikaciji. 
 			Implementirane metode komuniciraju s bazom podataka te vraćaju tražene podatke. 
 			Razred Users predstavlja neregistriranog korisnika koji se može registrirati u 
-			sustav unošenjem informacija. Razred Administrator predstavlja administratora 
-			sustava koji ima najveće ovlasti. Razred Leader predstavlja voditelja postaje koji ima mogućnost postavljanja tragača određenom istraživaču.
-			Razred Researcher predstavlja istraživača koji ima pristup karti tragača i životinja te može tragaču zadati zadatak. 
-			Razred Searcher predstavlja tragača koji ima pristup karti životinja te može ispunjavati zadatke.
+			sustav unošenjem informacija.
 
 
 			\eject
 
 			\begin{figure}[H]
-				\includegraphics[scale=0.4]{slike/klasni_dijagram_models.jpg}
+				\includegraphics[scale=0.15]{slike/klasni_dijagram_models.jpg}
 				\centering
 				\caption{Dijagram razreda - dio Models}
 				\label{fig:models}
 			\end{figure}
-			
-
-			\textbf{\textit{dio 2. revizije}}\\			
-			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
 			
 			
 			
