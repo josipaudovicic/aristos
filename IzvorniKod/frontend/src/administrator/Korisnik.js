@@ -55,7 +55,7 @@ const Korisnik = () => {
       <h2>Korisnik: {user.username}</h2>
       <p>Ime: {user.name}</p>
       <p>Prezime: {user.surname}</p>
-      <p>Fotografija: <img src={user.file} alt="User" style={{ width: '400px', height: '300px' }} /></p>
+      <p>Fotografija: <img src={BASE_URL + '' + user.file} alt="User" style={{ width: '400px', height: '300px' }} /></p>
       <p>Email: {user.email}</p>
       <p>Lozinka: {user.password}</p>
       <p>Uloga: {user.role}</p>
